@@ -7,6 +7,15 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<form action = "login_ok.jsp">
+<div>
+아이디 : 
+<input type = "text" name = "id">
+</div>
+<div>
+비밀번호 : 
+<input type = "password" name = "pwd">
+</div>
+</form>
 </body>
 </html>
