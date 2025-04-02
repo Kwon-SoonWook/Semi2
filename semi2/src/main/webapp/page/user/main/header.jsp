@@ -59,11 +59,11 @@
 	color: gray;
 }
 </style>  
-<script>
+
 <%
 String sname = (String)session.getAttribute("sname");
 %>
-</script>
+
 <header class="top-bar">
 	<div>
 		<a href="../main/index.jsp"><image src="logo.png" width="30" height="30"></a>

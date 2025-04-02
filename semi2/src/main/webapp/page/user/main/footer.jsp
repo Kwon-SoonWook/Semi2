@@ -30,12 +30,7 @@ footer div {
 	font-size: 12px;
 
 }
-</style>
-<script>
-<%
-String sid = (String)session.getAttribute("sid");
-%>
-</script>	
+</style> 
 <footer>
 	<hr color="lightgray" size="1">
 	<div class="footer-menu">

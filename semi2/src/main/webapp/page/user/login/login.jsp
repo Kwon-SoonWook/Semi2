@@ -32,6 +32,16 @@ function show2(){
 <input type ="button" value = "회원가입" onclick="location.href='signUp.jsp'">
 <input type ="button" value = "아이디찾기" onclick="show();">
 <input type ="button" value = "비밀번호찾기" onclick="show2();">
+<%
+if(session.getAttribute("sid")!=null||session.getAttribute("sname")!=null){
+	%>
+	<input type = "button" value = "로그아웃" onclick = "location.href='logout.jsp'">
+	<%
+}
+
+
+
+%>
 <div><input type = "checkbox" name = "rememid" value = "아이디 기억">아이디 기억하기</div>
 </form>
 </body>
