@@ -7,7 +7,13 @@
 <title>Insert title here</title>
 <link rel='stylesheet' type='text/css' href='/semi2/css/adminLayout.css'>
 </head>
-<body>
 <%@include file="adminHeader.jsp" %>
+<body>
+	<div class="container">
+        <%@include file="adminCategory.jsp" %>
+       	 <main class="main-content">
+            
+        </main>    
+    </div>
 </body>
 </html>

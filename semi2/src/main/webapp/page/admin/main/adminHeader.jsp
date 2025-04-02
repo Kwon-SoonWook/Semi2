@@ -1,35 +1,84 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<script>
-function openLogin(){
-	window.open("/myweb/member/login.jsp", "login", "width=450, height=350");
+<script src="https://kit.fontawesome.com/f0cba69f8f.js" crossorigin="anonymous"></script>
+<style>
+.top-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    background: white;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
-</script>
+
+.search-bar {
+    display: flex;
+    border: 0px solid #ccc;
+    padding: 10px;
+    border-radius: 50px;
+    margin: 0 auto;
+}
+.search-bar a {
+  	color: black;
+}
+.search-bar a:hover {
+  	color: gray;
+}
+.search-bar input {
+    border: none;
+    outline: none;
+}
+
+.btn-login{
+	display: flex;
+	align-items: center;
+	border: solid 1px black;
+	padding: 8px 6px;
+	font-size: 14px;
+	font-weight: bold;
+	color: black;
+	border-radius: 40px;
+	text-decoration: none;
+}
+
+.btn-login:hover {
+  	color: gray;
+}
+.btn-logout{
+	display: flex;
+	align-items: center;
+	border: solid 1px black;
+	padding: 8px 6px;
+	font-size: 14px;
+	font-weight: bold;
+	color: black;
+	border-radius: 40px;
+	text-decoration: none;
+}
+.btn-logout:hover{
+	color: gray;
+}
+</style>  
+
 <%
 String sname = (String)session.getAttribute("sname");
-String sid = (String)session.getAttribute("sid");
 %>
-<header>
-	<% 
-	if(sname == null){
-		%>
-		<div><a href="javascript:openLogin()">로그인</a> | 회원가입</div>
-		<%
-	}else{
-		%>
-		<div><%=sname%>님 로그인 중...  | <a href='/myweb/member/logout.jsp'>로그아웃</a></div>
-		<%		
-	}
-	%>
-	<nav>
-		<ul>
-			<li><a href='/semi2/page/admin/visitor/visitorInfo.jsp'>방문자 현황</a></li>
-			<li><a href='/semi2/page/admin/enquiry/enquiryList.jsp'>문의함</a></li>
-			<li><a href='/semi2/page/admin/user/userInfoList.jsp'>사용자 관리</a></li>
-			<li><a href='/semi2/page/admin/post/bbs/postList.jsp'>게시물 관리</a></li>
-			<li><a href='/semi2/page/admin/post/product/productList.jsp'>판매물품 게시글 관리</a></li>
-			<li><a href='#'>나가기</a></li>
-		</ul>
-	</nav>
-	<hr>
+
+<header class="top-bar">
+	<div>
+		<a href="/semi2/page/admin/main/adminIndex.jsp"><image src="/semi2/page/user/main/logo.png" width="30" height="30"></a>
+	</div>
+	<div class="search-bar">
+	</div>
+     <%if(sname == null){ %>
+     	<div class="login-button">
+   	 		<a href="../login/login.jsp" class="btn-login"><i class="fa-regular fa-circle-user" style="font-size: 20px;"></i>로그인</a>
+    	</div>
+    <%}else{ %>
+	    	<%=sname %>님 &nbsp;<a href="../mypage/mypage.jsp"><i class="fa-solid fa-circle-user" style="font-size: 25px; color:black;"></i></a>
+	    	&emsp;
+    	</div>  	<div class="logout-button">
+    		<a href="/semi2/page/user/login/logout.jsp" class="btn-logout"><i class="fa-solid fa-right-from-bracket" style="font-size: 20px;"></i>로그아웃</a>
+    	</div>
+    <%} %>
 </header>

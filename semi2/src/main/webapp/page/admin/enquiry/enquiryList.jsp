@@ -30,24 +30,30 @@ div[name="write"]{
 </head>
 <body>
 <%@include file="../main/adminHeader.jsp" %>
-<section>
-	<article>
-	<h2>문의함 페이지</h2>
-	<form name='enquiryList' action='enquiryList_ok.jsp'>
-		<table>
-			<thead>
-				<tr>
-					<th>번호</th>
-					<th>제목</th>
-					<th>작성자</th>
-					<th>작성일</th>
-					<th>처리상태</th>
-				</tr>
-			</thead>
-		</table>
-	</form>
-	</article>
-</section>
+	<div class="container">
+        <%@include file="../main/adminCategory.jsp" %>
+       	 <main class="main-content">
+			<section>
+				<article>
+				<h2>문의함 페이지</h2>
+				<form name='enquiryList' action='enquiryList_ok.jsp'>
+					<table>
+						<thead>
+							<tr>
+								<th>번호</th>
+								<th>제목</th>
+								<th>작성자</th>
+								<th>작성일</th>
+								<th>처리상태</th>
+							</tr>
+						</thead>
+					</table>
+				</form>
+				</article>
+			</section>            
+        </main>    
+    </div>
+</body>
 
 </body>
 </html>
