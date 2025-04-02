@@ -31,6 +31,8 @@ footer div {
 
 }
 </style> 
+</style>
+	
 <footer>
 	<hr color="lightgray" size="1">
 	<div class="footer-menu">
