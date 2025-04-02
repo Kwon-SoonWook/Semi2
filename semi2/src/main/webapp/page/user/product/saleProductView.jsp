@@ -7,6 +7,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<%@include file="/page/user/main/header.jsp" %>
+<section>
+	<article>
+	
+	</article>
+</section>
+<%@include file="/page/user/main/footer.jsp" %>
 </body>
 </html>
