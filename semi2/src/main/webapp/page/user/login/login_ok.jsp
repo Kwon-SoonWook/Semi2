@@ -4,7 +4,7 @@
     <jsp:useBean id="kdto" class = "com.ksj.login.loginDTO"></jsp:useBean> 
     <jsp:setProperty property="*" name="kdto"/>
 <%
-
+ 
 String result = kdao.login(kdto.getId(),kdto.getPwd());
 System.out.println(result);
 String msg = "";

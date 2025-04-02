@@ -8,7 +8,7 @@
 int result = kdao.signUp(kdto);    
 String msg = result>0?"등록완료":"등록실패";
 
-
+ 
 %>
  <script>
 window.alert('<%=msg%>');

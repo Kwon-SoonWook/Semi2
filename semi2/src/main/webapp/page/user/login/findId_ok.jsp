@@ -7,7 +7,7 @@
     String name = request.getParameter("name");
     String email = request.getParameter("email");
     
-    String result = kdao.findId(name, email);
+    String result = kdao.findId(name, email); 
     String msg = "";
     
 if(result.contains("존재")){

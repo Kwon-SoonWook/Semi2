@@ -26,7 +26,7 @@ String sid = (String)session.getAttribute("sid");
             <%for(int i=0; i<60; i++){ %>
                 <div class="photo-card">
                 	<a href="#">
-                    <div class="page"></div>
+                    <div class="page"></div> 
                     <h3>제목1</h3>
                     <p>내용1</p>
                     </a>
