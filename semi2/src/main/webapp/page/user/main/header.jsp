@@ -44,8 +44,26 @@
 .btn-login:hover {
   	color: gray;
 }
+.btn-logout{
+	display: flex;
+	align-items: center;
+	border: solid 1px black;
+	padding: 8px 6px;
+	font-size: 14px;
+	font-weight: bold;
+	color: black;
+	border-radius: 40px;
+	text-decoration: none;
+}
+.btn-logout:hover{
+	color: gray;
+}
 </style>  
-     
+<script>
+<%
+String sname = (String)session.getAttribute("sname");
+%>
+</script>
 <header class="top-bar">
 	<div>
 		<a href="../main/index.jsp"><image src="logo.png" width="30" height="30"></a>
@@ -53,8 +71,16 @@
     <div class="search-bar">
         <input type="text" size="70" placeholder="Search">
         <a href="#"><i class="fas fa-search"></i></a>
-    </div>
-    <div class="login-button">
-   	 	<a href="../login/login.jsp" class="btn-login"><i class="fa-regular fa-circle-user" style="font-size: 20px;"></i>로그인</a>
-    </div>
+    </div> 
+     <%if(sname == null){ %>
+     	<div class="login-button">
+   	 		<a href="../login/login.jsp" class="btn-login"><i class="fa-regular fa-circle-user" style="font-size: 20px;"></i>로그인</a>
+    	</div>
+    <%}else{ %>
+    	<%=sname %>님 &nbsp;<a href="../mypage/mypage.jsp"><i class="fa-solid fa-circle-user" style="font-size: 25px; color:black;"></i></a>
+    	&emsp;
+    	<div class="logout-button">
+    		<a href="../login/logout.jsp" class="btn-logout"><i class="fa-solid fa-right-from-bracket" style="font-size: 20px;"></i>고르아웃</a>
+    	</div>
+    <%} %>
 </header>

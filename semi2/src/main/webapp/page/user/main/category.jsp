@@ -25,6 +25,7 @@
         <div class="menu-item"><a href="../bbs/buyBbs.jsp"><i class="fa-solid fa-cart-shopping"></i><span> 삽니다</span></a></div>
     </nav>
 </aside>
+<!-- 
 <aside class="toolButton">
 	<li> 
 	  <ul>
@@ -36,5 +37,6 @@
 	  <span><a href="#"><i class="fa-solid fa-pen-to-square"></i></a></span>
 	</li>
 </aside>
+ -->
 </body>
 </html>

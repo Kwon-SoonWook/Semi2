@@ -193,6 +193,7 @@ section:hover > div:nth-of-type(1) {
     background: #ddd;
     border-radius: 5px;
 }
+/*
 .toolButton span{
 	position:fixed;
 	right: 0px;
@@ -226,3 +227,4 @@ section:hover > div:nth-of-type(1) {
 .toolButton ul > li:hover{
 	opacity: 1;
 }
+*/
