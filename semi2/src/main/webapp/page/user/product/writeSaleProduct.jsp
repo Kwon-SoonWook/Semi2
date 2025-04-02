@@ -13,6 +13,7 @@ section {
 	width: 680px;
 }
 
+
 body {
 	margin: 0px auto;
 	width: 680px;
