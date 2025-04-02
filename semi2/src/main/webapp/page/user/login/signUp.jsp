@@ -8,7 +8,7 @@
 </head>
 <body>
 <h2>회 원 가 입</h2>
-<form action = "signUp_ok.jsp">
+<form action = "signUp_ok.jsp" method = "post" onsubmit="return false;" enctype="multipart/form-data">
 <div>아이디 : 
 <input type = "text" name = "id">
 <input type = "submit" value = "중복검사">
@@ -29,7 +29,7 @@
 <input type = "text" name = "location">
 </div>
 <div>프로필 사진 : 
-<input type = "file" name = "uri">
+<input type = "file">
 </div>
 <input type = "submit" value = "회원가입">
 </form>

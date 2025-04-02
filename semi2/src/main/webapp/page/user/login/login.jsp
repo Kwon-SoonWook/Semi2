@@ -16,13 +16,28 @@ function show2(){
 
 </script>
 <title>Insert title here</title>
+<%
+String saveid = "";
+
+Cookie cks[] = request.getCookies();
+if(cks!=null){
+	for(int i = 0; i < cks.length; i++){
+		if(cks[i].getName().equals("sname")){
+			saveid = cks[i].getValue();
+		}
+	}
+	
+	
+}
+
+%>
 </head>
 <h2>로 그 인 </h2>
 <body>
 <form action = "login_ok.jsp">
 <div>
 아이디 : 
-<input type = "text" name = "id">
+<input type = "text" name = "id" value = "<%=saveid%>">
 </div>
 <div>
 비밀번호 : 
@@ -42,7 +57,7 @@ if(session.getAttribute("sid")!=null||session.getAttribute("sname")!=null){
 
 
 %>
-<div><input type = "checkbox" name = "rememid" value = "아이디 기억">아이디 기억하기</div>
+<div><input type = "checkbox" name = "saveid" value = "on" <%=saveid.equals("")?"":"checked" %>>아이디 기억하기</div>
 </form>
 </body>
 </html>

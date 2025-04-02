@@ -14,36 +14,11 @@ body {
 }
 
 
-/**index페이지*/
+/** mypage */
 .main-content {
     flex: 1;
     padding: 20px;
     margin-left: 50px;
-}
-
-.photo-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    margin-top: 20px;
-}
-
-@media (max-width: 1000px) {
-    .photo-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-@media (min-width: 1300px) {
-    .photo-grid {
-        grid-template-columns: repeat(5, 1fr);
-    }
-}
-
-@media (min-width: 1700px) {
-    .photo-grid {
-        grid-template-columns: repeat(6, 1fr);
-    }
 }
 .photo-card {
     background: white;
