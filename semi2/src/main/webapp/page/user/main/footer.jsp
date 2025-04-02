@@ -30,6 +30,7 @@ footer div {
 	font-size: 12px;
 
 }
+</style> 
 </style>
 
 <footer>
