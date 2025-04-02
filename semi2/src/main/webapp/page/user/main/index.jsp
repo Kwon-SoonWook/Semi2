@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<jsp:useBean id="ldao" class="com.ksj.login.loginDAO" scope="session"></jsp:useBean>
+<jsp:useBean id="kdao" class="com.ksj.login.loginDAO" scope="session"></jsp:useBean>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,18 +9,16 @@
 <title>노후재활센터</title>
 <link rel="stylesheet" type="text/css" href="mainLayout.css">
 <script src="https://kit.fontawesome.com/f0cba69f8f.js" crossorigin="anonymous"></script><!-- 안보이면 해당 사이트 로그인 후 주소받기 -->
-<script>
 <%
 String sid = (String)session.getAttribute("sid");
 %>
-</script>
 </head>
 <%@include file="header.jsp" %>
 <body>
     <div class="container">
         <%@include file="category.jsp" %>
         <main class="main-content">
-		<%if(sid==null){ %>
+		<%if(sid!=null){ %>
         	<h2></h2>
             <div class="photo-grid">
             <%for(int i=0; i<60; i++){ %>

@@ -31,11 +31,7 @@ footer div {
 
 }
 </style>
-<script>
-<%
-String sid = (String)session.getAttribute("sid");
-%>
-</script>	
+	
 <footer>
 	<hr color="lightgray" size="1">
 	<div class="footer-menu">

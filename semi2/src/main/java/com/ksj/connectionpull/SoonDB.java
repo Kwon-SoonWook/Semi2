@@ -1,4 +1,4 @@
-package connectionPool;
+package com.ksj.connectionpull;
 import java.sql.*;
 import javax.sql.*;
 import javax.naming.*;
