@@ -12,6 +12,7 @@ request.setCharacterEncoding("utf-8");
 <jsp:useBean id="pdao" class="com.ksj.product.ProductDAO"></jsp:useBean>
 <jsp:useBean id="idao" class="com.ksj.productimages.ProductImagesDAO"></jsp:useBean>
 <%
+	String sid = (String)session.getAttribute("sid");
 	String savepath = request.getRealPath("/page/user/product/img");
 	ArrayList saveFiles = new ArrayList();
 //	MultipartRequest mr = new MultipartRequest(request,savepath,1024*1024*20,"utf-8");
@@ -33,7 +34,7 @@ request.setCharacterEncoding("utf-8");
 	}
 	String title= request.getParameter("title");
 	String buyerId = "tnsdnr9331";
-	String sellerId = "onlyone0621";//(String)session.getAttribute("Id");
+	String sellerId = sid;//(String)session.getAttribute("Id");
 	String prices = request.getParameter("price");
 	int price;
 	if(prices==null||prices.length()==0){
@@ -54,6 +55,6 @@ request.setCharacterEncoding("utf-8");
 %>
 <script>
 window.alert('<%=msgProduct%>');
-//location.href='writeSaleProduct.jsp';
+location.href='writeSaleProduct.jsp';
 </script>
 
