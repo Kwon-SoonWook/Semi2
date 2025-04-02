@@ -47,9 +47,41 @@ function removefile(index){
 	fileShow();
 }	
 function check(){
-	if(document.writeSaleProduct.category.value==null||document.writeSaleProduct.category.value=""){
-		return false;
-	}
+	  var title = document.writeSaleProduct.title.value;
+	  if(title==null||title==""){
+	        alert("상품명을 입력해주세요!");
+	        return false;		  
+	  }
+	  var category = document.querySelector('input[name="category"]:checked'); // 선택된 라디오 버튼 가져오기
+	    if (!category) {
+	        alert("카테고리를 선택해주세요!");
+	        return false;
+	    }
+		var content = document.writeSaleProduct.content.value;
+		  if(content==null||content==""){
+		        alert("상품설명을 입력해주세요!");
+		        return false;		  
+		  }
+		var price = document.writeSaleProduct.price.value;
+		  if(price==null||price==""){
+		        alert("가격을 입력해주세요!");
+		        return false;		  
+		  }
+			var price = document.writeSaleProduct.price.value;
+			  if(price==null||price==""){
+			        alert("가격을 입력해주세요!");
+			        return false;		  
+			  }
+			var ea = document.writeSaleProduct.ea.value;
+				 if(ea==null||ea==""){
+				      alert("수량을 입력해주세요!");
+				      return false;		  
+				  }
+			var location = document.writeSaleProduct.location.value;
+				 if(location==null||location==""){
+					     alert("거래희망장소를 입력해주세요!");
+					     return false;		  
+				 }
 }
 </script>
 </head>
@@ -60,7 +92,7 @@ function check(){
 	%>
 	<section>
 		<article>
-			<form name="writeSaleProduct" action="writeSaleProduct_ok.jsp">
+			<form name="writeSaleProduct" action="writeSaleProduct_ok.jsp" method="post" enctype="multipart/form-data">
 				<table>
 					<tr>
 						<th>상품정보</th>

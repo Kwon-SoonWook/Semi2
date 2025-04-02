@@ -54,6 +54,6 @@ request.setCharacterEncoding("utf-8");
 %>
 <script>
 window.alert('<%=msgProduct%>');
-//location.href='writeSaleProduct.jsp';
+location.href='writeSaleProduct.jsp';
 </script>
 

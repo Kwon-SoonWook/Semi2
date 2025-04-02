@@ -10,7 +10,7 @@ public class CategoryDAO {
 	
 	public ArrayList<CategoryDTO> categoryList(){
 		try {
-			conn = com.ksj.connectionpull.SoonDB.getConn();
+			conn = com.ksj.db.ConnectionDB.getConn();
 			String sql = "select * from category order by category_id desc";
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();

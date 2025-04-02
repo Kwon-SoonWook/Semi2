@@ -8,7 +8,7 @@ public class ProductImagesDAO {
 	
 	public int addProductImages(ProductImagesDTO dto) {
 		try {
-			conn = com.ksj.connectionpull.SoonDB.getConn();
+			conn = com.ksj.db.ConnectionDB.getConn();
 			String sql = "insert into product_images values(?,?)";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, dto.getProductImagesId());

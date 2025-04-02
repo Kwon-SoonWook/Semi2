@@ -12,7 +12,7 @@ public class ProductDAO {
 	
 	public int productInsert(ProductDTO dto) {
 		try {
-			conn = com.ksj.connectionpull.SoonDB.getConn();
+			conn = com.ksj.db.ConnectionDB.getConn();
 			String sql = "insert into products values(products_idx.nextval,?,?,?,?,?,?,?,?,?,?,?,sysdate,sysdate,?)";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, dto.getCategory_id());
@@ -41,7 +41,7 @@ public class ProductDAO {
 	}
 	public int searchProductIdx() {
 		try {
-			conn = com.ksj.connectionpull.SoonDB.getConn();
+			conn = com.ksj.db.ConnectionDB.getConn();
 			String sql = "select max(products_id) from products";
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
