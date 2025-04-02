@@ -84,6 +84,9 @@ function check(){
 				 }
 }
 </script>
+<%
+String sid = (String)session.getAttribute("sid");
+%>
 </head>
 <body>
 	<%@include file="/page/user/main/header.jsp"%>

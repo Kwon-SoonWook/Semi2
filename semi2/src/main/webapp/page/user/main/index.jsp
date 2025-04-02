@@ -20,7 +20,7 @@ String sid = (String)session.getAttribute("sid");
     <div class="container">
         <%@include file="category.jsp" %>
         <main class="main-content">
-		<%if(sid==null){ %>
+		<%if(sid!=null){ %>
         	<h2></h2>
             <div class="photo-grid">
             <%for(int i=0; i<60; i++){ %>
