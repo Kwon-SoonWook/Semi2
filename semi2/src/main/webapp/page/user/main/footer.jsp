@@ -31,15 +31,16 @@ footer div {
 
 }
 </style> 
-</style>
-
+<%
+String footid = (String)session.getAttribute("sid");
+%>
 <footer>
 	<hr color="lightgray" size="1">
 	<div class="footer-menu">
 	<a href="../bbs/enquiryBbs.jsp">문의사항</a>&emsp;|&emsp;
 	<a href="../bbs/noticeBbs.jsp">공지사항</a>&emsp;|&emsp;
 	<a href="../mypage/myInfoUpdate.jsp">내 정보 수정</a>&emsp;|&emsp;
-	<%if(sid==null){ %>
+	<%if(footid==null){ %>
 	<a href="../login/login.jsp">로그인</a>
 	<%}else{ %>
 	<a href="../mypage/myInfoDelete.jsp">회원탈퇴</a>

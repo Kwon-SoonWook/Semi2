@@ -61,23 +61,23 @@
 </style>  
 
 <%
-String sname = (String)session.getAttribute("sname");
+String headername = (String)session.getAttribute("sname");
 %>
 
 <header class="top-bar">
 	<div>
-		<a href="../main/index.jsp"><image src="logo.png" width="30" height="30"></a>
+		<a href="../main/index.jsp"><image src="../main/logo.png" width="30" height="30"></a>
 	</div>
     <div class="search-bar">
         <input type="text" size="70" placeholder="Search">
         <a href="#"><i class="fas fa-search"></i></a>
     </div> 
-     <%if(sname == null){ %>
+     <%if(headername == null){ %>
      	<div class="login-button">
    	 		<a href="../login/login.jsp" class="btn-login"><i class="fa-regular fa-circle-user" style="font-size: 20px;"></i>로그인</a>
     	</div>
     <%}else{ %>
-    	<%=sname %>님 &nbsp;<a href="../mypage/mypage.jsp"><i class="fa-solid fa-circle-user" style="font-size: 25px; color:black;"></i></a>
+    	<%=headername %>님 &nbsp;<a href="../mypage/mypage.jsp"><i class="fa-solid fa-circle-user" style="font-size: 25px; color:darkgray;"></i></a>
     	&emsp;
     	<div class="logout-button">
     		<a href="../login/logout.jsp" class="btn-logout"><i class="fa-solid fa-right-from-bracket" style="font-size: 20px;"></i>로그아웃</a>
