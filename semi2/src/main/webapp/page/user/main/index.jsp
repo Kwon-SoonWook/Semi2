@@ -16,6 +16,7 @@ String indexid = (String)session.getAttribute("sid");
 
 </head>
 <%@include file="/page/user/main/header.jsp" %> 
+<title>Insert title here</title>
 <body>
     <div class="container">
         <%@include file="/page/user/main/category.jsp" %>
