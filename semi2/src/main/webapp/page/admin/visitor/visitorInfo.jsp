@@ -9,6 +9,16 @@
 </head>
 <body>
 <%@include file="../main/adminHeader.jsp" %>
-<h2>방문자 현황 페이지</h2>
+	<div class="container">
+        <%@include file="../main/adminCategory.jsp" %>
+       	 <main class="main-content">
+			<section>
+				<article>
+				<h2>방문자 현황</h2>
+				
+				</article>
+			</section>            
+        </main>    
+    </div>
 </body>
 </html>
