@@ -69,6 +69,7 @@ public class ProductDAO {
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, productId);
 			ProductDTO dto = null;
+			rs = ps.executeQuery();
 			while(rs.next()) {
 				int products_id = rs.getInt("products_id");
 				int category_id = rs.getInt("category_id");
@@ -98,5 +99,24 @@ public class ProductDAO {
 				if(conn!=null)conn.close();								
 			} catch (Exception e2) {}
 		}
+	}
+	public int updateProduct(ProductDTO dto) {
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+			String sql = "update products set trade_state=? where products_id=?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, dto.getTrade_state());
+			ps.setInt(2, dto.getProducts_id());
+			int result = ps.executeUpdate();
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();
+			} catch (Exception e2) {}
+		}		
 	}
 }
