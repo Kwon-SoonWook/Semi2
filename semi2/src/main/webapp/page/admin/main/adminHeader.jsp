@@ -72,7 +72,7 @@ String sname = (String)session.getAttribute("sname");
 	</div>
      <%if(sname == null){ %>
      	<div class="login-button">
-   	 		<a href="../login/login.jsp" class="btn-login"><i class="fa-regular fa-circle-user" style="font-size: 20px;"></i>로그인</a>
+   	 		<a href="/semi2/page/user/login/login.jsp" class="btn-login"><i class="fa-regular fa-circle-user" style="font-size: 20px;"></i>로그인</a>
     	</div>
     <%}else{ %>
 	    	<%=sname %>님 &nbsp;<a href="../mypage/mypage.jsp"><i class="fa-solid fa-circle-user" style="font-size: 25px; color:black;"></i></a>

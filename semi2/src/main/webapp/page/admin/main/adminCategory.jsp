@@ -20,9 +20,10 @@
      <nav>
         <div class="menu-item"><a href="/semi2/page/admin/main/adminIndex.jsp"><i class="fas fa-home"></i><span> 홈</span></a></div>
         <div class="menu-item"><a href="/semi2/page/admin/visitor/visitorInfo.jsp"><i class="fa-solid fa-bullhorn"></i><span> 방문현황</span></a></div>
-        <div class="menu-item"><a href="/semi2/page/admin/enquiry/enquiryList.jsp"><i class="fa-solid fa-circle-question"></i><span> 문의함</span></a></div>
+        <div class="menu-item"><a href="/semi2/page/admin/ask/askList.jsp"><i class="fa-solid fa-circle-question"></i><span> 문의함</span></a></div>
         <div class="menu-item"><a href="/semi2/page/admin/user/userInfoList.jsp"><i class="fa-solid fa-comments"></i><span> 사용자 관리</span></a></div>
         <div class="menu-item"><a href="/semi2/page/admin/post/bbs/postList.jsp"><i class="fa-solid fa-cart-shopping"></i><span> 게시물 관리</span></a></div>
+    	<div class="menu-item"><a href="/semi2/page/user/main/index.jsp"><i class="fa-solid fa-cart-shopping"></i><span> 사용자페이지</span></a></div>
     </nav>
 </aside>
 <!-- 

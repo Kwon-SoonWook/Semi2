@@ -10,10 +10,10 @@
 <%@include file="adminHeader.jsp" %>
 <body>
 	<div class="container">
-        <%@include file="adminCategory.jsp" %>
-       	 <main class="main-content">
+   	<%@include file="adminCategory.jsp" %>
+       	<main class="main-content">
             
-        </main>    
+    	</main>    
     </div>
 </body>
 </html>
