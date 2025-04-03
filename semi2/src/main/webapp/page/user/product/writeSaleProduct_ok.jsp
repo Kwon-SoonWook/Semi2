@@ -14,6 +14,7 @@ request.setCharacterEncoding("utf-8");
 %>
 <jsp:useBean id="pdao" class="com.ksj.product.ProductDAO"></jsp:useBean>
 <jsp:useBean id="idao" class="com.ksj.productimages.ProductImagesDAO"></jsp:useBean>
+<jsp:useBean id="tpdao" class="com.ksj.tempproduct.TempProductDAO"></jsp:useBean>
 <%
 	String sid = (String)session.getAttribute("sid");
 	String savepath = request.getRealPath("/page/user/product/img");
@@ -25,6 +26,7 @@ request.setCharacterEncoding("utf-8");
 		String name = (String)files.nextElement();
 		saveFiles.add(mr.getFilesystemName(name));
 	}
+	tpdao.deleteTempProduct(sid);
 	
 	String categoryIds = mr.getParameter("category");
 	int categoryid;

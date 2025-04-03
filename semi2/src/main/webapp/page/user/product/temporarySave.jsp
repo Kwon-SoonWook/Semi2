@@ -9,7 +9,7 @@ String categoryIds = request.getParameter("category");
 int categoryid;
 if(categoryIds==null||categoryIds.length()==0){
 	categoryid = 0;
-	System.out.print("null?");
+	System.out.println("null?");
 }else{
 	categoryid = Integer.parseInt(categoryIds);		
 }
@@ -24,8 +24,13 @@ if(prices==null||prices.length()==0){
 }
 String content = request.getParameter("content");
 String location = request.getParameter("location");
+int result;
 TempProductDTO dto = new TempProductDTO(sid,title,categoryid,content,price,location);
-int result = tpdao.addTempProdcuct(dto);
+if(tpdao.tempProductList(sid)==null){
+	result = tpdao.addTempProdcuct(dto);	
+}else{
+	result = tpdao.updateTempProdcuct(dto);
+}
 String msg = result>0?"임시저장성공":"임시저장실패";
 %>
 <script>
