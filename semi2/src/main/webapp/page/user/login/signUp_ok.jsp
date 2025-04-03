@@ -12,6 +12,6 @@ String msg = result>0?"등록완료":"등록실패";
 %>
  <script>
 window.alert('<%=msg%>');
-location.href = "login.jsp";
+location.href = "login.jsp"; 
 
 </script>

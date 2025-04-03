@@ -11,7 +11,6 @@ public class loginDAO {
 	public int signUp(loginDTO dto) {
 		try {
 			conn = com.ksj.db.DB.getConn();
-			
 			String sql = "insert into user_info values(?,?,?,?,?,?,?,sysdate)";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, dto.getName());
@@ -159,6 +158,70 @@ public class loginDAO {
 			try {
 				ps.close();
 				conn.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+		}
+	}
+	public int InfoDelete(String id) {
+		try {
+			conn = com.ksj.db.DB.getConn();
+			
+			String sql = "delete from user_info where id = ?";
+			ps=conn.prepareStatement(sql);
+			
+			ps.setString(1, id);
+			
+			int count = ps.executeUpdate();
+			return count;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				ps.close();
+				conn.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+		}
+	}
+	public boolean duptest(String id) {
+		try {
+			conn = com.ksj.db.DB.getConn();
+			
+			String sql = "select id from user_info where id = ?";
+			ps = conn.prepareStatement(sql);
+			
+			ps.setString(1, id);
+			
+			rs = ps.executeQuery();
+			
+			return rs.next()?false:true;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}finally {
+		try {
+			
+		} catch (Exception e2) {
+			// TODO: handle exception
+		}	
+		}
+	}
+	
+	public void profile() {
+		try {
+			conn = com.ksj.db.DB.getConn();
+			
+			String sql = "";
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				
 			} catch (Exception e2) {
 				// TODO: handle exception
 			}
