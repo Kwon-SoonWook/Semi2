@@ -38,6 +38,11 @@ body {
 .mypage-category{
 
 }
+.iframe    {
+	width: 100%;
+	hegiht: 0;
+	padding-top: calc(9/16 *100%);
+}
 
 </style>
 <script src="https://kit.fontawesome.com/f0cba69f8f.js" crossorigin="anonymous"></script><!-- 안보이면 해당 사이트 로그인 후 주소받기 -->
@@ -61,17 +66,19 @@ body {
 			<nav id="mypage-nav">
 				<div class="category-container">
 					<ul class="flex-start">
-						<li><a href="#">판매물품</a></li>
-						<li><a href="#">거래후기</a></li>
-						<li><a href="#">관심목록</a></li>
-						<li><a href="#">최신본상품</a></li>
-						<li><a href="#" class="category" data-page="enquiryBbs.jsp">1:1문의</a></li>
+						<li><a href="#" class="category" data-page="saleList.jsp">판매물품</a></li>
+						<li><a href="myReviewList.jsp">거래후기</a></li>
+						<li><a href="interestList.jsp">관심목록</a></li>
+						<li><a href="recentList.jsp">최신본상품</a></li>
+						<li><a href="userenquiryBbs.jsp">1:1문의</a></li>
 					</ul>
 				</div>
 			</nav>
 			<div id="mypage-content">
 				<div class="category-container">
 					<div id="channel-recent" class="flex-align-start">
+					<h3>결과리스트</h3>
+					<iframe id="contentFrame" src="saleList.jsp" frameborder="0"></iframe>
 					
 					</div>
 				</div>

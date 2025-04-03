@@ -29,7 +29,7 @@ table thead th{
 <section>
 <article>
 	<h2>문의사항 리스트</h2>
-	<table width="550" border="1" cellspacing="0">
+	<table border="0" width="350">
 		<thead>
 			<tr>
 				<th>번호</th>
