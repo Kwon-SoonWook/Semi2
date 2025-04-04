@@ -79,7 +79,6 @@ function IframeHeight(){
 	         	</div>
 			    <button type="button" onclick="location.href='myInfoUpdate.jsp'">수정</button>     	
 			</div>
-     		
 			<nav id="mypage-nav">
 				<div class="category-container">
 					<ul class="flex-start">

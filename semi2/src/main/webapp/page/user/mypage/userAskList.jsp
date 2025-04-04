@@ -7,6 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width"> <!-- 반응형 화면 변환 -->
 <title>1:1 문의</title>
 <style>
 body{
@@ -33,8 +34,8 @@ table thead th{
 	<article>
 	<h2>나의 문의</h2>
 	<form name='userAskList' action='askWrite.jsp'>
-	<div style="text-align:right;  margin-right:130px;"><input type='submit' value='문의작성'></div>
 		<table>
+			<caption style="text-align:right;"><input type='submit' value='문의작성'></caption>
 			<thead>
 				<tr>
 					<th style="text-align: center;">제목</th>
