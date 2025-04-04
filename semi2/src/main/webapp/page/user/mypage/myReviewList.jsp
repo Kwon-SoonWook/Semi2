@@ -31,6 +31,7 @@ table thead th{
 </head>
 <%
 String mypageid = (String)session.getAttribute("sid");
+
 %>
 <body>
 <section>
