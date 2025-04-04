@@ -23,12 +23,6 @@ table{
 table th{
 	background-color: silver;
 }
-div[name="pg"]{
-	text-align: center;
-}
-div[name="write"]{
-	text-align: right;
-}
 </style>
 </head>
 <body>
@@ -38,7 +32,7 @@ div[name="write"]{
        	 <main class="main-content">
 			<section>
 				<article>
-				<h2>문의함 페이지</h2>
+				<h2>문의함</h2>
 				<form name='askList' action='askList_ok.jsp'>
 					<table>
 						<thead>
@@ -75,11 +69,11 @@ div[name="write"]{
 										<td style="text-align: center;"><%=arr.get(i).getAsk_date() %></td>
 									<%if(arr.get(i).getAsk_type()==0){
 										%>	
-										<td style="text-align: center;">미처리</td>
+										<td style="color: red; text-align: center;">미처리</td>
 										<%	
 									}else if(arr.get(i).getAsk_type()==1){
 										%>
-										<td style="text-align: center;">처리완료</td>	
+										<td style="color: blue; text-align: center;">처리완료</td>	
 										<%
 									}else if(arr.get(i).getAsk_type()==2){
 										%>

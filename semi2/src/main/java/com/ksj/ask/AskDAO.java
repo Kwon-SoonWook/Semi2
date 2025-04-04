@@ -61,6 +61,43 @@ public class AskDAO {
 		}
 	}
 	
+
+	/**관리자 페이지 문의함 출력 메서드*/
+	public ArrayList<AskDTO> userAskList(){
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+			String sql = "select * from ask order by ref desc, sunbun asc";
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			ArrayList<AskDTO> arr = new ArrayList<AskDTO>();
+			while(rs.next()) {
+				int ask_id = rs.getInt("ask_id");
+				String ask_user_id = rs.getString("ask_user_id");
+				String ask_title = rs.getString("ask_title");
+				String ask_content = rs.getString("ask_content");;
+				int ask_type = rs.getInt("ask_type");
+				java.sql.Date ask_date = rs.getDate("ask_date");
+				int ref = rs.getInt("ref");
+				int lev = rs.getInt("lev");;
+				int sunbun = rs.getInt("sunbun");
+				AskDTO dto = new AskDTO(ask_id, ask_user_id, ask_title, ask_content, ask_type, ask_date, ref, lev, sunbun);
+				arr.add(dto);
+			}
+			return arr;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}finally {
+			try {
+				if(rs != null) rs.close();
+				if(ps != null) ps.close();
+				if(conn != null) conn.close();
+			}catch(Exception e2) {
+				
+			}
+		}
+	}
+	
 	/**관리자 페이지 문의함 출력 메서드*/
 	public ArrayList<AskDTO> askList(){
 		try {
@@ -183,6 +220,7 @@ public class AskDAO {
 	/**관리자 페이지 문의답변시 해당 문의 미처리에서 처리완료로 변경 메서드*/
 	public void askUpdate(int ask_id) {
 		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
 			String sql = "update ask set ask_type=1 where ask_id=?";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, ask_id);
@@ -192,6 +230,7 @@ public class AskDAO {
 		}finally {
 			try {
 				if(ps != null) ps.close();
+				if(conn != null) conn.close();
 			}catch(Exception e2) {
 				
 			}
