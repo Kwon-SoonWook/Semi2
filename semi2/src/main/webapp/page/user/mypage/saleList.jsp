@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
 <%@ page import="com.ksj.product.*" %>
-
 <jsp:useBean id="pdao" class="com.ksj.product.ProductDAO" scope="session"></jsp:useBean>
 <!DOCTYPE html>
 <html>
@@ -10,10 +9,15 @@
 <meta charset="UTF-8">
 <title>판매물품 리스트</title>
 <style>
+body{
+	height: auto;
+	overflow: hidden;
+}
 h2{
 	text-align: center;
 }
 table{
+	height: auto;
 	width: 550px;
 	margin: 0px auto;
 	border-top:3px double darkgray;
@@ -22,6 +26,7 @@ table{
 table thead th{
 	background-color : lightgray;
 }
+
 </style>
 </head>
 <%
