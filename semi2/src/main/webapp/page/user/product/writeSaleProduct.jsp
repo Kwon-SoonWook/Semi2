@@ -12,6 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title> 
+<link rel="stylesheet" type="text/css" href="mainLayout.css">
 <style>
 section {
 	width: 680px;
