@@ -1,9 +1,12 @@
+<%@page import="com.ksj.tempproduct.TempProductDTO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.ksj.category.CategoryDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <jsp:useBean id="cdao" class="com.ksj.category.CategoryDAO"></jsp:useBean>
+<jsp:useBean id="pdao" class="com.ksj.product.ProductDAO"></jsp:useBean>
+<jsp:useBean id="tpdao" class="com.ksj.tempproduct.TempProductDAO"></jsp:useBean>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -20,33 +23,6 @@ body {
 }
 </style>
 <script>
-var selectedFiles = [];
-
-function addFile(input) {
-    const files = input.files;
-    if (files.length > 0) {
-        for (let i = 0; i < files.length; i++) {
-            if (selectedFiles.length < 5) { // 최대 5개 제한
-                selectedFiles.push(files[i]);
-                fileShow();
-            } else {
-                alert("최대 5개까지 업로드할 수 있습니다.");
-                break;
-            }
-        }
-    }
-    input.value = ""; // 같은 파일 다시 선택 가능하도록 초기화
-}
-function fileShow(){
-	document.getElementById('filelist').innerHTML="";
-	for(let i =0;i< selectedFiles.length;i++){
-		document.getElementById('filelist').innerHTML+='<li>'+selectedFiles[i].name+'<a href="#" onclick="removefile('+i+'); return false;">삭제</a></li>'
-	}	
-}
-function removefile(index){
-	selectedFiles.splice(index,1);
-	fileShow();
-}	
 function check(){
 	  var title = document.writeSaleProduct.title.value;
 	  if(title==null||title==""){
@@ -68,25 +44,45 @@ function check(){
 		        alert("가격을 입력해주세요!");
 		        return false;		  
 		  }
-			var price = document.writeSaleProduct.price.value;
-			  if(price==null||price==""){
-			        alert("가격을 입력해주세요!");
-			        return false;		  
-			  }
-			var ea = document.writeSaleProduct.ea.value;
-				 if(ea==null||ea==""){
-				      alert("수량을 입력해주세요!");
-				      return false;		  
-				  }
 			var location = document.writeSaleProduct.location.value;
 				 if(location==null||location==""){
 					     alert("거래희망장소를 입력해주세요!");
 					     return false;		  
 				 }
+				 document.forms["writeSaleProduct"].enctype ="multipart/form-data";
 }
+function show(){
+		<%for(int i=0;i<5;i++){
+			%>
+			var filename = document.writeSaleProduct.img<%=i%>.value;			
+			if(filename!=""){
+				  window.alert('임시저장은 이미지가 없어야 저장이 됩니다');
+				  return false;
+				}
+			<%
+			}
+			%>
+			document.forms["writeSaleProduct"].enctype ="application/x-www-form-urlencoded";
+		}
 </script>
 <%
 String sid = (String)session.getAttribute("sid");
+TempProductDTO tpdto = tpdao.tempProductList(sid);
+%>
+<%
+if(tpdto!=null){
+	%>
+	<script>
+	window.onload =function(){
+		document.writeSaleProduct.title.value = "<%=tpdto.getTitle()%>";
+		document.writeSaleProduct.category.value = "<%=tpdto.getCategory_id()%>";
+		document.writeSaleProduct.content.value = "<%=tpdto.getContent()%>";
+		document.writeSaleProduct.price.value = "<%=tpdto.getPrice()%>";
+		document.writeSaleProduct.location.value = "<%=tpdto.getWish_location()%>";
+	}
+	</script>
+	<%
+}
 %>
 </head>
 <body>
@@ -101,11 +97,13 @@ String sid = (String)session.getAttribute("sid");
 					<tr>
 						<th>상품정보</th>
 					</tr>
+					
 					<tr>
 						<th>상품이미지(최대5개)</th>
 						<td>
-						<input type="file" name="img" accept="image/*" onchange="addFile(this)">
-						<ui id="filelist"></ui>
+					<% for(int i=0;i<5;i++){ %>
+						<input type="file" name="img<%=i %>" accept="image/*">
+					<%	}  %>	
 						</td>
 					</tr>
 					<tr>
@@ -123,8 +121,12 @@ String sid = (String)session.getAttribute("sid");
 						%><td>
 							<%
 							for (int i = 0; i < arr.size(); i++) {
+								if(i==0){
+									%><input type="radio" name="category" value="<%=arr.get(i).getCategoryId()%>" checked="checked"><%=arr.get(i).getCategoryName()%><%
+								}else{
 							%><input type="radio" name="category" value="<%=arr.get(i).getCategoryId()%>"><%=arr.get(i).getCategoryName()%>
 							<%
+								}
 							}
 							%>
 						</td>
@@ -136,16 +138,8 @@ String sid = (String)session.getAttribute("sid");
 						<th>상품설명</th>
 						<td><textarea rows="8" cols="45" name="content"></textarea></td>
 					</tr>
-					<tr>
-						<th>태그</th>
-						<td><input type="text" name="tage"></td>
-					</tr>
 					<th>가격</th>
-					<td><input type="text" name="price"></td>
-					</tr>
-					<tr>
-						<th>수량</th>
-						<td><input type="text" name="ea"></td>
+					<td><input type="text" name="price" value="0"></td>
 					</tr>
 					<tr>
 						<th>거래희망장소</th>
@@ -153,8 +147,8 @@ String sid = (String)session.getAttribute("sid");
 					</tr>
 					<tr>
 						<td colspan="3" align="right"><input type="reset" value="초기화">
-							<input type="submit" name="tempsave" value="임시저장"> 
-							<input type="submit" name="save" value="저장" onclick="return check()"></td>
+							<input type="submit" name="tempsave" value="임시저장" onclick="return show()" formaction="temporarySave.jsp"> 
+							<input type="submit" name="save" value="저장" onclick="return check()" formaction="writeSaleProduct_ok.jsp"></td>
 					</tr>
 				</table>
 			</form>
