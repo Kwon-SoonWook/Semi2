@@ -3,15 +3,16 @@ package com.ksj.favoriteproducts;
 import java.util.*;
 
 import com.ksj.product.ProductDTO;
+import com.ksj.review.ReviewDTO;
 
 import java.sql.*;
 
-public class FavoriteProductDAO {
+public class FavoriteProductsDAO {
 	private Connection conn;
 	private PreparedStatement ps;
 	private ResultSet rs;
 	
-	public int addFavoriteProduct(FavoriteProductsDTO dto) {
+	public int addFavoriteProducts(FavoriteProductsDTO dto) {
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
 			String sql = "insert into favorite_products values(?,?,?)";
@@ -31,7 +32,7 @@ public class FavoriteProductDAO {
 			} catch (Exception e2) {}
 		}
 	}
-	public int updateFavoriteProduct(FavoriteProductsDTO dto) {
+	public int updateFavoriteProducts(FavoriteProductsDTO dto) {
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
 			String sql = "update favorite_products set is_valid=? where products_id=? and user_id = ?";
@@ -51,5 +52,7 @@ public class FavoriteProductDAO {
 			} catch (Exception e2) {}
 		}		
 	}
+	
+	
 
 }

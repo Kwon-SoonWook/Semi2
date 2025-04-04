@@ -74,10 +74,10 @@ function IframeHeight(){
 	      		<i class="fa-solid fa-circle-user" style="color: darkgray; font-size: 100px;"></i>
 	         	<div class="txt-wrap">
 	         		<h2>닉네임칸</h2>
-	         		<p>등록한 게시물 수 : 43</p>
-	         		<p>댓글 수 : 3</p>
+	         		<p>등록한 게시물 수 : ?</p>
+	         		<p>댓글 수 : ?</p>
 	         	</div>
-			    <button type="button">수정</button>     	
+			    <button type="button" onclick="location.href='myInfoUpdate.jsp'">수정</button>     	
 			</div>
      		
 			<nav id="mypage-nav">
