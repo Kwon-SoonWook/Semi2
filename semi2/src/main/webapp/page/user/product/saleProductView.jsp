@@ -4,12 +4,6 @@
 <jsp:useBean id="pdao" class="com.ksj.product.ProductDAO"></jsp:useBean>
 <%
 String sid = (String)session.getAttribute("sid");
-/*String productsIds = request.getParameter("productsIds");
-int productsId = Integer.parseInt(productsIds);
-if(productsIds==null||productsIds.equals("")){
-	productsId = 0;
-}
-*/
 int prodcutsId = 61;
 ProductDTO pdto = pdao.ProductList(prodcutsId);
 %>

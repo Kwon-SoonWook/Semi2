@@ -36,7 +36,7 @@ String mypageid = (String)session.getAttribute("sid");
 <section>
 <article>
 	<h2>판매물품 리스트</h2>
-	<table width="550" border="1" cellspacing="0">
+	<table>
 		<thead>
 			<tr>
 				<th>썸네일</th>
