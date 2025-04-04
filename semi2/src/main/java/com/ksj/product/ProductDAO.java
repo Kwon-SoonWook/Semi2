@@ -10,7 +10,7 @@ public class ProductDAO {
 	private ResultSet rs;
 	public static final int ERROR=-1;
 
-	
+	/**물품등록*/
 	public int productInsert(ProductDTO dto) {
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
@@ -40,6 +40,7 @@ public class ProductDAO {
 			} catch (Exception e2) {}
 		}
 	}
+	/**가장 마지막에 등록된 물품 id 찾기*/
 	public int searchProductIdx() {
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
@@ -62,6 +63,7 @@ public class ProductDAO {
 			} catch (Exception e2) {}
 		}
 	}
+	/**특정 물품id 리스트 가져오기*/
 	public ProductDTO ProductList(int productId) {
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
@@ -100,7 +102,8 @@ public class ProductDAO {
 			} catch (Exception e2) {}
 		}
 	}
-	public int updateProduct(ProductDTO dto) {
+	/**물품거래수정*/
+	public int updateTradeProduct(ProductDTO dto) {
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
 			String sql = "update products set trade_state=? where products_id=?";
@@ -112,6 +115,56 @@ public class ProductDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return -1;
+		}finally {
+			try {
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();
+			} catch (Exception e2) {}
+		}
+	}
+	/**물품숨기기수정 0이면 보이고 1이면 안보이게*/
+	public int updateBbsProduct(ProductDTO dto) {
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+			String sql = "update products set bbs_state=? where products_id=?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, dto.getBbs_state());
+			ps.setInt(2, dto.getProducts_id());
+			int result = ps.executeUpdate();
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();
+			} catch (Exception e2) {}
+		}
+	}
+	/**물품수정*/
+	public int upadteProduct(ProductDTO dto) {
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+			String sql = "update set products category_id = ?, price= ?,title= ?,content= ?,location = ?, update_date = sysdate where products_id = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, dto.getCategory_id());
+			ps.setString(2, dto.getBuyer_id());
+			ps.setString(3, dto.getSeller_id());
+			ps.setInt(4, dto.getPrice());
+			ps.setString(5, dto.getTitle());
+			ps.setString(6, dto.getContent());
+			ps.setString(7, dto.getLocation());
+			ps.setInt(8, dto.getTrade_state());
+			ps.setInt(9, dto.getBbs_state());
+			ps.setString(10, dto.getThumb_image());
+			ps.setInt(11, dto.getView_cnt());
+			ps.setString(12, dto.getImage_uri());
+			int result = ps.executeUpdate();
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ERROR;
 		}finally {
 			try {
 				if(ps!=null)ps.close();
@@ -158,5 +211,24 @@ public class ProductDAO {
 				if(conn!=null)conn.close();								
 			} catch (Exception e2) {}
 		}
+	}
+	public int deleteProduct(int productId) {
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+			String sql = "delete from products where products_id=? ";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, productId);
+			int result = ps.executeUpdate();
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();												
+			} catch (Exception e2) {}
+		}
+		
 	}
 }

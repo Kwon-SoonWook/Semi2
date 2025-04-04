@@ -21,7 +21,7 @@ ProductDTO pdto = pdao.ProductList(prodcutsId);
 <script>
 window.onload=function(){
 	<%
-	if(pdto.getBuyer_id()==sid){
+	if(pdto.getSeller_id()==sid){
 		%>
 		document.getElementById("tradestateid").disabled = true;
 		<%
@@ -65,11 +65,11 @@ function trade(){
 			<div><%=pdto.getLocation() %></div>
 			<div>
 			<input type="button" name="favorite_products" value="찜">
-			<%if(sid.equals(pdto.getBuyer_id())){
+			<%if(sid!=null&&sid.equals(pdto.getSeller_id())){
 				%>
-			<input type="button" name="update_products" value="수정하기">
-			<input type="button" name="delete_products" value="삭제하기">
-			<input type="button" name="hidden_products" value="숨기기">
+			<input type="button" name="update_products" value="수정하기" onclick="location.href='writeSaleProduct.jsp?productId=<%=prodcutsId%>'">
+			<input type="button" name="delete_products" value="삭제하기" onclick="location.href='deleteSaleProduct.jsp?productId=<%=prodcutsId%>'">
+			<input type="button" name="hidden_products" value="<%=pdto.getBbs_state()==1?"숨기기":"보이기" %>" onclick="location.href='hideSaleProduct.jsp?productId=<%=prodcutsId%>'">
 				
 				<%
 			}
