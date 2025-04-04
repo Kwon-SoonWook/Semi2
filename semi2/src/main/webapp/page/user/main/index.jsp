@@ -1,6 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="com.ksj.product.ProductDTO"%>
 <jsp:useBean id="kdao" class="com.ksj.login.loginDAO" scope="session"></jsp:useBean>
+<jsp:useBean id="pdao" class="com.ksj.product.ProductDAO"></jsp:useBean>
+<%
+String sid = (String)session.getAttribute("sid");
+int prodcutsId = 61;
+ProductDTO pdto = pdao.ProductList(prodcutsId);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,11 +29,11 @@
 	    	<div class="photo-grid">
 	        <%for(int i=0; i<60; i++){ %>
 	            <div class="photo-card">
-		            <a href="#">
+		            <a href="/page/user/product/saleProductView.jsp?productId=<%=prodcutsId%>'">
 			            <div class="thumbnail"></div>
 				        <h3>제목1</h3>
 				        <p>내용1</p>
-		            </a>
+		            </a> 
 	            </div>
 	        <% }%>  
 	        </div>

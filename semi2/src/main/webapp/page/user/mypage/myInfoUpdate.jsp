@@ -32,9 +32,15 @@ body {
 }
 /*사용자 정보*/
 .info{
-	padding: 50px;	
+	padding: 100px;	
+	text-align: center;
 }
 </style>
+<script>
+function popup(){
+	window.open('/semi2/page/user/login/fileupload.jsp','popup','width = 300 height = 300')
+}
+</script>
 <script src="https://kit.fontawesome.com/f0cba69f8f.js" crossorigin="anonymous"></script><!-- 안보이면 해당 사이트 로그인 후 주소받기 -->
 </head>
 <%@include file="../main/header.jsp" %> 
@@ -46,32 +52,35 @@ body {
 			<div class="info">
 	      		<i class="fa-solid fa-circle-user" style="color: darkgray; font-size: 100px;"></i>
 	         	<div class="txt-wrap">
-	         		<form action = "signUp_ok.jsp">
-		         		<h2>정보 수정</h2>
-						<div>아이디 : 
-							<input type = "text" name = "id" id = "id" readonly>
+	         		<form action = "signUp_ok.jsp">	
+		         		<br>
+		         		<div>
+		         			<input type = "hidden" name = "profile_uri" id = "profile">  
+							<input type = "button" value = "프로필 사진 수정" onclick='popup()'>
 						</div>
-						<div>비밀번호 : 
+						<h2>정보 수정</h2>
+						<div>아이디
+							<input type = "text" name = "id" readonly>
+						</div>
+						<div>비밀번호 
 							<input type = "password" name = "pwd">
 						</div>
-						<div>이름 : 
-							<input type = "text" name = "name" readonly>
+						<div>이름
+							<input type = "text" name = "name">
 						</div>
-						<div>이메일 : 
-							<input type = "text" name = "email" readonly>
+						<div>이메일
+							<input type = "text" name = "email">
 						</div>
-						<div>닉네임 : 
+						<div>닉네임
 							<input type = "text" name = "nickname">
 						</div>
-						<div>거주 지역(00구) : 
+						<div>거주 지역(00구)
 							<input type = "text" name = "location">
 						</div>
-						<div> 
-							<input type = "button" value = "프로필 사진 등록" onclick='popup2()'>
-						</div>
-							<input type="hidden" name = "profile_uri" id = "profile"> 
-							<button type="button" onclick="location.href='mypage.jsp'">수정</button>     	
+						<br>   
 					</form>
+					<button type="button" onclick="">수정</button>
+					<button type="button" onclick="location.href='mypage.jsp'">취소</button>     	
 	         	</div>
 			</div>
 		</div>	          
