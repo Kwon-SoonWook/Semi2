@@ -8,6 +8,7 @@ public class AskDTO {
 	private String ask_content;
 	private int ask_type;
 	private Date ask_date;
+	private String ask_writer;
 	private int ref;
 	private int lev;
 	private int sunbun;
@@ -18,7 +19,7 @@ public class AskDTO {
 
 	
 
-	public AskDTO(int ask_id, String ask_user_id, String ask_title,String ask_content, int ask_type, Date ask_date,int ref, int lev, int sunbun) {
+	public AskDTO(int ask_id, String ask_user_id, String ask_title,String ask_content, int ask_type, Date ask_date, String ask_writer,int ref, int lev, int sunbun) {
 		super();
 		this.ask_id = ask_id;
 		this.ask_user_id = ask_user_id;
@@ -26,6 +27,7 @@ public class AskDTO {
 		this.ask_content = ask_content;
 		this.ask_type = ask_type;
 		this.ask_date = ask_date;
+		this.ask_writer = ask_writer;
 		this.ref = ref;
 		this.lev = lev;
 		this.sunbun = sunbun;
@@ -79,6 +81,14 @@ public class AskDTO {
 
 	public void setAsk_date(Date ask_date) {
 		this.ask_date = ask_date;
+	}
+	
+	public String getAsk_writer() {
+		return ask_writer;
+	}
+
+	public void setAsk_writer(String ask_writer) {
+		this.ask_writer = ask_writer;
 	}
 
 	public int getRef() {

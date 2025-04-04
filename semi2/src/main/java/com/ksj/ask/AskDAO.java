@@ -40,12 +40,13 @@ public class AskDAO {
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
 			int ref = getMaxRef();
-			String sql = "insert into ask values(ask_idx.nextval,?,?,?,0,sysdate,?,0,0)";
+			String sql = "insert into ask values(ask_idx.nextval,?,?,?,0,sysdate,?,?,0,0)";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, dto.getAsk_user_id());
 			ps.setString(2, dto.getAsk_title());
 			ps.setString(3, dto.getAsk_content());
-			ps.setInt(4, ref+1);
+			ps.setString(4, dto.getAsk_writer());
+			ps.setInt(5, ref+1);
 			int count = ps.executeUpdate();
 			return count;
 		}catch(Exception e) {
@@ -62,12 +63,13 @@ public class AskDAO {
 	}
 	
 
-	/**관리자 페이지 문의함 출력 메서드*/
-	public ArrayList<AskDTO> userAskList(){
+	/**사용자 페이지 문의함 출력 메서드*/
+	public ArrayList<AskDTO> userAskList(String ask_writer){
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
-			String sql = "select * from ask order by ref desc, sunbun asc";
+			String sql = "select * from ask where ask_writer=? order by ref desc, sunbun asc";
 			ps = conn.prepareStatement(sql);
+			ps.setString(1, ask_writer);
 			rs = ps.executeQuery();
 			ArrayList<AskDTO> arr = new ArrayList<AskDTO>();
 			while(rs.next()) {
@@ -80,7 +82,7 @@ public class AskDAO {
 				int ref = rs.getInt("ref");
 				int lev = rs.getInt("lev");;
 				int sunbun = rs.getInt("sunbun");
-				AskDTO dto = new AskDTO(ask_id, ask_user_id, ask_title, ask_content, ask_type, ask_date, ref, lev, sunbun);
+				AskDTO dto = new AskDTO(ask_id, ask_user_id, ask_title, ask_content, ask_type, ask_date, ask_writer, ref, lev, sunbun);
 				arr.add(dto);
 			}
 			return arr;
@@ -98,6 +100,7 @@ public class AskDAO {
 		}
 	}
 	
+	
 	/**관리자 페이지 문의함 출력 메서드*/
 	public ArrayList<AskDTO> askList(){
 		try {
@@ -113,10 +116,11 @@ public class AskDAO {
 				String ask_content = rs.getString("ask_content");;
 				int ask_type = rs.getInt("ask_type");
 				java.sql.Date ask_date = rs.getDate("ask_date");
+				String ask_writer = rs.getString("ask_writer");
 				int ref = rs.getInt("ref");
 				int lev = rs.getInt("lev");;
 				int sunbun = rs.getInt("sunbun");
-				AskDTO dto = new AskDTO(ask_id, ask_user_id, ask_title, ask_content, ask_type, ask_date, ref, lev, sunbun);
+				AskDTO dto = new AskDTO(ask_id, ask_user_id, ask_title, ask_content, ask_type, ask_date, ask_writer, ref, lev, sunbun);
 				arr.add(dto);
 			}
 			return arr;
@@ -148,10 +152,11 @@ public class AskDAO {
 				String ask_content = rs.getString("ask_content");;
 				int ask_type = rs.getInt("ask_type");
 				java.sql.Date ask_date = rs.getDate("ask_date");
+				String ask_writer = rs.getString("ask_writer");
 				int ref = rs.getInt("ref");
 				int lev = rs.getInt("lev");;
 				int sunbun = rs.getInt("sunbun");
-				AskDTO dto = new AskDTO(ask_id, ask_user_id, ask_title, ask_content, ask_type, ask_date, ref, lev, sunbun);
+				AskDTO dto = new AskDTO(ask_id, ask_user_id, ask_title, ask_content, ask_type, ask_date, ask_writer, ref, lev, sunbun);
 				return dto;
 			}else {
 				return null;
@@ -194,14 +199,15 @@ public class AskDAO {
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
 			setSunUpdate(dto.getRef(), dto.getSunbun()+1);
-			String sql = "insert into ask values(ask_idx.nextval,?,?,?,2,sysdate,?,?,?)";
+			String sql = "insert into ask values(ask_idx.nextval,?,?,?,2,sysdate,?,?,?,?)";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, dto.getAsk_user_id());
 			ps.setString(2, dto.getAsk_title());
 			ps.setString(3, dto.getAsk_content());
-			ps.setInt(4, dto.getRef());
-			ps.setInt(5, dto.getLev()+1);
-			ps.setInt(6, dto.getSunbun()+1);
+			ps.setString(4, dto.getAsk_writer());
+			ps.setInt(5, dto.getRef());
+			ps.setInt(6, dto.getLev()+1);
+			ps.setInt(7, dto.getSunbun()+1);
 			int count = ps.executeUpdate();
 			return count;
 		}catch(Exception e) {

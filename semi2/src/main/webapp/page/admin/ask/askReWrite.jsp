@@ -5,6 +5,7 @@
 <%
 int ask_id = Integer.parseInt(request.getParameter("ask_id"));
 String ask_user_id = (String)session.getAttribute("sid");
+String ask_writer = request.getParameter("ask_writer");
 String ask_title = request.getParameter("ask_title");
 String ref = request.getParameter("ref");
 String lev = request.getParameter("lev");
@@ -27,6 +28,7 @@ String sunbun = request.getParameter("sunbun");
 				<h2></h2>
 				<form name='askReWrite' action='askReWrite_ok.jsp'>
 				<input type='hidden' name='ask_id' value='<%=ask_id%>'>
+				<input type='hidden' name='ask_writer' value='<%=ask_writer%>'>
 				<input type='hidden' name='ask_user_id' value='<%=ask_user_id%>'>
 				<input type='hidden' name='ref' value='<%=ref%>'>
 				<input type='hidden' name='lev' value='<%=lev%>'>

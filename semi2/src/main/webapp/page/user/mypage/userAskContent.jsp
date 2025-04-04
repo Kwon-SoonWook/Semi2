@@ -11,17 +11,15 @@ AskDTO dto = adao.askContent(ask_id);
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel='stylesheet' type='text/css' href='/semi2/css/adminLayout.css'>
+<link rel="stylesheet" type="text/css" href="../main/mainLayout.css">
 </head>
 <body>
-<%@include file="../main/adminHeader.jsp" %>
 	<div class="container">
-        <%@include file="../main/adminCategory.jsp" %>
        	 <main class="main-content">
 			<section>
 				<article>
 				<h2></h2>
-				<form name='askContent' action='askList.jsp'>
+				<form name='userAskContent' action='userAskList.jsp'>
 					<table width="550" border="1" cellspacing="0">
 						<tr>
 							<th>번호</th>
@@ -60,7 +58,6 @@ AskDTO dto = adao.askContent(ask_id);
 						</tr>
 					</table>
 					<div><input type='submit' value='목록으로'>
-					<input type='button' value='문의답변' onclick="location.href='askReWrite.jsp?ask_id=<%=dto.getAsk_id() %>&ask_writer=<%=dto.getAsk_writer() %>&ask_title=<%=dto.getAsk_title() %>&ref=<%=dto.getRef()%>&lev=<%=dto.getLev()%>&sunbun=<%=dto.getSunbun()%>'"></div>
 				</form>
 				</article>
 			</section>            
