@@ -15,6 +15,11 @@ function popup2(){
 	window.open('fileupload.jsp','popup2','width = 300 height = 300')
 }
 </script>
+<style>
+body{
+
+}
+</style>
 </head>
 <body>
 <h2>회 원 가 입</h2>
