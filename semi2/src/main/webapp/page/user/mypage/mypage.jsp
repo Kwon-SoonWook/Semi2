@@ -87,7 +87,7 @@ function IframeHeight(){
 						<li><a href="#" class="category" data-page="myReviewList.jsp">거래후기</a></li>
 						<li><a href="#" class="category" data-page="interestList.jsp">관심목록</a></li>
 						<li><a href="#" class="category" data-page="recentList.jsp">최신본상품</a></li>
-						<li><a href="#" class="category" data-page="userenquiryBbs.jsp">1:1문의</a></li>
+						<li><a href="#" class="category" data-page="userAskList.jsp">1:1문의</a></li>
 					</ul>
 				</div>
 			</nav>
