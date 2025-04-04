@@ -5,12 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script>
-function show(){
-	
-	
-}
-</script>
 <style>
 div {
 text-align: center;
@@ -31,7 +25,7 @@ left : 700px;
 <input type = "button" value="탈퇴안하기" onclick="location.href='../main/index.jsp'">
 </div>
 <div class = "out">
-<input type = "button" name = "out" value="탈퇴하기" onclick="">
+<input type = "button" name = "out" value="탈퇴하기" onclick="location.href='myInfoDelete_ok.jsp'">
 </div>
 </body>
 </html>

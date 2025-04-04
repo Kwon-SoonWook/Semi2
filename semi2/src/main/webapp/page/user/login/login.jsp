@@ -4,16 +4,21 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script>
-function show(){
-	window.open('findId.jsp','idpopup','width = 500 height = 500')
-	
-}
-function show2(){
-	window.open('findPwd.jsp','pwdpopup','width = 500 height = 500')
-	
+<style>
+.login_border{
+	border-radius: 30px;
 }
 
+</style>
+<script>
+function show(){
+   window.open('findId.jsp','idpopup','width = 500 height = 500')
+   
+}
+function show2(){
+   window.open('findPwd.jsp','pwdpopup','width = 500 height = 500')
+   
+}
 </script>
 <title>Insert title here</title>
 <%
@@ -21,19 +26,21 @@ String saveid = "";
 
 Cookie cks[] = request.getCookies();
 if(cks!=null){
-	for(int i = 0; i < cks.length; i++){
-		if(cks[i].getName().equals("sname")){
-			saveid = cks[i].getValue();
-		}
-	}
-	
-	
+   for(int i = 0; i < cks.length; i++){
+      if(cks[i].getName().equals("sname")){
+         saveid = cks[i].getValue();
+      }
+   }
+   
+   
 }
 
 %>
 </head>
-<h2>로 그 인 </h2>
+
 <body>
+<div class = "login_border">
+<h2>로 그 인 </h2>
 <form action = "login_ok.jsp">
 <div>
 아이디 : 
@@ -49,9 +56,9 @@ if(cks!=null){
 <input type ="button" value = "비밀번호찾기" onclick="show2();">
 <%
 if(session.getAttribute("sid")!=null||session.getAttribute("sname")!=null){
-	%>
-	<input type = "button" value = "로그아웃" onclick = "location.href='logout.jsp'">
-	<%
+   %>
+   <input type = "button" value = "로그아웃" onclick = "location.href='logout.jsp'">
+   <%
 }
 
 
@@ -60,4 +67,5 @@ if(session.getAttribute("sid")!=null||session.getAttribute("sname")!=null){
 <div><input type = "checkbox" name = "saveid" value = "on" <%=saveid.equals("")?"":"checked" %>>아이디 기억하기</div>
 </form>
 </body>
+</div>
 </html>
