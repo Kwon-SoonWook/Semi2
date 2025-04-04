@@ -56,7 +56,8 @@ request.setCharacterEncoding("utf-8");
 			images.add(saveFiles.get(i));
 		}
 	}
-	ProductDTO pdto = new ProductDTO(0,categoryid,buyerId,sellerId,price,title,content,location,tradeState,bbsState,(String)images.get(0),0,null,null,savepath);
+	String imagePath = (images.size() > 0) ? (String)images.get(0) : ""; 
+	ProductDTO pdto = new ProductDTO(0,categoryid,buyerId,sellerId,price,title,content,location,tradeState,bbsState,imagePath,0,null,null,savepath);
 	String msgProduct = pdao.productInsert(pdto)>0?"등록 성공":"등록 실패";
 	for(int i=0;i<images.size();i++){
 		ProductImagesDTO idto = new ProductImagesDTO((String)images.get(i),pdao.searchProductIdx());

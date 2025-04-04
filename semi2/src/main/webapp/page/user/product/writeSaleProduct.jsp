@@ -1,3 +1,4 @@
+<%@page import="com.ksj.product.ProductDTO"%>
 <%@page import="com.ksj.tempproduct.TempProductDTO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.ksj.category.CategoryDTO"%>
@@ -64,24 +65,73 @@ function show(){
 			%>
 			document.forms["writeSaleProduct"].enctype ="application/x-www-form-urlencoded";
 		}
+	
+var selectedFiles = [];
+
+function addFile(input) {
+    const files = input.files;
+    if (files.length > 0) {
+        for (let i = 0; i < files.length; i++) {
+            if (selectedFiles.length < 5) { // 최대 5개 제한
+                selectedFiles.push(files[i]);
+                fileShow();
+            } else {
+                alert("최대 5개까지 업로드할 수 있습니다.");
+                break;
+            }
+        }
+    }
+    input.value = ""; // 같은 파일 다시 선택 가능하도록 초기화
+}
+function fileShow(){
+	document.getElementById('filelist').innerHTML="";
+	for(let i =0;i< selectedFiles.length;i++){
+		document.getElementById('filelist').innerHTML+='<li>'+selectedFiles[i].name+'<a href="#" onclick="removefile('+i+'); return false;">삭제</a></li>'
+	}	
+}
+function removefile(index){
+	selectedFiles.splice(index,1);
+    input.value = "";
+	fileShow();
+}	
 </script>
 <%
 String sid = (String)session.getAttribute("sid");
 TempProductDTO tpdto = tpdao.tempProductList(sid);
-%>
-<%
-if(tpdto!=null){
+String productIds = request.getParameter("productId");
+int productId;
+if(productIds==null||productIds.equals("")){
+	productId=0;
+}else{
+	productId = Integer.parseInt(productIds);
+}
+ProductDTO pdto = pdao.ProductList(productId);
+if(pdto==null||pdto.equals("")){
+	if(tpdto!=null){
+		%>
+		<script>
+		window.onload =function(){
+			document.writeSaleProduct.title.value = "<%=tpdto.getTitle()%>";
+			document.writeSaleProduct.category.value = "<%=tpdto.getCategory_id()%>";
+			document.writeSaleProduct.content.value = "<%=tpdto.getContent()%>";
+			document.writeSaleProduct.price.value = "<%=tpdto.getPrice()%>";
+			document.writeSaleProduct.location.value = "<%=tpdto.getWish_location()%>";
+		}
+		</script>
+		<%
+	}
+}else{
 	%>
 	<script>
 	window.onload =function(){
-		document.writeSaleProduct.title.value = "<%=tpdto.getTitle()%>";
-		document.writeSaleProduct.category.value = "<%=tpdto.getCategory_id()%>";
-		document.writeSaleProduct.content.value = "<%=tpdto.getContent()%>";
-		document.writeSaleProduct.price.value = "<%=tpdto.getPrice()%>";
-		document.writeSaleProduct.location.value = "<%=tpdto.getWish_location()%>";
+		document.writeSaleProduct.title.value = "<%=pdto.getTitle()%>";
+		document.writeSaleProduct.category.value = "<%=pdto.getCategory_id()%>";
+		document.writeSaleProduct.content.value = "<%=pdto.getContent()%>";
+		document.writeSaleProduct.price.value = "<%=pdto.getPrice()%>";
+		document.writeSaleProduct.location.value = "<%=pdto.getLocation()%>";
 	}
 	</script>
-	<%
+	<%	
 }
 %>
 </head>
@@ -93,6 +143,7 @@ if(tpdto!=null){
 	<section>
 		<article>
 			<form name="writeSaleProduct" action="writeSaleProduct_ok.jsp" method="post" enctype="multipart/form-data">
+			<input type="hidden" name ="productId" value="<%=productId%>">
 				<table>
 					<tr>
 						<th>상품정보</th>
