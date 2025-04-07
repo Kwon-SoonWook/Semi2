@@ -10,18 +10,31 @@ String ask_writer = (String)session.getAttribute("sid");
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="../main/mainLayout.css">
+<meta name="viewport" content="width=device-width"> <!-- 반응형 화면 변환 -->
+<title>1:1 문의 작성</title>
+<link rel="stylesheet" type="text/css" href="mypageLayout.css">
+<style>
+body {
+    font-family: Arial, sans-serif;
+    height: auto;
+
+}
+table{
+	margin-left:auto;
+	margin-right:auto;
+}
+h2{
+	text-align: center;
+}
+</style>
 </head>
 <body>
-<%@include file="../main/header.jsp" %>
 	<div class="container">
-        <%@include file="../main/category.jsp" %>
        	 <main class="main-content">
 			<section>
 				<article>
-				<h2></h2>
 				<form name='askWrite' action='askWrite_ok.jsp'>
+				<h2>1:1 문의 작성</h2>
 				<input type='hidden' name='ask_writer' value='<%=ask_user_id%>'>
 				<input type='hidden' name='ask_user_id' value='<%=ask_user_id%>'>
 					<table>

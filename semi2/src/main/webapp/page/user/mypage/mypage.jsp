@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%@ page import="com.ksj.user.*" %>
+<jsp:useBean id="udao" class="com.ksj.user.UserDAO"></jsp:useBean>
+<jsp:useBean id="udto" class="com.ksj.user.UserDTO"></jsp:useBean>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,28 +26,43 @@ body {
     padding: 20px;
     margin-left: 50px;
 }
-
 /*흰색 페이지*/
 .page {
     background: white;
-    padding: 10px;
+    padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 /*사용자 정보*/
 .info{
-	padding: 50px;	
+	padding: 50px;
+}
+/*카테고리 css*/
+.flex-start {
+	list-style: none;
+}
+.flex-start a{
+	text-decoration: none;
+	color: black;
+	margin: 2em;
+}
+.flex-start:first-child {
+	display: flex;
+	justify-content: center;
 }
 </style>
+<script>
+let underline = document.getElementById("underbar");
+
+</script>
 <script>
 document.addEventListener("DOMContentLoaded", categoryCheck); //페이지가 새로 로딩될 때마다 이벤트 발생
 
 //카테고리 클래스 확인 이벤트
 function categoryCheck(){
 	let categories = document.querySelectorAll(".category");	//category class 요소 전체 반환
-	categories.forEach(category =>{	//카테고리 배열 순환 - forEach문
-		category.addEventListener("click", categoryClick);
-	}); 
+	//카테고리 배열 순환 - forEach문
+	categories.forEach(category =>{	category.addEventListener("click", categoryClick);}); 
 }
 
 //카테고리 클릭 이벤트
@@ -63,6 +82,24 @@ function IframeHeight(){
 </script>
 <script src="https://kit.fontawesome.com/f0cba69f8f.js" crossorigin="anonymous"></script><!-- 안보이면 해당 사이트 로그인 후 주소받기 -->
 
+<% 
+String sid = (String)session.getAttribute("sid");
+ArrayList<UserDTO> arr = udao.myinfo(sid);
+for(int i=0; i<arr.size(); i++){
+	session.setAttribute("spwd", arr.get(i).getPwd());
+	session.setAttribute("semail", arr.get(i).getEmail());
+	session.setAttribute("snickname", arr.get(i).getNickname());
+	session.setAttribute("slocation", arr.get(i).getLocation());
+}
+String sname = (String)session.getAttribute("sname");
+String spwd = (String)session.getAttribute("spwd");
+String semail = (String)session.getAttribute("semail");
+String snickname = (String)session.getAttribute("snickname");
+String slocation = (String)session.getAttribute("slocation");
+%>
+<% 
+Integer totalbbs = (Integer)session.getAttribute("totalbbs");
+%>
 </head>
 <%@include file="../main/header.jsp" %> 
 <body>
@@ -70,18 +107,26 @@ function IframeHeight(){
     <%@include file="/page/user/main/category.jsp" %>
 	<main class="main-content">
 		<div class="page">
-			<div class="info">
-	      		<i class="fa-solid fa-circle-user" style="color: darkgray; font-size: 100px;"></i>
+			<div class="info" style="text-align: center;">
+	      		<%if(!arr.isEmpty() && arr.get(0).getProfile_uri() != null){ %>
+					<img src="/<%=arr.get(0).getProfile_uri() %>" alt="프로필 이미지" width="150" height="150" style="border-radius:50%; text-align:left;" />
+	         	<%}else{ %>
+	         		<i class="fa-solid fa-circle-user" style="color: darkgray; font-size: 100px;"></i>
+	         	<%} %>
+	    
 	         	<div class="txt-wrap">
-	         		<h2>닉네임</h2>
-	         		<p>등록한 게시물 수 : ?</p>
-	         		<p>댓글 수 : ?</p>
-	         	</div>
+	         		<h2><%=snickname %></h2>
+	         		<p>등록한 게시물 수 : <%=totalbbs %></p>
+	         		<p>리뷰 수 : ?</p>
+	         		<p>관심목록 : ?</p>
+	         	          
 			    <button type="button" onclick="location.href='myInfoUpdate.jsp'">수정</button>     	
+				</div>
 			</div>
 			<nav id="mypage-nav">
 				<div class="category-container">
 					<ul class="flex-start">
+						<div id="underbar"></div>
 						<li><a href="#" class="category" data-page="saleList.jsp">판매물품</a></li>
 						<li><a href="#" class="category" data-page="myReviewList.jsp">거래후기</a></li>
 						<li><a href="#" class="category" data-page="interestList.jsp">관심목록</a></li>
