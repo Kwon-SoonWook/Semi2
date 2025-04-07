@@ -22,17 +22,12 @@ table{
 table th{
 	background-color: silver;
 }
-div[name="pg"]{
-	text-align: center;
-}
-div[name="write"]{
-	text-align: right;
-}
 </style>
 <script>
 function show(){
-	var keyword =  document.userManagement.input.value;
-	location.href="userManagement.jsp?input="+keyword;
+	var input =  document.userManagement.input.value;
+	var select = document.userManagement.select.value;
+	location.href="userManagement.jsp?input="+input+"&select="+select;
 }
 </script>
 </head>
@@ -40,18 +35,19 @@ function show(){
 <%@include file="../main/adminHeader.jsp" %>
 	<div class="container">
         <%@include file="../main/adminCategory.jsp" %>
-       	<main class="main-content">
-			<section>
+			<main class="main-content">
+			<section style="width: 800px; margin: auto;">
 				<article>
 				<h2>사용자 관리</h2>
 				<form name='userManagement' action='deleteUserInfo.jsp'>
-					<div style="text-align:right"><input type='submit' value='삭제'></div>
 					<%@include file="userInfoList.jsp" %>
-					<div>
-					<select>
+					<br>
+					<div style="text-align: center;">
+					<select name="select">
 					<option>전체</option>
 					<option>ID</option>
 					<option>이름</option>
+					<option>닉네임</option>
 					</select>
 					<input type="text" name="input">
 					<input type="button" value="검색" onclick="show();">
@@ -59,7 +55,7 @@ function show(){
 				</form>
 				</article>
 			</section>	           
-        </main>    
+			</main>
     </div>
 </body>
 </html>

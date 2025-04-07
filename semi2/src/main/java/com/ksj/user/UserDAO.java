@@ -8,11 +8,52 @@ public class UserDAO {
 	private PreparedStatement ps;
 	private ResultSet rs;
 	
-	public ArrayList<UserDTO> userList(){
+//	public int getTotalUser() {
+//		try {
+//			conn = com.ksj.db.ConnectionDB.getConn();
+//			String sql = "select count(*) from user_info";
+//			ps = conn.prepareStatement(sql);
+//			rs = ps.executeQuery();
+//			int result = rs.getInt(1);
+//			return result;
+//		}catch (Exception e) {
+//			e.printStackTrace();
+//			return -1;
+//		}finally {
+//			try {
+//				if(rs!=null) rs.close();
+//				if(ps!=null) ps.close();
+//				if(conn!=null) conn.close();
+//			}catch(Exception e2) {
+//				
+//			}
+//		}
+//	}
+	
+	public ArrayList<UserDTO> userList(int select, String input){
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
-			String sql = "select * from user_info order by create_date asc";
-			ps = conn.prepareStatement(sql);
+			String sql = "";
+			switch(select) {
+			case 0:
+				sql = "select * from user_info order by create_date desc";
+				ps = conn.prepareStatement(sql);
+				break;
+			case 1:
+				sql = "select * from user_info where id like ? order by create_date desc";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, "%"+input+"%");
+				break;
+			case 2:
+				sql = "select * from user_info where name like ? order by create_date desc";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, "%"+input+"%");
+				break;
+			case 3:
+				sql = "select * from user_info where nickname like ? order by create_date desc";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, "%"+input+"%");
+			}
 			rs = ps.executeQuery();
 			ArrayList<UserDTO> arr = new ArrayList<UserDTO>();
 			while (rs.next()) {
@@ -63,37 +104,4 @@ public class UserDAO {
 		}
 	}
 	
-	public ArrayList<UserDTO> searchUserList(int select, String input){
-		try {
-			conn = com.ksj.db.ConnectionDB.getConn();
-			String sql = "select * from user_info order by create_date asc";
-			ps = conn.prepareStatement(sql);
-			rs = ps.executeQuery();
-			ArrayList<UserDTO> arr = new ArrayList<UserDTO>();
-			while (rs.next()) {
-				String name = rs.getString("name");
-				String id = rs.getString("id");
-				String pwd = rs.getString("pwd");
-				String email = rs.getString("email");
-				String nickname = rs.getString("nickname");
-				String location = rs.getString("location");
-				String profile_uri = rs.getString("profile_uri");
-				java.sql.Date create_date = rs.getDate("create_date");
-				UserDTO dto = new UserDTO(name, id, pwd, email, nickname, location, profile_uri, create_date);
-				arr.add(dto);
-			}
-			return arr;
-		}catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}finally {
-			try {
-				if(rs!=null) rs.close();
-				if(ps!=null) ps.close();
-				if(conn!=null) conn.close();
-			}catch(Exception e2) {
-				
-			}
-		}
-	}
 }

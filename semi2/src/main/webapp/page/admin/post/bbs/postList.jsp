@@ -56,7 +56,7 @@ div[name="write"]{
 						</thead>
 						<tbody>
 							<%
-							ArrayList<UserDTO> arr = udao.userList();
+							ArrayList<UserDTO> arr = udao.userList(0, "");
 							if(arr==null || arr.size()==0){
 								%>
 								<tr>
