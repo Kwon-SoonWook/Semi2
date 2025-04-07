@@ -1,3 +1,4 @@
+<%@page import="com.ksj.productscomment.ProductsCommentDTO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.ksj.productimages.ProductImagesDTO"%>
 <%@page import="com.ksj.product.ProductDTO"%>
@@ -5,11 +6,9 @@
     pageEncoding="UTF-8"%>
 <jsp:useBean id="pdao" class="com.ksj.product.ProductDAO"></jsp:useBean>
 <jsp:useBean id="pidao" class="com.ksj.productimages.ProductImagesDAO"></jsp:useBean>
+<jsp:useBean id="pcdao" class="com.ksj.productscomment.ProductsCommentDAO"></jsp:useBean>
 <%
 String sid = (String)session.getAttribute("sid");
-<<<<<<< HEAD
-int prodcutsId = 61;
-=======
 /*String productsIds = request.getParameter("productsIds");
 int productsId = Integer.parseInt(productsIds);
 if(productsIds==null||productsIds.equals("")){
@@ -17,9 +16,9 @@ if(productsIds==null||productsIds.equals("")){
 }
 */
 int prodcutsId = 71;
->>>>>>> b526ceb112176aae2d1ffec4dcdf828e7a79ec06
 ProductDTO pdto = pdao.ProductList(prodcutsId);
 ArrayList<ProductImagesDTO> arr= pidao.ProductImagesList(prodcutsId);
+
 %>
 <!DOCTYPE html>
 <html>
@@ -177,19 +176,30 @@ function trade(){
 	
 	%>
 }
+
+function contentclick(){
+	var contentname = document.saleProductiVeiw.contentname.value;
+	if(contentname.trim()==""){
+		alert("댓글을 입력해주세요");
+		return false;
+	}else{
+		return true;
+	}
+}
 function showbig(val){
 	var img = document.getElementById("big");
 	img.src = "img/"+val;
 }
+function openReWrite(url) {
+	window.open(url,'reWrite','width=450,height=350');
+}
 </script>
 </head>
 <body>
-<%@include file="/page/user/main/header.jsp" %>
-<%
-%>
+<%@include file="/page/user/main/header.jsp"%>
 <section>
 	<article>
-		<form name="saleProductiVeiw" action="">
+		<form name="saleProductiVeiw" action="productComment_ok.jsp">
 		<div class="sale-product-container">
 			<div class="image-container">
 			<img alt="" src="img/<%=pdto.getThumb_image()%>" width="400" height="400" id="big">
@@ -231,13 +241,101 @@ function showbig(val){
 		
 		<div class="comment-section">
 			<table>
-				<thead><tr><th>댓글</th></tr></thead>
+				<thead><tr><th colspan="3">댓글</th></tr></thead>
 				<tbody>
-					<tr>
-						<td>
-						
-						</td>
-					</tr>
+						<%
+						if(sid!=null&&sid.equals(pdto.getSeller_id())){
+							ArrayList<ProductsCommentDTO> sellerlist= pcdao.productsCommentList();
+							if(sellerlist==null&&sellerlist.size()==0){
+							%>
+								<tr>
+									<td colspan="3" align="center">
+									등록된 게시글이 없습니다
+									</td>
+								</tr>								
+							<%								
+							}else{
+								for(int i=0;i<sellerlist.size();i++){
+									%>
+										<tr>
+											<td>
+											<%
+											for(int z=0;z<sellerlist.get(i).getLev();z++){
+												out.println("&nbsp;&nbsp;");
+											}
+											if(sellerlist.get(i).getLev()!=0){
+												out.println("ㄴ");
+											}
+											if(sellerlist.get(i).getComment_div()==0){
+											%>											
+												<%=sellerlist.get(i).getSeller_id() %>
+												<%=sellerlist.get(i).getComment_content() %>
+												</td>
+												<%if(sellerlist.get(i).getSeller_id().equals(sid)){
+													%>
+												<td><input type="button" value="수정하기" onclick="openReWrite('productCommentReWrite.jsp?idx=<%=sellerlist.get(i).getProducts_comment_idx()%>')">
+												<input type="button" value="삭제하기" onclick="location.href='deleteProductComment_ok.jsp?idx=<%=sellerlist.get(i).getProducts_comment_idx()%>'">
+												</td>												
+													<%
+												}else{
+													%>
+												<td><input type="button" value="답글쓰기" onclick="openReWrite('productCommentReWrite.jsp?idx=<%=sellerlist.get(i).getProducts_comment_idx()%>')"></td>												
+													<%												
+												}
+											}else{
+												%>삭제되었습니다</td><%
+											}
+											%>
+										</tr>
+									<%								
+								}
+							}
+						}else{
+							ArrayList<ProductsCommentDTO> buyerlist= pcdao.buyerProductsCommentList(sid);
+							if(buyerlist==null&&buyerlist.size()==0){
+								%>
+									<tr>
+										<td colspan="3" align="center">
+										등록된 게시글이 없습니다
+										</td>
+									</tr>								
+								<%
+							}else{
+								for(int i=0;i<buyerlist.size();i++){
+									%>
+										<tr>
+											<td>
+											<%
+											for(int z=0;z<buyerlist.get(i).getLev();z++){
+												out.println("&nbsp;&nbsp;");
+											}
+												if(buyerlist.get(i).getLev()!=0){
+													out.println("ㄴ");
+												}
+												if(buyerlist.get(i).getComment_div()==0){
+												%>
+												<%=buyerlist.get(i).getSeller_id() %>
+												<%=buyerlist.get(i).getComment_content() %>
+												</td>
+												<%if(buyerlist.get(i).getSeller_id().equals(sid)){
+													%>
+													<td><input type="button" value="수정하기"><input type="button" value="삭제하기" onclick="location.href='deleteProductComment_ok.jsp?idx=<%=buyerlist.get(i).getProducts_comment_idx()%>'"></td>
+													<%																								
+												}else{
+													%>
+												<td><input type="button" value="답글쓰기" onclick="openReWrite('productCommentReWrite.jsp?idx=<%=buyerlist.get(i).getProducts_comment_idx()%>')"></td>												
+													<%												
+												}
+											}else{
+												%>삭제되었습니다</td><%
+											}
+											%>
+										</tr>
+									<%																
+								}
+							}
+						}
+						%>
 				</tbody>
 				<tfoot>
 					<tr>
@@ -249,8 +347,11 @@ function showbig(val){
 							        </a>
 							        <span class="user-id"><%=sid %></span>
 							    </div>
+							    <input type="hidden" value="<%=sid %>" name="buyerId">
+							    <input type="hidden" value="<%=prodcutsId %>" name="prodcutsId">
+							    <input type="hidden" value="<%=sid %>" name="sellerId">
 							    <textarea class="comment-input" placeholder="댓글을 작성해주세요" name="contentname"></textarea>
-							    <button class="comment-submit">댓글 작성</button>
+							    <button class="comment-submit" onclick="return contentclick()">댓글 작성</button>
 							</div>
 						</td>
 					</tr>

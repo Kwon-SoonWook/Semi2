@@ -3,27 +3,33 @@ package com.ksj.productscomment;
 public class ProductsCommentDTO {
     private int products_comment_idx;
     private int products_id;
+    private String buyer_id;
+    private String seller_id;
     private String comment_content;
-    private String frist_comment;
     private int ref;//대댓글
     private int lev;
     private int sunbun;
+    private int comment_div;
     
     public ProductsCommentDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ProductsCommentDTO(int products_comment_idx, int products_id, String comment_content, String frist_comment, int ref, int lev,
-			int sunbun) {
+
+	public ProductsCommentDTO(int products_comment_idx, int products_id, String buyer_id, String seller_id,
+			String comment_content, int ref, int lev, int sunbun, int comment_div) {
 		super();
 		this.products_comment_idx = products_comment_idx;
 		this.products_id = products_id;
+		this.buyer_id = buyer_id;
+		this.seller_id = seller_id;
 		this.comment_content = comment_content;
-		this.frist_comment = frist_comment;
 		this.ref = ref;
 		this.lev = lev;
 		this.sunbun = sunbun;
+		this.comment_div = comment_div;
 	}
+
 
 	public int getProducts_comment_idx() {
 		return products_comment_idx;
@@ -49,14 +55,6 @@ public class ProductsCommentDTO {
 		this.comment_content = comment_content;
 	}
 
-	public String getFrist_comment() {
-		return frist_comment;
-	}
-
-	public void setFrist_comment(String frist_comment) {
-		this.frist_comment = frist_comment;
-	}
-
 	public int getRef() {
 		return ref;
 	}
@@ -79,6 +77,32 @@ public class ProductsCommentDTO {
 
 	public void setSunbun(int sunbun) {
 		this.sunbun = sunbun;
+	}
+
+	public String getBuyer_id() {
+		return buyer_id;
+	}
+
+	public void setBuyer_id(String buyer_id) {
+		this.buyer_id = buyer_id;
+	}
+
+	public String getSeller_id() {
+		return seller_id;
+	}
+
+	public void setSeller_id(String seller_id) {
+		this.seller_id = seller_id;
+	}
+
+
+	public int getComment_div() {
+		return comment_div;
+	}
+
+
+	public void setComment_div(int comment_div) {
+		this.comment_div = comment_div;
 	}
 
 }
