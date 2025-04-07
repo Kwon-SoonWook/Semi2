@@ -26,17 +26,30 @@ table{
 table thead th{
 	background-color : lightgray;
 }
-
+.paging a{
+	margin: 0px auto;
+	text-align: center;
+	text-decoration: none;
+	color:black;
+}
+.paging a:hover{
+	color:gray;
+}
 </style>
 </head>
 <%
 String mypageid = (String)session.getAttribute("sid");
+ 
+//총 게시물 수
+int totalCnt = pdao.getTotalCnt(mypageid); // db로부터 조회
+session.setAttribute("totalbbs", totalCnt);
 %>
 <body>
 <section>
 <article>
 	<h2>판매물품 리스트</h2>
 	<table>
+		<caption style="text-align:right;"><button onclick="top.location.href='/semi2/page/user/product/writeSaleProduct.jsp'">새글쓰기</caption>
 		<thead>
 			<tr>
 				<th>썸네일</th>

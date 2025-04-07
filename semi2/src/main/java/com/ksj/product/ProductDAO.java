@@ -277,4 +277,31 @@ public class ProductDAO {
 		}
 		
 	}
+	
+	/**총 게시물수 관련 메서드*/
+	public int getTotalCnt(String sid) {
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+	        String sql = "select distinct count(*) from products where seller_id = ?";
+	        ps = conn.prepareStatement(sql);
+	        ps.setString(1, sid);
+	        rs = ps.executeQuery();
+	        rs.next();
+	        int count = rs.getInt(1);
+	        return count == 0 ? 1 : count;
+
+		}catch (Exception e) {
+			e.printStackTrace();
+			return 1;
+		}finally {
+			try {
+				if (rs != null) rs.close();
+	            if (ps != null) ps.close();
+	            if (conn != null) conn.close();
+				
+			}catch (Exception e) {
+			}
+		}
+	}
+	
 }

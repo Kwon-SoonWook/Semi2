@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%@ page import="com.ksj.user.*" %>
+<jsp:useBean id="udao" class="com.ksj.user.UserDAO"></jsp:useBean>
+<jsp:useBean id="udto" class="com.ksj.user.UserDTO"></jsp:useBean>
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,6 +47,21 @@ function popup(){
 </script>
 <script src="https://kit.fontawesome.com/f0cba69f8f.js" crossorigin="anonymous"></script><!-- 안보이면 해당 사이트 로그인 후 주소받기 -->
 </head>
+<% 
+String sid = (String)session.getAttribute("sid");
+ArrayList<UserDTO> arr = udao.myinfo(sid);
+for(int i=0; i<arr.size(); i++){
+	session.setAttribute("spwd", arr.get(i).getPwd());
+	session.setAttribute("semail", arr.get(i).getEmail());
+	session.setAttribute("snickname", arr.get(i).getNickname());
+	session.setAttribute("slocation", arr.get(i).getLocation());
+}
+String sname = (String)session.getAttribute("sname");
+String spwd = (String)session.getAttribute("spwd");
+String semail = (String)session.getAttribute("semail");
+String snickname = (String)session.getAttribute("snickname");
+String slocation = (String)session.getAttribute("slocation");
+%>
 <%@include file="../main/header.jsp" %> 
 <body>
 <div id="container">
@@ -50,36 +69,40 @@ function popup(){
 	<main class="main-content">
 		<div class="page">
 			<div class="info">
-	      		<i class="fa-solid fa-circle-user" style="color: darkgray; font-size: 100px;"></i>
+				<!-- 프로필 파일 받는 법 -->
+				<%if(!arr.isEmpty() && arr.get(0).getProfile_uri() != null){ %>
+					<img src="/<%=arr.get(0).getProfile_uri() %>" alt="프로필 이미지" width="150" height="150" style=border-radius:50% />
+	         	<%}else{ %>
+	         		<i class="fa-solid fa-circle-user" style="color: darkgray; font-size: 100px;"></i>
+	         	<%} %>
 	         	<div class="txt-wrap">
-	         		<form action = "signUp_ok.jsp">	
+	         		<form action = "myInfoUpdate_ok.jsp" method="post" enctype="multipart/form-data">	
 		         		<br>
 		         		<div>
-		         			<input type = "hidden" name = "profile_uri" id = "profile">  
-							<input type = "button" value = "프로필 사진 수정" onclick='popup()'>
+							<input type = "file" name = "profile" value = "프로필 사진 수정" >
 						</div>
 						<h2>정보 수정</h2>
 						<div>아이디
-							<input type = "text" name = "id" readonly>
+							<input type = "text" name = "id" value="<%=sid %>" readonly>
 						</div>
 						<div>비밀번호 
-							<input type = "password" name = "pwd">
+							<input type = "password" name = "pwd" value="<%=spwd %>">
 						</div>
 						<div>이름
-							<input type = "text" name = "name">
+							<input type = "text" name = "name" value="<%=sname %>">
 						</div>
 						<div>이메일
-							<input type = "text" name = "email">
+							<input type = "text" name = "email" value="<%=semail %>">
 						</div>
 						<div>닉네임
-							<input type = "text" name = "nickname">
+							<input type = "text" name = "nickname" value="<%=snickname %>">
 						</div>
 						<div>거주 지역(00구)
-							<input type = "text" name = "location">
+							<input type = "text" name = "location" value="<%=slocation %>">
 						</div>
-						<br>   
+						<br>  
+					<input type="submit" value="수정">
 					</form>
-					<button type="button" onclick="">수정</button>
 					<button type="button" onclick="location.href='mypage.jsp'">취소</button>     	
 	         	</div>
 			</div>
