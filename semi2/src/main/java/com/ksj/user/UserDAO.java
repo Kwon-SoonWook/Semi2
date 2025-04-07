@@ -104,8 +104,6 @@ public class UserDAO {
 		}
 	}
 	
-<<<<<<< HEAD
-=======
 	public ArrayList<UserDTO> searchUserList(int select, String input){
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
@@ -225,5 +223,5 @@ public class UserDAO {
 			}
 		}
 	}
->>>>>>> d2788e8e9ef0d39bcb2f9049891abb2cb11fa1e4
 }
+
