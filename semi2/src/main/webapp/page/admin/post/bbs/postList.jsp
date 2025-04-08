@@ -37,21 +37,20 @@ div[name="write"]{
 	<div class="container">
         <%@include file="../../main/adminCategory.jsp" %>
        	<main class="main-content">
-			<section>
+			<section style="width: 800px; margin: auto;">
 				<article>
 				<h2>게시물 관리</h2>
 				<form name='postList' action='deletePost.jsp'>
-					<div style="text-align:right"><input type='submit' value='삭제'></div>
 					<table>
 						<thead>
 							<tr>
-								<th>ID</th>
-								<th>이름</th>
-								<th>닉네임</th>
-								<th>주소</th>
-								<th>E-mail</th>
-								<th>가입일자</th>
-								<th></th>
+								<th style="width: 50px; text-align: center;">No</th>
+								<th style="width: 100px; text-align: center;">구분</th>
+								<th>제목</th>
+								<th style="width: 80px; text-align: center;">작성자</th>
+								<th style="width: 80px; text-align: center;">작성일</th>
+								<th style="width: 50px; text-align: center;">조회수</th>
+								<th style="width: 30px;"><input type='submit' value='삭제'></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -60,7 +59,7 @@ div[name="write"]{
 							if(arr==null || arr.size()==0){
 								%>
 								<tr>
-									<td colspan='6' align='center'>등록된 사용자가 없습니다.</td>
+									<td colspan='5' align='center'>등록된 사용자가 없습니다.</td>
 								</tr>
 								<%
 							}else{
@@ -72,7 +71,6 @@ div[name="write"]{
 										<td><%=arr.get(i).getNickname() %></td>
 										<td><%=arr.get(i).getLocation() %></td>
 										<td><%=arr.get(i).getEmail() %></td>
-										<td><%=arr.get(i).getCreate_date() %></td>
 										<td><input type="checkbox" name='<%=arr.get(i).getId()%>'></td>
 									<tr>
 									<%
