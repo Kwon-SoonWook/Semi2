@@ -189,6 +189,7 @@ String categoryname = (String)session.getAttribute("sname");
         <div class="menu-item"><a href="../bbs/noticeBbs.jsp"><i class="fa-solid fa-bullhorn"></i><span> 공지사항</span></a></div>
         <%if(categoryname != null){ %>
         <div class="menu-item"><a href="../mypage/mypage.jsp"><i class="fa-solid fa-circle-question"></i><span> 문의사항</span></a></div>
+        <div class="menu-item"><a href="/semi2/page/user/product/writeSaleProduct.jsp"><i class="fa-solid fa-pen-to-square"></i><span> 글쓰기</span></a></div>
         <%} %>
         <div class="menu-item"><a href="../bbs/communityBbs.jsp"><i class="fa-solid fa-comments"></i><span> 커뮤니티</span></a></div>
         <div class="menu-item"><a href="../bbs/buyBbs.jsp"><i class="fa-solid fa-cart-shopping"></i><span> 삽니다</span></a></div>

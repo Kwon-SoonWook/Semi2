@@ -8,7 +8,7 @@ public class ReviewDAO {
 	private ResultSet rs;
 	
 	//mypage-피평가자가 작성한 리뷰 리스트
-	public ArrayList<ReviewDTO> reviewList(String userid){
+	public ArrayList<ReviewDTO> ReviewList(String userid){
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
 			String sql = "select * from user_review where user_id = ? order by rate desc";

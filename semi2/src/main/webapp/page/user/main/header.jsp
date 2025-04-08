@@ -84,15 +84,22 @@ String heademail = (String)session.getAttribute("email");
 String headnickname = (String)session.getAttribute("nickname");
 String headlocation = (String)session.getAttribute("location");
 %>
-
+<script>
+function searchClick(){
+	document.getElementById('searchform').submit();
+	return false;
+}
+</script>
 <header class="top-bar">
 	<div>
 		<a href="../main/index.jsp"><image src="../main/logo.png" width="30" height="30"></a>
 	</div>
     <div class="search-bar">
-        <input type="text" size="70" placeholder="Search">
-        <a href="#"><i class="fas fa-search"></i></a>
-    </div> 
+    <form id=searchform method="post" action="search.jsp">
+        <input type="text" name="keyword" size="70" placeholder="Search">
+        <a href="#" onclick="searchClick();"><i class="fas fa-search"></i></a>
+    </form>
+    </div>
      <%if(headname == null){ %>
      	<div class="login-button">
    	 		<a href="../login/login.jsp" class="btn-login"><i class="fa-regular fa-circle-user" style="font-size: 20px;"></i>로그인</a>
@@ -112,4 +119,5 @@ String headlocation = (String)session.getAttribute("location");
     		<a href="../login/logout.jsp" class="btn-logout"><i class="fa-solid fa-right-from-bracket" style="font-size: 20px;"></i>로그아웃</a>
     	</div>
     <%} %>
+    
 </header>
