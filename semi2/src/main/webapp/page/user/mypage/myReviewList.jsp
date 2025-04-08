@@ -10,66 +10,64 @@
 <title>리뷰 리스트</title>
 <style>
 body{
-	height: auto;
-	overflow: hidden;
+	height: 100%;
 }
 h2{
 	text-align: center;
 }
-table{
-	height: auto;
-	width: 550px;
-	margin: 0px auto;
-	border-top:3px double darkgray;
-	border-bottom: 3px double darkgray;
+/*전체 게시물 목록*/
+.photo-grid {
+    display: grid;
+    gap: 20px;
+    margin-top: 20px;
 }
-table thead th{
-	background-color : lightgray;
+.photo-grid a{
+    text-decoration: none;
+    color: black;
+}
+/*개별 게시물 레이아웃*/
+.photo-card {
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.photo-card a:hover{
+    color: gray;
 }
 
 </style>
 </head>
 <%
-String mypageid = (String)session.getAttribute("sid");
-
+String rid = (String)session.getAttribute("sid");
+//총 게시물 수
+int reviewCnt = rdao.getReviewCnt(rid); // db로부터 조회
+session.setAttribute("reviewCnt", reviewCnt);
 %>
 <body>
 <section>
 <article>
 	<h2>리뷰 리스트</h2>
-	<table>
-		<thead>
-			<tr>
-				<th>평가자</th>
-				<th>피평가자</th>
-				<th>댓글</th>
-				<th>별점</th>
-			</tr>
-		</thead>
-		<tbody>
-		<%
-			ArrayList<ReviewDTO> arr = rdao.reviewList(mypageid);
-			if(arr==null || arr.size()==0){
-				%>
-				<tr>
-					<td colspan='4' align='center'>등록된 글이 없습니다.</td>
-				</tr>
-				<%
-			}else{
-				for(int i=0; i<arr.size(); i++){
-					%>
-					<tr>
-						<td><%=arr.get(i).getUsere_id() %></td>
-						<td><%=arr.get(i).getUser_id() %></td>
-						<td><%=arr.get(i).getReview_content() %></td>
-						<td><%=arr.get(i).getRate() %></td>
-					<tr>
-					<%
-				}
+    <%
+	ArrayList<ReviewDTO> arr = rdao.ReviewList(rid);
+	if(arr==null || arr.size()==0){
+	%>
+	<h3 align='center'>등록된 글이 없습니다.</h3>
+	<%
+	}else{%>
+	<div class="photo-grid">
+		<%for(int i=0; i<arr.size(); i++){%>
+            <div class="photo-card">
+	                <div class="thumbnail"></div>
+			        <h3><%=arr.get(i).getUsere_id() %></h3>
+			        <p><%=arr.get(i).getReview_content() %></p>
+			        <p><%=arr.get(i).getRate() %></p>
+	            </a> 
+            </div>
+        	<% 
 			}
-		%>
-		</tbody>
-	</table>
+		}%>  
+    </div>
 </article>
 </section>
 </body>

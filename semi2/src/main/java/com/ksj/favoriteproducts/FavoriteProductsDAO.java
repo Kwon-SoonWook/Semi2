@@ -52,7 +52,31 @@ public class FavoriteProductsDAO {
 			} catch (Exception e2) {}
 		}		
 	}
-	
+	public FavoriteProductsDTO favoriteProductsList(int prodcutId , String userId ){
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+			String sql = "select * from favorite_products where products_id=? and user_id = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, prodcutId);
+			ps.setString(2, userId);
+			rs = ps.executeQuery();
+			FavoriteProductsDTO fdto = null;
+			if(rs.next()) {
+				int isValid = rs.getInt("is_valid");
+				fdto = new FavoriteProductsDTO(userId, prodcutId, isValid);
+			}
+			return fdto;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();
+			} catch (Exception e2) {}
+		}				
+	}
 	
 
 }

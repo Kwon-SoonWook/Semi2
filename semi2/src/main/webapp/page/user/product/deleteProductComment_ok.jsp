@@ -13,5 +13,5 @@
 %>
 <script>
 window.alert('<%=msg%>');
-location.href='saleProductView.jsp?productId=<%=dto.getProducts_id()%>';
+location.href='saleProductView.jsp?productsIds=<%=dto.getProducts_id()%>';
 </script>

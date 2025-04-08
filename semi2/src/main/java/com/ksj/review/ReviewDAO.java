@@ -8,7 +8,7 @@ public class ReviewDAO {
 	private ResultSet rs;
 	
 	//mypage-피평가자가 작성한 리뷰 리스트
-	public ArrayList<ReviewDTO> reviewList(String userid){
+	public ArrayList<ReviewDTO> ReviewList(String userid){
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
 			String sql = "select * from user_review where user_id = ? order by rate desc";
@@ -39,5 +39,30 @@ public class ReviewDAO {
 			} catch (Exception e2) {}
 		}
 	}
+	/**mypage-피평가자가 작성한 리뷰 리스트 게시물수 관련 메서드*/
+	public int getReviewCnt(String sid) {
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+	        String sql = "select distinct count(*) from user_review where user_id = ?";
+	        ps = conn.prepareStatement(sql);
+	        ps.setString(1, sid);
+	        rs = ps.executeQuery();
+	        rs.next();
+	        int count = rs.getInt(1);
+	        return count;
+		}catch (Exception e) {
+			e.printStackTrace();
+			return 1;
+		}finally {
+			try {
+				if (rs != null) rs.close();
+	            if (ps != null) ps.close();
+	            if (conn != null) conn.close();
+				
+			}catch (Exception e) {
+			}
+		}
+	}
+	
 	
 }

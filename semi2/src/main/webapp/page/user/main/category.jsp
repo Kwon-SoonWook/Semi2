@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>카테고리</title>
 <link rel="stylesheet" type="text/css" href="mainLayout.css">
 <style>
 /**category페이지*/
@@ -171,6 +171,9 @@ section:hover > div:nth-of-type(1) {
 */
 </style>
 <script src="https://kit.fontawesome.com/f0cba69f8f.js" crossorigin="anonymous"></script>
+<%
+String categoryname = (String)session.getAttribute("sname");
+%>
 </head>
 <aside class="side-bar">
 	<section class="side-bar__icon-box">
@@ -181,12 +184,17 @@ section:hover > div:nth-of-type(1) {
 		</section>
 	</section>
      <nav>
+     	
         <div class="menu-item"><a href="../main/index.jsp"><i class="fas fa-home"></i><span> 홈</span></a></div>
         <div class="menu-item"><a href="../bbs/noticeBbs.jsp"><i class="fa-solid fa-bullhorn"></i><span> 공지사항</span></a></div>
+        <%if(categoryname != null){ %>
         <div class="menu-item"><a href="../mypage/mypage.jsp"><i class="fa-solid fa-circle-question"></i><span> 문의사항</span></a></div>
+        <div class="menu-item"><a href="/semi2/page/user/product/writeSaleProduct.jsp"><i class="fa-solid fa-pen-to-square"></i><span> 글쓰기</span></a></div>
+        <%} %>
         <div class="menu-item"><a href="../bbs/communityBbs.jsp"><i class="fa-solid fa-comments"></i><span> 커뮤니티</span></a></div>
         <div class="menu-item"><a href="../bbs/buyBbs.jsp"><i class="fa-solid fa-cart-shopping"></i><span> 삽니다</span></a></div>
         <div class="menu-item"><a href="/semi2/page/admin/main/adminIndex.jsp"><i class="fa-solid fa-user-tie"></i><span> 관리자페이지</span></a></div>
+   		
     </nav>
 </aside>
 <!-- 

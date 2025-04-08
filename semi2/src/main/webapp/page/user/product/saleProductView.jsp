@@ -1,3 +1,4 @@
+<%@page import="com.ksj.favoriteproducts.FavoriteProductsDTO"%>
 <%@page import="com.ksj.productscomment.ProductsCommentDTO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.ksj.productimages.ProductImagesDTO"%>
@@ -7,18 +8,20 @@
 <jsp:useBean id="pdao" class="com.ksj.product.ProductDAO"></jsp:useBean>
 <jsp:useBean id="pidao" class="com.ksj.productimages.ProductImagesDAO"></jsp:useBean>
 <jsp:useBean id="pcdao" class="com.ksj.productscomment.ProductsCommentDAO"></jsp:useBean>
+<jsp:useBean id="fdao" class="com.ksj.favoriteproducts.FavoriteProductsDAO"></jsp:useBean>
 <%
 String sid = (String)session.getAttribute("sid");
-/*String productsIds = request.getParameter("productsIds");
-int productsId = Integer.parseInt(productsIds);
+String productsIds = request.getParameter("productsIds");
+int prodcutsId;
 if(productsIds==null||productsIds.equals("")){
-	productsId = 0;
+	prodcutsId = 0;
+}else{
+	prodcutsId = Integer.parseInt(productsIds);
 }
-*/
-int prodcutsId = 71;
+//int prodcutsId = 71;
 ProductDTO pdto = pdao.ProductList(prodcutsId);
 ArrayList<ProductImagesDTO> arr= pidao.ProductImagesList(prodcutsId);
-
+FavoriteProductsDTO fdto = fdao.favoriteProductsList(prodcutsId, sid);
 %>
 <!DOCTYPE html>
 <html>
@@ -216,24 +219,53 @@ function openReWrite(url) {
 			<div class="product-info">
 				<div>
 				<h2>제목:<%=pdto.getTitle() %></h2>
-				<select name = "tradestate" id="tradestateid" onchange="trade();">
-				<option value=0>판매중</option>	
-				<option value=1>예약중</option>	
-				</select>
+				<%if(sid!=null&&sid.equals(pdto.getSeller_id())){
+					%>				
+					<select name = "tradestate" onchange="trade()" >
+					<option value=0>판매중</option>	
+					<option value=1>예약중</option>	
+					<option value=2>거래완료</option>	
+					</select>
+					<%
+					}else{
+					%>				
+					<select name = "tradestate" disabled="false"  onchange="trade()" >
+					<option value=0>판매중</option>	
+					<option value=1>거래중</option>	
+					<option value=2>거래완료</option>	
+					</select>
+					<%						
+					}
+				%>
 				</div>
 				<hr>
 				<div>가격:<%=pdto.getPrice() %></div>
 				<div><%=pdto.getContent() %></div>
 				<div><%=pdto.getLocation() %></div>
 				<div class="product-actions">
-				<input type="button" name="favorite_products" value="찜">
 				<%if(sid!=null&&sid.equals(pdto.getSeller_id())){
 					%>
 				<input type="button" name="update_products" value="수정하기" onclick="location.href='writeSaleProduct.jsp?productId=<%=prodcutsId%>'">
 				<input type="button" name="delete_products" value="삭제하기" onclick="location.href='deleteSaleProduct.jsp?productId=<%=prodcutsId%>'">
 				<input type="button" name="hidden_products" value="<%=pdto.getBbs_state()==1?"숨기기":"보이기" %>" onclick="location.href='hideSaleProduct.jsp?productId=<%=prodcutsId%>'">
 					<%
-				}		
+				}else{
+					if(fdto==null){
+						%>
+						<input type="button" name="favorite_products" value="찜" onclick="location.href='isValidfavoriteProduct.jsp?productId=<%=prodcutsId%>'">										
+						<%
+					}else{
+						if(fdto.getIs_valid()==0){
+							%>
+							<input type="button" name="favorite_products" value="찜" onclick="location.href='isValidfavoriteProduct.jsp?productId=<%=prodcutsId%>'">										
+							<%							
+						}else if(fdto.getIs_valid()==1){
+							%>
+							<input type="button" name="favorite_products" value="찜취소" onclick="location.href='isValidfavoriteProduct.jsp?productId=<%=prodcutsId%>'">										
+							<%							
+						}
+					}
+				}
 					%>
 				</div>
 			</div>	
@@ -250,7 +282,7 @@ function openReWrite(url) {
 							%>
 								<tr>
 									<td colspan="3" align="center">
-									등록된 게시글이 없습니다
+									등록된 댓글이 없습니다
 									</td>
 								</tr>								
 							<%								
@@ -273,7 +305,7 @@ function openReWrite(url) {
 												</td>
 												<%if(sellerlist.get(i).getSeller_id().equals(sid)){
 													%>
-												<td><input type="button" value="수정하기" onclick="openReWrite('productCommentReWrite.jsp?idx=<%=sellerlist.get(i).getProducts_comment_idx()%>')">
+												<td><input type="button" value="수정하기" onclick="openReWrite('productCommentUpdate.jsp?idx=<%=sellerlist.get(i).getProducts_comment_idx()%>')">
 												<input type="button" value="삭제하기" onclick="location.href='deleteProductComment_ok.jsp?idx=<%=sellerlist.get(i).getProducts_comment_idx()%>'">
 												</td>												
 													<%
@@ -296,7 +328,7 @@ function openReWrite(url) {
 								%>
 									<tr>
 										<td colspan="3" align="center">
-										등록된 게시글이 없습니다
+										등록된 댓글이 없습니다
 										</td>
 									</tr>								
 								<%
@@ -319,7 +351,8 @@ function openReWrite(url) {
 												</td>
 												<%if(buyerlist.get(i).getSeller_id().equals(sid)){
 													%>
-													<td><input type="button" value="수정하기"><input type="button" value="삭제하기" onclick="location.href='deleteProductComment_ok.jsp?idx=<%=buyerlist.get(i).getProducts_comment_idx()%>'"></td>
+													<td><input type="button" value="수정하기" onclick="openReWrite('productCommentUpdate.jsp?idx=<%=buyerlist.get(i).getProducts_comment_idx()%>')">
+													<input type="button" value="삭제하기" onclick="location.href='deleteProductComment_ok.jsp?idx=<%=buyerlist.get(i).getProducts_comment_idx()%>'"></td>
 													<%																								
 												}else{
 													%>

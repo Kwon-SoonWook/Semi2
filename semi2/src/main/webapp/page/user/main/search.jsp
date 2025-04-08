@@ -4,6 +4,9 @@
 <jsp:useBean id="kdao" class="com.ksj.login.loginDAO" scope="session"></jsp:useBean>
 <jsp:useBean id="pdao" class="com.ksj.product.ProductDAO"></jsp:useBean>
 <%
+request.setCharacterEncoding("UTF-8");
+String keyword = request.getParameter("keyword");
+
 String indexid = (String)session.getAttribute("sid");
 String productsIds = request.getParameter("productsIds");
 int productsId;
@@ -18,7 +21,7 @@ if(productsIds==null||productsIds.equals("")){
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width"> <!-- 반응형 화면 변환 -->
-<title>노후재활센터</title>
+<title>검색 페이지</title>
 <link rel="stylesheet" type="text/css" href="mainLayout.css">
 <script src="https://kit.fontawesome.com/f0cba69f8f.js" crossorigin="anonymous"></script><!-- 안보이면 해당 사이트 로그인 후 주소받기 -->
 </head>
@@ -28,10 +31,10 @@ if(productsIds==null||productsIds.equals("")){
 	<%@include file="/page/user/main/category.jsp" %>
     <main class="main-content">
       	<%if(indexid!=null){ %>
-        	<h2>최근 업로드 목록</h2>
+        	<h2>검색어 : <%=keyword %></h2>
 	    	<div class="photo-grid">
 	        <%
-			ArrayList<ProductDTO> arr = pdao.AllProductList();
+			ArrayList<ProductDTO> arr = pdao.SearchProductList(keyword);
 			if(arr==null || arr.size()==0){
 			%>
 				<h3>등록된 글이 없습니다.</h3>

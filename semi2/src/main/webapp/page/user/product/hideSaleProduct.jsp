@@ -20,5 +20,5 @@
 %>
 <script>
 window.alert('<%=msg%>');
-location.href='saleProductView.jsp?productId=<%=productId%>';
+location.href='saleProductView.jsp?productsIds=<%=productId%>';
 </script>
