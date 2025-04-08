@@ -13,17 +13,15 @@ public class BbsDTO {
 	private Date create_date;
 	private Date update_date;
 	private int bbs_div;
-	
+	private String bbs_image;
 	
 	public BbsDTO() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	
 
 
 	public BbsDTO(int bbs_idx, String bbs_id, String title, String content, int view_cnt, Date create_date,
-			Date update_date, int bbs_div) {
+			Date update_date, int bbs_div, String bbs_image) {
 		super();
 		this.bbs_idx = bbs_idx;
 		this.bbs_id = bbs_id;
@@ -33,8 +31,8 @@ public class BbsDTO {
 		this.create_date = create_date;
 		this.update_date = update_date;
 		this.bbs_div = bbs_div;
+		this.bbs_image = bbs_image;
 	}
-
 
 
 
@@ -115,6 +113,16 @@ public class BbsDTO {
 
 	public void setBbs_div(int bbs_div) {
 		this.bbs_div = bbs_div;
+	}
+
+
+	public String getBbs_image() {
+		return bbs_image;
+	}
+
+
+	public void setBbs_image(String bbs_image) {
+		this.bbs_image = bbs_image;
 	}
 	
 	
