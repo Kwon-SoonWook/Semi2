@@ -3,7 +3,9 @@
 <%@ page import="java.util.*" %>
 <%@ page import="com.ksj.user.*" %>
 <jsp:useBean id="udao" class="com.ksj.user.UserDAO"></jsp:useBean>
-<jsp:useBean id="udto" class="com.ksj.user.UserDTO"></jsp:useBean>
+<jsp:useBean id="pdao" class="com.ksj.product.ProductDAO" scope="session"></jsp:useBean>
+<jsp:useBean id="rdao" class="com.ksj.review.ReviewDAO" scope="session"></jsp:useBean>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -85,20 +87,14 @@ function IframeHeight(){
 <% 
 String sid = (String)session.getAttribute("sid");
 ArrayList<UserDTO> arr = udao.myinfo(sid);
-for(int i=0; i<arr.size(); i++){
-	session.setAttribute("spwd", arr.get(i).getPwd());
-	session.setAttribute("semail", arr.get(i).getEmail());
-	session.setAttribute("snickname", arr.get(i).getNickname());
-	session.setAttribute("slocation", arr.get(i).getLocation());
-}
-String sname = (String)session.getAttribute("sname");
-String spwd = (String)session.getAttribute("spwd");
-String semail = (String)session.getAttribute("semail");
-String snickname = (String)session.getAttribute("snickname");
-String slocation = (String)session.getAttribute("slocation");
-%>
-<% 
-Integer totalbbs = (Integer)session.getAttribute("totalbbs");
+//session 이용 시 해당 페이지에서 새로고침이 이뤄지지 않으면 적용되지 않음. 따라서 db에서 바로 가져와야 함
+Integer productCnt = pdao.getProductCnt(sid);
+Integer reviewCnt = rdao.getReviewCnt(sid);
+Integer favoriteCnt = pdao.getfavoriteCnt(sid);
+
+if(productCnt==null) productCnt = 0;
+if(reviewCnt==null) reviewCnt = 0;
+if(favoriteCnt==null) favoriteCnt = 0;
 %>
 </head>
 <%@include file="../main/header.jsp" %> 
@@ -115,11 +111,11 @@ Integer totalbbs = (Integer)session.getAttribute("totalbbs");
 	         	<%} %>
 	    
 	         	<div class="txt-wrap">
-	         		<h2><%=snickname %></h2>
-	         		<p>등록한 게시물 수 : <%=totalbbs %></p>
-	         		<p>리뷰 수 : ?</p>
-	         		<p>관심목록 : ?</p>
-	         	          
+	         		<h2><%=arr.get(0).getNickname() %></h2>
+	         		<p>등록한 게시물 수 : <%=productCnt %></p>
+	         		<p>리뷰 수 : <%=reviewCnt %></p>
+	         		<p>찜 목록 : <%=favoriteCnt %></p>
+	         	
 			    <button type="button" onclick="location.href='myInfoUpdate.jsp'">수정</button>     	
 				</div>
 			</div>
@@ -129,8 +125,8 @@ Integer totalbbs = (Integer)session.getAttribute("totalbbs");
 						<div id="underbar"></div>
 						<li><a href="#" class="category" data-page="saleList.jsp">판매물품</a></li>
 						<li><a href="#" class="category" data-page="myReviewList.jsp">거래후기</a></li>
-						<li><a href="#" class="category" data-page="interestList.jsp">관심목록</a></li>
-						<li><a href="#" class="category" data-page="recentList.jsp">최신본상품</a></li>
+						<li><a href="#" class="category" data-page="interestList.jsp">찜 목록</a></li>
+						<li><a href="#" class="category" data-page="recentList.jsp">최신 본 상품</a></li>
 						<li><a href="#" class="category" data-page="userAskList.jsp">1:1문의</a></li>
 					</ul>
 				</div>

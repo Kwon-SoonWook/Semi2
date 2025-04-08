@@ -216,11 +216,46 @@ public class ProductDAO {
 	public ArrayList<ProductDTO> favoriteList(String userid){
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
-			String sql = "select distinct * \r\n"
-					+ "from products pd, favorite_products fp \r\n"
-					+ "where pd.products_id = fp.products_id \r\n"
-					+ "and is_valid = 1 \r\n"
-					+ "and user_id = ?";
+			String sql = "select distinct * from products pd, favorite_products fp where pd.products_id = fp.products_id and is_valid = 1 and user_id = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, userid);
+			rs = ps.executeQuery();
+			ArrayList<ProductDTO> arr = new ArrayList<ProductDTO>();
+			while(rs.next()) {
+				int products_id = rs.getInt("products_id");
+				int category_id = rs.getInt("category_id");
+				String buyer_id = rs.getString("buyer_id");
+				String seller_id = rs.getString("seller_id");
+				int price = rs.getInt("price");
+				String title = rs.getString("title");
+				String content =rs.getString("content");
+				String location = rs.getString("location");
+				int trade_state = rs.getInt("trade_state");
+				int bbs_state =rs.getInt("bbs_state");
+				String thumb_image = rs.getString("thumb_image");
+				int view_cnt = rs.getInt("view_cnt");
+				java.sql.Date create_date = rs.getDate("create_date");
+				java.sql.Date update_date = rs.getDate("update_date");
+				String image_uri = rs.getString("image_uri");
+				ProductDTO dto = new ProductDTO(products_id, category_id, buyer_id, seller_id, price, title, content, location, trade_state, bbs_state, thumb_image, view_cnt, create_date, update_date, image_uri);
+				arr.add(dto);
+			}
+			return arr;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();								
+			} catch (Exception e2) {}
+		}
+	}
+	public ArrayList<ProductDTO> recentList(String userid){
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+			String sql = "select distinct * from products pd, favorite_products fp where pd.products_id = fp.products_id and user_id = ?";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, userid);
 			rs = ps.executeQuery();
@@ -257,7 +292,6 @@ public class ProductDAO {
 		}
 	}
 	
-	
 	public int deleteProduct(int productId) {
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
@@ -278,8 +312,8 @@ public class ProductDAO {
 		
 	}
 	
-	/**총 게시물수 관련 메서드*/
-	public int getTotalCnt(String sid) {
+	/**총 작성게시물수 관련 메서드*/
+	public int getProductCnt(String sid) {
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
 	        String sql = "select distinct count(*) from products where seller_id = ?";
@@ -288,8 +322,31 @@ public class ProductDAO {
 	        rs = ps.executeQuery();
 	        rs.next();
 	        int count = rs.getInt(1);
-	        return count == 0 ? 1 : count;
-
+	        return count;
+		}catch (Exception e) {
+			e.printStackTrace();
+			return 1;
+		}finally {
+			try {
+				if (rs != null) rs.close();
+	            if (ps != null) ps.close();
+	            if (conn != null) conn.close();
+				
+			}catch (Exception e) {
+			}
+		}
+	}
+	/**총 찜한 게시물수 관련 메서드*/
+	public int getfavoriteCnt(String sid) {
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+	        String sql = "select distinct count(*) from products pd, favorite_products fp where pd.products_id = fp.products_id and is_valid = 1 and user_id = ?";
+	        ps = conn.prepareStatement(sql);
+	        ps.setString(1, sid);
+	        rs = ps.executeQuery();
+	        rs.next();
+	        int count = rs.getInt(1);
+	        return count;
 		}catch (Exception e) {
 			e.printStackTrace();
 			return 1;

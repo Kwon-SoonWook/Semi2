@@ -31,6 +31,10 @@ table thead th{
 </head>
 <%
 String fid = (String)session.getAttribute("sid");
+//총 게시물 수
+int favoriteCnt = pdao.getfavoriteCnt(fid); // db로부터 조회
+session.setAttribute("favoriteCnt", favoriteCnt);
+
 %>
 <body>
 <section>
