@@ -1,6 +1,7 @@
 package com.ksj.productscomment;
 import java.util.*;
 import java.sql.*;
+import java.sql.Date;
 
 public class ProductsCommentDAO {
 	private Connection conn;
@@ -8,11 +9,12 @@ public class ProductsCommentDAO {
 	private ResultSet rs;
 	
 	/**판매자 댓글목록보기*/
-	public ArrayList<ProductsCommentDTO> productsCommentList(){
+	public ArrayList<ProductsCommentDTO> productsSellerCommentList(int products_id){
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
-			String sql = "select * from products_comment order by ref asc, sunbun asc,lev asc ";
+			String sql = "select * from products_comment where products_id = ? order by ref asc, sunbun asc,lev asc ";
 			ps = conn.prepareStatement(sql);
+			ps.setInt(1, products_id);
 			rs = ps.executeQuery();
 			ArrayList<ProductsCommentDTO> arr = new ArrayList<ProductsCommentDTO>();
 			while(rs.next()) {
@@ -21,11 +23,12 @@ public class ProductsCommentDAO {
 				String buyerId = rs.getString("buyer_id");
 				String sellerId = rs.getString("seller_id");
 				String commentContent = rs.getString("comment_content");
+				java.sql.Date create_date = rs.getDate("create_date");				
 				int ref = rs.getInt("ref");
 				int lev = rs.getInt("lev");
 				int sunbun = rs.getInt("sunbun");
 				int commentDiv = rs.getInt("comment_div");
-				ProductsCommentDTO dto = new ProductsCommentDTO(productsCommentIdx, productsId, buyerId,sellerId, commentContent, ref, lev, sunbun,commentDiv);
+				ProductsCommentDTO dto = new ProductsCommentDTO(productsCommentIdx, productsId, buyerId,sellerId, commentContent,create_date, ref, lev, sunbun,commentDiv);
 				arr.add(dto);
 			}
 			return arr;
@@ -42,12 +45,13 @@ public class ProductsCommentDAO {
 	}
 	
 	/**댓글작성자 댓글목록보기*/
-	public ArrayList<ProductsCommentDTO> buyerProductsCommentList(String buyerId){
+	public ArrayList<ProductsCommentDTO> buyerProductsCommentList(String buyerId,int products_id){
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
-			String sql = "select * from products_comment where buyer_id=? order by ref asc,sunbun asc, lev asc";
+			String sql = "select * from products_comment where buyer_id=? and products_id = ? order by ref asc,sunbun asc, lev asc";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, buyerId);
+			ps.setInt(2, products_id);
 			rs = ps.executeQuery();
 			ArrayList<ProductsCommentDTO> arr = new ArrayList<ProductsCommentDTO>();
 			while(rs.next()) {
@@ -55,11 +59,12 @@ public class ProductsCommentDAO {
 				int productsId = rs.getInt("products_id");
 				String sellerId = rs.getString("seller_id");
 				String commentContent = rs.getString("comment_content");
+				java.sql.Date create_date = rs.getDate("create_date");				
 				int ref = rs.getInt("ref");
 				int lev = rs.getInt("lev");
 				int sunbun = rs.getInt("sunbun");
 				int commentDiv = rs.getInt("comment_div");
-				ProductsCommentDTO dto = new ProductsCommentDTO(productsCommentIdx, productsId,buyerId, sellerId, commentContent, ref, lev, sunbun,commentDiv);
+				ProductsCommentDTO dto = new ProductsCommentDTO(productsCommentIdx, productsId,buyerId, sellerId, commentContent,create_date, ref, lev, sunbun,commentDiv);
 				arr.add(dto);
 			}
 			return arr;
@@ -88,11 +93,45 @@ public class ProductsCommentDAO {
 				String buyerId = rs.getString("buyer_id");
 				String sellerId = rs.getString("seller_id");
 				String commentContent = rs.getString("comment_content");
+				java.sql.Date create_date = rs.getDate("create_date");				
 				int ref = rs.getInt("ref");
 				int lev = rs.getInt("lev");
 				int sunbun = rs.getInt("sunbun");
 				int commentDiv = rs.getInt("comment_div");
-				dto = new ProductsCommentDTO(products_comment_idx, productsId, buyerId, sellerId, commentContent, ref, lev, sunbun,commentDiv);
+				dto = new ProductsCommentDTO(products_comment_idx, productsId, buyerId, sellerId, commentContent,create_date, ref, lev, sunbun,commentDiv);
+			}
+			return dto;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();																
+			} catch (Exception e2) {}
+		}
+	}
+	/**products_id 이용해 답글할 댓글 가져오기*/
+	public ProductsCommentDTO productsIdCommentList(int products_id){
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+			String sql = "select * from products_comment where products_id= ? order by ref asc,sunbun asc,lev asc ";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, products_id);
+			rs = ps.executeQuery();
+			ProductsCommentDTO dto = null;
+			if(rs.next()) {
+				int products_comment_idx = rs.getInt("products_comment_idx");
+				String buyerId = rs.getString("buyer_id");
+				String sellerId = rs.getString("seller_id");
+				String commentContent = rs.getString("comment_content");
+				java.sql.Date create_date = rs.getDate("create_date");								
+				int ref = rs.getInt("ref");
+				int lev = rs.getInt("lev");
+				int sunbun = rs.getInt("sunbun");
+				int commentDiv = rs.getInt("comment_div");
+				dto = new ProductsCommentDTO(products_comment_idx, products_id, buyerId, sellerId, commentContent,create_date, ref, lev, sunbun,commentDiv);
 			}
 			return dto;
 		} catch (Exception e) {
@@ -132,7 +171,7 @@ public class ProductsCommentDAO {
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
 			int ref = getMaxRef();
-			String sql = "insert into products_comment values(products_comment_idx.nextval,?,?,?,?,?,0,0,0)";
+			String sql = "insert into products_comment values(products_comment_idx.nextval,?,?,?,?,sysdate,?,0,0,0)";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, dto.getProducts_id());
 			ps.setString(2, dto.getBuyer_id());
@@ -226,7 +265,7 @@ public class ProductsCommentDAO {
 			}else {
 				insertSunbun = getLastSunbun(dto.getRef()) +1;
 			}
-			String sql = "insert into products_comment values(products_comment_idx.nextval,?,?,?,?,?,?,?,0)";
+			String sql = "insert into products_comment values(products_comment_idx.nextval,?,?,?,?,sysdate,?,?,?,0)";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, dto.getProducts_id());
 			ps.setString(2, dto.getBuyer_id());
@@ -284,6 +323,25 @@ public class ProductsCommentDAO {
 			try {
 				if(ps!=null)ps.close();
 				if(conn!=null)conn.close();				
+			} catch (Exception e2) {}
+		}
+	}
+	/**댓글삭제를 위해서 만듬*/
+	public int deleteProductsComment(int products_id) {
+		try {
+			conn= com.ksj.db.ConnectionDB.getConn();
+			String sql = "delete from products_comment where products_id = ? ";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, products_id);
+			int result = ps.executeUpdate();
+			return result;
+		}catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();								
 			} catch (Exception e2) {}
 		}
 	}

@@ -142,6 +142,26 @@ public class ProductDAO {
 			} catch (Exception e2) {}
 		}
 	}
+	/**물품거래상태수정 0 1 2 로 나뉨 각각 판매중 거래중 거래완료*/
+	public int updateProductTrade(ProductDTO dto) {
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+			String sql = "update products set trade_state=? where products_id=?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, dto.getTrade_state());
+			ps.setInt(2, dto.getProducts_id());
+			int result = ps.executeUpdate();
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();
+			} catch (Exception e2) {}
+		}
+	}	
 	/**물품수정*/
 	public int upadteProduct(ProductDTO dto) {
 		try {

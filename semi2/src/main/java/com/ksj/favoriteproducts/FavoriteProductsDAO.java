@@ -77,6 +77,25 @@ public class FavoriteProductsDAO {
 			} catch (Exception e2) {}
 		}				
 	}
+	/**등록한 물품을 삭제하면 찜한 내역도 같이 삭제*/
+	public int deleteFavoriteProducts(int prodcutId){
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+			String sql = "delete from favorite_products where products_id=?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, prodcutId);
+			int result = ps.executeUpdate();
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();
+			} catch (Exception e2) {}
+		}				
+	}
 	
 
 }
