@@ -6,9 +6,11 @@
 <%
 String sid = (String)session.getAttribute("sid");
 String productsIds = request.getParameter("productsIds");
-int productsId = Integer.parseInt(productsIds);
+int productsId;
 if(productsIds==null||productsIds.equals("")){
 	productsId = 0;
+}else{
+	productsId = Integer.parseInt(productsIds);
 }
 %>
 <!DOCTYPE html>
@@ -32,7 +34,7 @@ if(productsIds==null||productsIds.equals("")){
 	    	<div class="photo-grid">
 	        <%for(int i=0; i<60; i++){ %>
 	            <div class="photo-card">
-		            <a href="/semi2/page/user/product/saleProductView.jsp?productId=<%=productsId%>">
+		            <a href="/semi2/page/user/product/saleProductView.jsp?productsIds=<%=productsId%>">
 			            <div class="thumbnail"></div>
 				        <h3>제목1</h3>
 				        <p>내용1</p>
