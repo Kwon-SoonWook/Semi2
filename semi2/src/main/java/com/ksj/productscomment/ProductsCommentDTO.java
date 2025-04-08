@@ -1,4 +1,6 @@
 package com.ksj.productscomment;
+import java.sql.*;
+import java.sql.Date;
 
 public class ProductsCommentDTO {
     private int products_comment_idx;
@@ -6,6 +8,7 @@ public class ProductsCommentDTO {
     private String buyer_id;
     private String seller_id;
     private String comment_content;
+    private Date create_date;
     private int ref;//대댓글
     private int lev;
     private int sunbun;
@@ -15,21 +18,20 @@ public class ProductsCommentDTO {
 		// TODO Auto-generated constructor stub
 	}
 
-
 	public ProductsCommentDTO(int products_comment_idx, int products_id, String buyer_id, String seller_id,
-			String comment_content, int ref, int lev, int sunbun, int comment_div) {
+			String comment_content, Date create_date, int ref, int lev, int sunbun, int comment_div) {
 		super();
 		this.products_comment_idx = products_comment_idx;
 		this.products_id = products_id;
 		this.buyer_id = buyer_id;
 		this.seller_id = seller_id;
 		this.comment_content = comment_content;
+		this.create_date = create_date;
 		this.ref = ref;
 		this.lev = lev;
 		this.sunbun = sunbun;
 		this.comment_div = comment_div;
 	}
-
 
 	public int getProducts_comment_idx() {
 		return products_comment_idx;
@@ -53,6 +55,14 @@ public class ProductsCommentDTO {
 
 	public void setComment_content(String comment_content) {
 		this.comment_content = comment_content;
+	}
+
+	public Date getCreate_date() {
+		return create_date;
+	}
+
+	public void setCreate_date(Date create_date) {
+		this.create_date = create_date;
 	}
 
 	public int getRef() {

@@ -12,7 +12,7 @@ if(!(productsIds==null||productsIds.equals(""))){
 String buyerId= request.getParameter("buyerId");
 String sellerId= request.getParameter("sellerId");
 String contentname = request.getParameter("contentname");
-ProductsCommentDTO pcdto = new ProductsCommentDTO(0,productsId,buyerId,sellerId,contentname,0,0,0,0);
+ProductsCommentDTO pcdto = new ProductsCommentDTO(0,productsId,buyerId,sellerId,contentname,null,0,0,0,0);
 String msg = pcdao.productsCommentWrite(pcdto)>0?"댓글완료":"댓글실패";
 %>
 <script>

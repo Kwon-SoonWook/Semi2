@@ -27,7 +27,7 @@ int sunbun = 0;
 if(!(sunbun_s==null||sunbun_s.equals(""))){
 	sunbun = Integer.parseInt(sunbun_s);
 }
-ProductsCommentDTO pcdto = new ProductsCommentDTO(0,id,buyerId,sellerId,commentContent,ref,lev,sunbun,0);
+ProductsCommentDTO pcdto = new ProductsCommentDTO(0,id,buyerId,sellerId,commentContent,null,ref,lev,sunbun,0);
 
 String msg = pcdao.productsCommentReWrite(pcdto)>0?"답글성공":"답글실패";
 %>
