@@ -11,7 +11,7 @@ public class ProductsCommentDAO {
 	public ArrayList<ProductsCommentDTO> productsCommentList(){
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
-			String sql = "select * from products_comment order by ref asc,sunbun asc ";
+			String sql = "select * from products_comment order by ref asc, sunbun asc,lev asc ";
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
 			ArrayList<ProductsCommentDTO> arr = new ArrayList<ProductsCommentDTO>();
@@ -45,7 +45,7 @@ public class ProductsCommentDAO {
 	public ArrayList<ProductsCommentDTO> buyerProductsCommentList(String buyerId){
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
-			String sql = "select * from products_comment where buyer_id=? order by ref asc,sunbun asc";
+			String sql = "select * from products_comment where buyer_id=? order by ref asc,sunbun asc, lev asc";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, buyerId);
 			rs = ps.executeQuery();
@@ -78,7 +78,7 @@ public class ProductsCommentDAO {
 	public ProductsCommentDTO productsCommentList(int products_comment_idx){
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
-			String sql = "select * from products_comment where products_comment_idx=? order by ref asc,sunbun asc ";
+			String sql = "select * from products_comment where products_comment_idx= ? order by ref asc,sunbun asc,lev asc ";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, products_comment_idx);
 			rs = ps.executeQuery();
@@ -154,7 +154,7 @@ public class ProductsCommentDAO {
 	/**답변시 sunbun업데이트 관련 메서드*/
 	public void setSunUpdate(int ref,int sun) {
 		try {
-			String sql = "update products_comment set sunbun=sunbun+1 where ref = ? and sunbun>=? ";
+			String sql = "update products_comment set sunbun= sunbun + 1 where ref = ? and sunbun >= ?";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, ref);
 			ps.setInt(2, sun);
@@ -167,11 +167,65 @@ public class ProductsCommentDAO {
 			} catch (Exception e2) {}
 		}
 	}
+	/**sunbun 최대값 가져오기*/
+	public int getLastSunbun(int ref) {
+	    try {
+	        String sql = "SELECT MAX(sunbun) FROM products_comment WHERE ref = ? ";
+	        ps = conn.prepareStatement(sql);
+	        ps.setInt(1, ref);
+	        rs = ps.executeQuery();
+
+	        if (rs.next()) {
+	            return rs.getInt(1);
+	        } else {
+	            return 0;
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return 0;
+	    } finally {
+	        try {
+	            if (rs != null) rs.close();
+	            if (ps != null) ps.close();
+	        } catch (Exception e2) {}
+	    }
+	}
+	/**sunbun 최솟값 가져오기*/
+	public int getFristSunbun(int ref, int lev, int sunbun) {
+	    try {
+	        String sql = "SELECT min(sunbun) FROM products_comment WHERE ref = ? AND sunbun > ? AND lev <= ?";
+	        ps = conn.prepareStatement(sql);
+	        ps.setInt(1, ref);
+	        ps.setInt(2, sunbun);
+	        ps.setInt(3, lev);
+	        rs = ps.executeQuery();
+
+	        if (rs.next()) {
+	            int result = rs.getInt(1);
+	            return result == 0 ? -1 : result;
+	        } else {
+	            return -1;
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return -1;
+	    } finally {
+	        try {
+	            if (rs != null) rs.close();
+	            if (ps != null) ps.close();
+	        } catch (Exception e2) {}
+	    }
+	}
 	/**답변글쓰기 관련 메서드*/
-	public int prodcutsCommentReWrite(ProductsCommentDTO dto) {
+	public int productsCommentReWrite(ProductsCommentDTO dto) {
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
-			setSunUpdate(dto.getRef(), dto.getSunbun()+1);
+			int insertSunbun = getFristSunbun(dto.getRef(), dto.getLev(), dto.getSunbun());
+			if(insertSunbun != -1) {
+				setSunUpdate(dto.getRef(), insertSunbun);
+			}else {
+				insertSunbun = getLastSunbun(dto.getRef()) +1;
+			}
 			String sql = "insert into products_comment values(products_comment_idx.nextval,?,?,?,?,?,?,?,0)";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, dto.getProducts_id());
@@ -180,7 +234,7 @@ public class ProductsCommentDAO {
 			ps.setString(4, dto.getComment_content());
 			ps.setInt(5, dto.getRef());
 			ps.setInt(6, dto.getLev()+1);
-			ps.setInt(7, dto.getSunbun()+1);
+			ps.setInt(7, insertSunbun);
 			int count = ps.executeUpdate();
 			return count;
 		} catch (Exception e) {
@@ -193,12 +247,33 @@ public class ProductsCommentDAO {
 			} catch (Exception e2) {}
 		}
 	}
+	/**삭제하기하면 coment div가 1로 바뀌면서 삭제되었습니다라고 표현하기 만듬*/
 	public int updateProductsComment(int products_comment_idx) {
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
 			String sql = "update products_comment set comment_div = ? where products_comment_idx=? ";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, 1);
+			ps.setInt(2, products_comment_idx);
+			int result = ps.executeUpdate();
+			return result;
+		}catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();				
+			} catch (Exception e2) {}
+		}
+	}
+	/**답글내용 수정을 위해 만듬*/
+	public int updateProductsComment(int products_comment_idx,String comment_content) {
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+			String sql = "update products_comment set comment_content = ? where products_comment_idx=? ";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, comment_content);
 			ps.setInt(2, products_comment_idx);
 			int result = ps.executeUpdate();
 			return result;

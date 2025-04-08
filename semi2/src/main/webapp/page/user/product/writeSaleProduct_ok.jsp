@@ -26,7 +26,6 @@ request.setCharacterEncoding("utf-8");
 		String name = (String)files.nextElement();
 		saveFiles.add(mr.getFilesystemName(name));
 	}
-	tpdao.deleteTempProduct(sid);
 	
 	String categoryIds = mr.getParameter("category");
 	int categoryid;
@@ -63,9 +62,10 @@ request.setCharacterEncoding("utf-8");
 		ProductImagesDTO idto = new ProductImagesDTO((String)images.get(i),pdao.searchProductIdx());
 		idao.addProductImages(idto);
 	}
+	tpdao.deleteTempProduct(sid);
 %>
 <script>
 window.alert('<%=msgProduct%>');
-location.href='writeSaleProduct.jsp';
+location.href='../main/index.jsp';
 </script>
 
