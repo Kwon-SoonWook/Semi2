@@ -3,6 +3,7 @@
 <%@ page import="java.util.*" %>
 <%@ page import="com.ksj.review.*" %>
 <jsp:useBean id="rdao" class="com.ksj.review.ReviewDAO" scope="session"></jsp:useBean>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,8 +32,12 @@ table thead th{
 </head>
 <%
 String mypageid = (String)session.getAttribute("sid");
+//총 게시물 수
+int reviewCnt = rdao.getReviewCnt(mypageid); // db로부터 조회
+session.setAttribute("reviewCnt", reviewCnt);
 
 %>
+
 <body>
 <section>
 <article>

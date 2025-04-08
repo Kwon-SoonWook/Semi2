@@ -41,8 +41,8 @@ table thead th{
 String mypageid = (String)session.getAttribute("sid");
  
 //총 게시물 수
-int totalCnt = pdao.getTotalCnt(mypageid); // db로부터 조회
-session.setAttribute("totalbbs", totalCnt);
+int productCnt = pdao.getProductCnt(mypageid); // db로부터 조회
+session.setAttribute("productCnt", productCnt);
 %>
 <body>
 <section>
