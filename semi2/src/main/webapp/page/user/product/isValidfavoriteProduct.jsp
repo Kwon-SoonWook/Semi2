@@ -26,5 +26,5 @@ if(fdto==null){
 }
 %>
 <script>
-location.href='saleProductView.jsp?productId=<%=productId%>';
+location.href='saleProductView.jsp?productsIds=<%=productId%>';
 </script>
