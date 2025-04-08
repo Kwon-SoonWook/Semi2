@@ -50,6 +50,17 @@ padding-top:5px;
 <!-- 안보이면 해당 사이트 로그인 후 주소받기 -->
 <%
 String indexid = (String) session.getAttribute("sid");
+String select = request.getParameter("select");
+String input = request.getParameter("find");
+
+select = "0";
+if(select.equals("title")){
+	select = "1";
+}else if(select.equals("writer")){
+	select = "2";
+}else{
+	select = "0";
+}
 %>
 </head>
 <%@include file="/page/user/main/header.jsp"%>
@@ -73,13 +84,13 @@ String indexid = (String) session.getAttribute("sid");
 						</thead>
 						<tbody>
 							<%
-							ArrayList<BbsDTO> arr = kdao.bbsList();
+							ArrayList<BbsDTO> arr = kdao.findBbs(select, input);
 
 							for (int i = 0; i < arr.size(); i++) {
 							%>
 							<tr>
 								<td><%=arr.get(i).getBbs_idx()%></td>
-								<td><%=arr.get(i).getTitle()%></td>
+								<td><a href = "bbsContent.jsp?id=<%=arr.get(i).getBbs_idx()%>"><%=arr.get(i).getTitle()%></a></td>
 								<td><%=arr.get(i).getBbs_id()%></td>
 								<td><%=arr.get(i).getCreate_date()%></td>
 								<td><%=arr.get(i).getView_cnt()%></td>
@@ -91,10 +102,18 @@ String indexid = (String) session.getAttribute("sid");
 						
 					</table>
 						<div class = "right-write">
+						<form action = "communityBbs.jsp?input=<%=input%>&select=<%=select%>">
+						<select name = "select">
+						<option value = "title">제목</option>
+						<option value = "writer">작성자</option>
+						</select>
+						<input type="text" name = "find" style=text-align:left;>
+						<input type="submit" value = "검색">
+						</form>
 						<input type="submit" value="글쓰기" onclick="location.href='writeBbsPost.jsp'">
 					</div>
 					<div style="text-align: center; padding-top:5px;">
-						<input type="text" name = "find">
+						
 					</div>
 				</article>
 			</section>

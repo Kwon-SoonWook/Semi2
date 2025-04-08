@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -105,6 +105,7 @@ body{
 background-image: url("img/snow.gif"), url("img/snow.gif"),url("img/snow.gif"),url("img/cry.gif"),url("img/sup.gif"),url("img/sup.gif"),url("img/cry.gif"),url("img/cry.gif"),url("img/sunglass.gif"),url("img/sunglass.gif");
 background-repeat: no-repeat;
 background-position: 170px 500px,1100px 50px,1100px 385px,147px 284px, 362px 427px,1344px 477px, 425px 214px,1300px 230px, 1174px 600px, 200px 100px;
+background-attachment: 
 }
 
 nav{
