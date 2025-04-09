@@ -31,16 +31,14 @@ ArrayList<BbsDTO> arr = kdao.showContent(id);
 	<section>
 	<article>
 	<h1><%=arr.get(0).getTitle() %></h1>
-	<div><%=arr.get(0).getContent()%></div>
 	<div>작성자 : <%=arr.get(0).getBbs_id()%></div>
 	<div>작성일자 : <%=arr.get(0).getCreate_date()%></div>
-	<div><img src = "img/<%=arr.get(0).getBbs_image()%>" width="300"></div>
+	<div><%=arr.get(0).getContent()%></div>
+	<%if(arr.get(0).getBbs_image()!=null){ %>
+	<div><img src = "img/<%=arr.get(0).getBbs_image()%>"></div>
+	<%} %>
 	</article>
 	</section>
-
-
-
-
 		</main>
 	</div>
 </body>

@@ -56,6 +56,11 @@ public class BbsDAO {
 	}
 	
 	public int bbsUpload(String id, MultipartRequest mr) {
+		
+		if(id==null) {
+			return 0;
+		}
+		
 		try {
 			conn = com.ksj.db.DB.getConn();
 			
@@ -64,7 +69,7 @@ public class BbsDAO {
 			
 			String image = mr.getFilesystemName("file");
 			String div = mr.getParameter("select");
-			System.out.print(div);
+			
 			if(div.equals("notice")) {
 				div = "0";
 			}else if(div.equals("bbs")) {
@@ -100,26 +105,21 @@ public class BbsDAO {
 		try {
 			conn = com.ksj.db.DB.getConn();
 			String sql = "";
-			
-			switch(select) {
-			case "0": 
+			int cate = Integer.parseInt(select);
+			System.out.print(cate);
+			if(cate==0) {
 				sql = "select * from bbs order by create_date desc";
 				ps = conn.prepareStatement(sql);
-				
-				break;
-			case "1":
+			}else if(cate==1) {
 				sql = "select * from bbs where bbs_id = ?";
 				ps = conn.prepareStatement(sql);
 				ps.setString(1, input);
-				break;
-				
-			case "2":
+			}else if(cate==2) {
 				sql = "select * from bbs where title = ?";
 				ps = conn.prepareStatement(sql);
 				ps.setString(1, input);
-				break;
+			}
 			
-			} 
 			
 			rs = ps.executeQuery();
 			ArrayList<BbsDTO> arr = new ArrayList<BbsDTO>();
