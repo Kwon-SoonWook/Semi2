@@ -49,7 +49,11 @@ String rid = (String)session.getAttribute("sid");
 		<%for(int i=0; i<arr.size(); i++){%>
            <div class="photo-card">
            <a href="#" onclick="window.parent.location='/semi2/page/user/product/saleProductView.jsp?productsIds=<%=arr.get(i).getProducts_id()%>';">
-	            <img src="/semi2/page/user/product/img/<%=arr.get(i).getThumb_image()%>"class="thumbnail">
+	            <%if(arr.get(i).getThumb_image()!=null) {%>
+			        <img src="/semi2/page/user/product/img/<%=arr.get(i).getThumb_image()%>"class="thumbnail">
+				<%}else{ %>
+					<div class="thumbnail"></div>
+				<%} %>
 		        <h3><%=arr.get(i).getTitle() %></h3>
 		        <p><%=arr.get(i).getPrice() %></p>
 		        <p><%=arr.get(i).getCreate_date() %></p></a>
