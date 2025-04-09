@@ -78,6 +78,31 @@ public class ProductsCommentDAO {
 			} catch (Exception e2) {}
 		}
 	}
+	/**해당 물품에 댓글적은 구매자작성자들만 가지고오기*/
+	public ArrayList<String> productsCommentBuyerId(int products_id){
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+			String sql = "select DISTINCT(buyer_id) from products_comment where products_id= ? ";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, products_id);
+			rs = ps.executeQuery();
+			ArrayList<String> arr = new ArrayList<String>();
+			while(rs.next()) {
+				String sellerId = rs.getString("buyer_id");
+				arr.add(sellerId);
+			}
+			return arr;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();																
+			} catch (Exception e2) {}
+		}		
+	}
 	/**products_comment_idx 이용해 답글할 댓글 가져오기*/
 	public ProductsCommentDTO productsCommentList(int products_comment_idx){
 		try {
