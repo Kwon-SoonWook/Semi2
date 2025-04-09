@@ -1,7 +1,6 @@
 package com.ksj.productscomment;
 import java.util.*;
 import java.sql.*;
-import java.sql.Date;
 
 public class ProductsCommentDAO {
 	private Connection conn;
@@ -23,7 +22,7 @@ public class ProductsCommentDAO {
 				String buyerId = rs.getString("buyer_id");
 				String sellerId = rs.getString("seller_id");
 				String commentContent = rs.getString("comment_content");
-				java.sql.Date create_date = rs.getDate("create_date");				
+				java.sql.Timestamp create_date = rs.getTimestamp("create_date");				
 				int ref = rs.getInt("ref");
 				int lev = rs.getInt("lev");
 				int sunbun = rs.getInt("sunbun");
@@ -59,7 +58,7 @@ public class ProductsCommentDAO {
 				int productsId = rs.getInt("products_id");
 				String sellerId = rs.getString("seller_id");
 				String commentContent = rs.getString("comment_content");
-				java.sql.Date create_date = rs.getDate("create_date");				
+				java.sql.Timestamp create_date = rs.getTimestamp("create_date");				
 				int ref = rs.getInt("ref");
 				int lev = rs.getInt("lev");
 				int sunbun = rs.getInt("sunbun");
@@ -93,7 +92,7 @@ public class ProductsCommentDAO {
 				String buyerId = rs.getString("buyer_id");
 				String sellerId = rs.getString("seller_id");
 				String commentContent = rs.getString("comment_content");
-				java.sql.Date create_date = rs.getDate("create_date");				
+				java.sql.Timestamp create_date = rs.getTimestamp("create_date");				
 				int ref = rs.getInt("ref");
 				int lev = rs.getInt("lev");
 				int sunbun = rs.getInt("sunbun");
@@ -126,7 +125,7 @@ public class ProductsCommentDAO {
 				String buyerId = rs.getString("buyer_id");
 				String sellerId = rs.getString("seller_id");
 				String commentContent = rs.getString("comment_content");
-				java.sql.Date create_date = rs.getDate("create_date");								
+				java.sql.Timestamp create_date = rs.getTimestamp("create_date");								
 				int ref = rs.getInt("ref");
 				int lev = rs.getInt("lev");
 				int sunbun = rs.getInt("sunbun");

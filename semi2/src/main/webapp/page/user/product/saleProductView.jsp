@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.ksj.favoriteproducts.FavoriteProductsDTO"%>
 <%@page import="com.ksj.productscomment.ProductsCommentDTO"%>
 <%@page import="java.util.ArrayList"%>
@@ -22,7 +23,7 @@ if(productsIds==null||productsIds.equals("")){
 ProductDTO pdto = pdao.ProductList(prodcutsId);
 ArrayList<ProductImagesDTO> arr= pidao.ProductImagesList(prodcutsId);
 FavoriteProductsDTO fdto = fdao.favoriteProductsList(prodcutsId, sid);
-ArrayList<UserDTO> userArr;
+SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
 %>
 <!DOCTYPE html>
 <html>
@@ -287,8 +288,8 @@ function openReWrite(url) {
 											}
 											if(sellerlist.get(i).getComment_div()==0){
 											%>											
-												<%=sellerlist.get(i).getSeller_id() %>
-												<%=sellerlist.get(i).getCreate_date() %>
+												<%=udao.myinfo((sellerlist.get(i).getSeller_id())).get(0).getNickname()%>
+												<%=timeFormat.format(sellerlist.get(i).getCreate_date()) %>
 												<%=sellerlist.get(i).getComment_content() %>
 												<%if(sellerlist.get(i).getSeller_id().equals(sid)){
 													%>
@@ -333,8 +334,8 @@ function openReWrite(url) {
 												}
 												if(buyerlist.get(i).getComment_div()==0){
 												%>
-												<%=buyerlist.get(i).getSeller_id() %>
-												<%=buyerlist.get(i).getCreate_date() %>
+												<%=udao.myinfo(buyerlist.get(i).getSeller_id()).get(0).getNickname() %>
+												<%=timeFormat.format(buyerlist.get(i).getCreate_date()) %>
 												<%=buyerlist.get(i).getComment_content() %>
 												<%if(buyerlist.get(i).getSeller_id().equals(sid)){
 													%>
@@ -366,7 +367,7 @@ function openReWrite(url) {
 							        <a href="../mypage/mypage.jsp">
 							            <i class="fa-solid fa-circle-user"></i>
 							        </a>
-							        <span class="user-id"><%=sid %></span>
+							        <span class="user-id"><%=udao.myinfo(sid).get(0).getNickname() %></span>
 							    </div>
 							    <input type="hidden" value="<%=sid %>" name="buyerId">
 							    <input type="hidden" value="<%=prodcutsId %>" name="prodcutsId">
