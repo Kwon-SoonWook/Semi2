@@ -25,7 +25,6 @@ text-align: center;
 </style>
 <link rel="stylesheet" type="text/css" href="../main/mainLayout.css">
 <script src="https://kit.fontawesome.com/f0cba69f8f.js" crossorigin="anonymous"></script><!-- 안보이면 해당 사이트 로그인 후 주소받기 -->
-<%String indexid = (String)session.getAttribute("sid"); %>
 </head>
 <%@include file="/page/user/main/header.jsp" %> 
 <title>Insert title here</title>
@@ -35,7 +34,7 @@ text-align: center;
     <main class="main-content">
 <h2>글 쓰 기</h2>
 <hr>
-<form action = "writeBbsPost_ok.jsp">
+<form action = "writeBbsPost_ok.jsp" method = "post" enctype="multipart/form-data">
 <table>
 <tr>
 <td width = 190px;><label>제목  </label></td>
@@ -50,6 +49,11 @@ text-align: center;
 <td class = "content"> <input type = "file" name = "file"></td>
 </tr>
 
+<select name = "select">
+<option value = "notice">공지사항</option>
+<option value = "bbs">자유게시판</option>
+<option value = "buy">삽니다</option>
+</select>
 </table>  
 
 <input type = "submit" value="등록">

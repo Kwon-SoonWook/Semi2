@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.oreilly.servlet.MultipartRequest;
+
 public class BbsDAO {
 
 	private Connection conn;
@@ -53,18 +55,30 @@ public class BbsDAO {
 		
 	}
 	
-	public int bbsUpload(BbsDTO dto, String id) {
+	public int bbsUpload(String id, MultipartRequest mr) {
 		try {
 			conn = com.ksj.db.DB.getConn();
 			
-			String sql = "insert into bbs values(bbs_comment_idx.nextval,?,?,?,?,sysdate,sysdate,?)";
+			String sql = "insert into bbs values(bbs_comment_idx.nextval,?,?,?,0,sysdate,sysdate,?,?)";
 			ps= conn.prepareStatement(sql);
 			
+			String image = mr.getFilesystemName("file");
+			String div = mr.getParameter("select");
+			System.out.print(div);
+			if(div.equals("notice")) {
+				div = "0";
+			}else if(div.equals("bbs")) {
+				div = "1";
+			}else if(div.equals("buy")) {
+				div="2";
+			}
+			
 			ps.setString(1, id);
-			ps.setString(2, dto.getTitle());
-			ps.setString(3, dto.getContent());
-			ps.setInt(4, dto.getView_cnt());
-			ps.setInt(5, dto.getBbs_div());
+			ps.setString(2, mr.getParameter("title"));
+			ps.setString(3, mr.getParameter("content"));
+			
+			ps.setInt(4, Integer.parseInt(div));
+			ps.setString(5, image);
 			
 			int result = ps.executeUpdate();
 			return result;
@@ -89,7 +103,7 @@ public class BbsDAO {
 			
 			switch(select) {
 			case "0": 
-				sql = "select * from bbs";
+				sql = "select * from bbs order by create_date desc";
 				ps = conn.prepareStatement(sql);
 				
 				break;
@@ -105,7 +119,7 @@ public class BbsDAO {
 				ps.setString(1, input);
 				break;
 			
-			}
+			} 
 			
 			rs = ps.executeQuery();
 			ArrayList<BbsDTO> arr = new ArrayList<BbsDTO>();
