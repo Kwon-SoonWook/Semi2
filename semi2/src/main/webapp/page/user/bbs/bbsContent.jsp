@@ -34,7 +34,7 @@ ArrayList<BbsDTO> arr = kdao.showContent(id);
 	<div><%=arr.get(0).getContent()%></div>
 	<div>작성자 : <%=arr.get(0).getBbs_id()%></div>
 	<div>작성일자 : <%=arr.get(0).getCreate_date()%></div>
-	<div><img src = "img/<%=arr.get(0).getBbs_image()%>"></div>
+	<div><img src = "img/<%=arr.get(0).getBbs_image()%>" width="300"></div>
 	</article>
 	</section>
 
