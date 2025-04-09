@@ -41,7 +41,11 @@ if(productsIds==null||productsIds.equals("")){
 				%>
 	            <div class="photo-card">
 		            <a href="/semi2/page/user/product/saleProductView.jsp?productsIds=<%=arr.get(i).getProducts_id()%>">
+			            <%if(arr.get(i).getThumb_image()!=null) {%>
 			            <img src="/semi2/page/user/product/img/<%=arr.get(i).getThumb_image()%>"class="thumbnail">
+				        <%}else{ %>
+				        <div class="thumbnail"></div>
+				        <%} %>
 				        <h3><%=arr.get(i).getTitle() %></h3>
 				        <p><%=arr.get(i).getPrice() %></p>
 				        <p><%=arr.get(i).getCreate_date() %></p></a>

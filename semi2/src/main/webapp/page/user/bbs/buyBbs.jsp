@@ -3,7 +3,6 @@
 <%@ page import = "java.util.*" %>
 <%@ page import = "com.ksj.bbs.*" %>
 <jsp:useBean id="bdao" class="com.ksj.bbs.BbsDAO" scope="session"></jsp:useBean>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,11 +33,9 @@ body {
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
-/*사용자 정보*/
-.info{
-	padding: 50px;
+h2{
+	text-align: center;
 }
-
 table{
 	margin:0px auto;
 	border-top:3px double #393E46;
@@ -46,20 +43,39 @@ table{
 	width:550px;
 }
 table th{
-	background-color: #9AA6B2;
+	background-color: #ddd;
+	text-align: center;
+}
+table td{
 	text-align: center;
 }
 </style>
-<%@include file="../main/header.jsp" %>
+<% 
+int bbsdiv = 1;
+int totalCnt = bdao.getTotalCnt(bbsdiv);
+int listSize = 5;
+int totalPage = (totalCnt/listSize)+1;
+if(totalCnt%listSize == 0) totalPage--;
+int pageSize = 5;
+String cp_s = request.getParameter("cp");
+if(cp_s == null || cp_s.equals("")){
+	cp_s="1";
+}
+int cp = Integer.parseInt(cp_s);
+int userGroup = cp/pageSize;
+if(cp % pageSize == 0) userGroup--;
+%>
 <body>
+<%@include file="/page/user/main/header.jsp" %>
 <div id="container">
     <%@include file="/page/user/main/category.jsp" %>
 	<main class="main-content">
 		<div class="page">
-			<div class="info" style="text-align: center;">
-	      		<h2>삽니다 게시판</h2>
-			</div>
+			<h2>삽니다 게시판</h2>
 			<table>
+				<caption style="caption-side:top; height:30px; vertical-align: center; text-align: right;">
+					<input type="submit" value="글쓰기" onclick="location.href='writeBbsPost.jsp'">
+				</caption>
 				<thead>
 					<tr>
 						<th>번호</th>
@@ -71,12 +87,11 @@ table th{
 				</thead>
 				<tbody>
 				<% 
-				ArrayList<BbsDTO> arr = bdao.bbsList();
-				System.out.println(arr);
+				ArrayList<BbsDTO> arr = bdao.bbsList(bbsdiv, cp, listSize);
 				if(arr == null || arr.size()==0){
 					%>
 					<tr>
-						<td colspan="5" align="center">
+						<td colspan="5">
 						등록된 게시글이 없습니다.
 						</td>
 					</tr>
@@ -86,7 +101,7 @@ table th{
 						%>
 						<tr>
 							<td><%=arr.get(i).getBbs_idx() %></td>
-							<td><%=arr.get(i).getTitle() %></td>
+							<td><a href = "bbsContent.jsp?id=<%=arr.get(i).getBbs_idx()%>"><%=arr.get(i).getTitle()%></a></td>
 							<td><%=arr.get(i).getBbs_id() %></td>
 							<td><%=arr.get(i).getCreate_date() %></td>
 							<td><%=arr.get(i).getView_cnt() %></td>
@@ -96,12 +111,30 @@ table th{
 				}
 				%>
 				</tbody>
-				
-				<tfoot>
-				
-				</tfoot>
-				
-				<caption>
+				<caption style="caption-side:bottom; height: 50px; vertical-align: center;">
+					
+					<%if(userGroup!=0){ %>
+						<a href="buyBbs.jsp?cp=<%=(userGroup-1)*pageSize+pageSize %>">&lt; &lt;</a>
+					<%} %>
+					<% for(int i=(userGroup*pageSize+1); i<=(userGroup*pageSize+pageSize); i++){
+						%>&nbsp;&nbsp;<a href="buyBbs.jsp?cp=<%=i%>"><%=i %></a>&nbsp;&nbsp;<%
+						if(i==totalPage){
+							break;
+						}
+					}
+					%>
+					<%if(((totalPage/pageSize)-(totalPage%pageSize==0?1:0))!=userGroup){ %>
+						<a href="buyBbs.jsp?cp=<%=(userGroup+1)*pageSize+1%>">&gt; &gt;</a>
+					<%} %>
+				</caption>
+				<caption style="caption-side:bottom; height: 50px; vertical-align: center;">
+					<select>
+						<option>제목</option>
+						<option>작성자</option>
+						<option>내용</option>
+					</select>
+					<input type="text">
+					<input type="submit" value="검색">
 				</caption>
 			</table>  	
 		</div>	          
@@ -109,6 +142,6 @@ table th{
 </div>
 </body>
 <footer>
-<%@include file="../main/footer.jsp" %>
+<%@include file="/page/user/main/footer.jsp" %>
 </footer>
 </html>

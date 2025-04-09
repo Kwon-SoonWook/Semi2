@@ -95,7 +95,7 @@ function searchClick(){
 		<a href="../main/index.jsp"><image src="../main/logo.png" width="30" height="30"></a>
 	</div>
     <div class="search-bar">
-    <form id=searchform method="post" action="search.jsp">
+    <form id=searchform method="post" action="/semi2/page/user/main/search.jsp">
         <input type="text" name="keyword" size="70" placeholder="Search">
         <a href="#" onclick="searchClick();"><i class="fas fa-search"></i></a>
     </form>
