@@ -85,8 +85,9 @@ if(select.equals("title")){
 						<tbody>
 							<%
 							ArrayList<BbsDTO> arr = kdao.findBbs(select, input);
-
+							
 							for (int i = 0; i < arr.size(); i++) {
+								if(arr.get(i).getBbs_div() == 1){
 							%>
 							<tr>
 								<td><%=arr.get(i).getBbs_idx()%></td>
@@ -96,6 +97,7 @@ if(select.equals("title")){
 								<td><%=arr.get(i).getView_cnt()%></td>
 							</tr>
 							<%
+							}
 							}
 							%>
 						</tbody>

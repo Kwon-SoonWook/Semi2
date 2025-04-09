@@ -2,24 +2,28 @@ package com.ksj.login;
 
 import java.sql.*;
 
+import com.oreilly.servlet.MultipartRequest;
+
 public class loginDAO {
 
 	private Connection conn;
 	private PreparedStatement ps;
 	private ResultSet rs;
 	
-	public int signUp(loginDTO dto) {
+	public int signUp(MultipartRequest mr) {
 		try {
+			
+			String img = mr.getFilesystemName("img");
 			conn = com.ksj.db.DB.getConn();
 			String sql = "insert into user_info values(?,?,?,?,?,?,?,sysdate)";
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, dto.getName());
-			ps.setString(2, dto.getId());
-			ps.setString(3, dto.getPwd());
-			ps.setString(4, dto.getEmail());
-			ps.setString(5, dto.getNickname());
-			ps.setString(6, dto.getLocation());
-			ps.setString(7, dto.getProfile_uri());
+			ps.setString(1, mr.getParameter("name"));
+			ps.setString(2, mr.getParameter("id"));
+			ps.setString(3, mr.getParameter("pwd"));
+			ps.setString(4, mr.getParameter("email"));
+			ps.setString(5, mr.getParameter("nickname"));
+			ps.setString(6, mr.getParameter("location"));
+			ps.setString(7, img);
 			
 			int result = ps.executeUpdate();
 			return result;
