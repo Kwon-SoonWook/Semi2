@@ -9,6 +9,7 @@
 <jsp:useBean id="pidao" class="com.ksj.productimages.ProductImagesDAO"></jsp:useBean>
 <jsp:useBean id="pcdao" class="com.ksj.productscomment.ProductsCommentDAO"></jsp:useBean>
 <jsp:useBean id="fdao" class="com.ksj.favoriteproducts.FavoriteProductsDAO"></jsp:useBean>
+<jsp:useBean id="udao" class="com.ksj.user.UserDAO"></jsp:useBean>
 <%
 String sid = (String)session.getAttribute("sid");
 String productsIds = request.getParameter("productsIds");
@@ -18,10 +19,10 @@ if(productsIds==null||productsIds.equals("")){
 }else{
 	prodcutsId = Integer.parseInt(productsIds);
 }
-prodcutsId = 71;
 ProductDTO pdto = pdao.ProductList(prodcutsId);
 ArrayList<ProductImagesDTO> arr= pidao.ProductImagesList(prodcutsId);
 FavoriteProductsDTO fdto = fdao.favoriteProductsList(prodcutsId, sid);
+ArrayList<UserDTO> userArr;
 %>
 <!DOCTYPE html>
 <html>
@@ -163,7 +164,7 @@ width:100%;
 window.onload=function(){
 	<%
 	
-	if(pdto.getSeller_id()!=null||sid.equals(pdto.getSeller_id())){
+	if(sid.equals(pdto.getSeller_id())){
 		%>		
 		document.getElementById("tradestateid").disabled = false;
 		<%
