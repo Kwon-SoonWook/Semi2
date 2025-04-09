@@ -63,6 +63,59 @@ public class ReviewDAO {
 			}
 		}
 	}
-	
+	/**판매자가 작성한 등록한 물품에 후기를 가져오는 메서드*/
+	public ReviewDTO getReviewSeller(String usere_id,String products_id) {
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+			String sql = "select * from user_review where usere_id= ? and products_id= ? ";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, usere_id);
+			ps.setString(2, products_id);
+			rs = ps.executeQuery();
+			ReviewDTO dto = null;
+			if(rs.next()) {
+				String review_id = rs.getString("review_id");
+				String user_id = rs.getString("user_id");
+				int rate = rs.getInt("rate");
+				String review_content = rs.getString("review_content");
+				int review_type = rs.getInt("review_type");
+				dto = new ReviewDTO(review_id, usere_id, user_id, products_id, rate, review_content, review_type);
+			}
+			return dto;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}finally {
+			try {
+				if (rs != null) rs.close();
+	            if (ps != null) ps.close();
+	            if (conn != null) conn.close();				
+			} catch (Exception e2) {}
+		}
+	}
+	/**review에서 리뷰작성 메서드*/
+	public int addReview(ReviewDTO dto) {
+		try {
+			conn=com.ksj.db.ConnectionDB.getConn();
+			String sql = "insert into user_review values(review_idx.nextval,?,?,?,?,?,?)";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, dto.getUsere_id());
+			ps.setString(2, dto.getUser_id());
+			ps.setString(3, dto.getProducts_id());
+			ps.setInt(4, dto.getRate());
+			ps.setString(5, dto.getReview_content());
+			ps.setInt(6, dto.getReview_type());
+			int result = ps.executeUpdate();
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}finally {
+			try {
+	            if (ps != null) ps.close();
+	            if (conn != null) conn.close();				
+			} catch (Exception e2) {}
+		}
+	}
 	
 }

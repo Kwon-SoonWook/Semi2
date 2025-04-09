@@ -1,3 +1,5 @@
+<%@page import="com.ksj.review.ReviewDTO"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.ksj.favoriteproducts.FavoriteProductsDTO"%>
 <%@page import="com.ksj.productscomment.ProductsCommentDTO"%>
 <%@page import="java.util.ArrayList"%>
@@ -10,6 +12,7 @@
 <jsp:useBean id="pcdao" class="com.ksj.productscomment.ProductsCommentDAO"></jsp:useBean>
 <jsp:useBean id="fdao" class="com.ksj.favoriteproducts.FavoriteProductsDAO"></jsp:useBean>
 <jsp:useBean id="udao" class="com.ksj.user.UserDAO"></jsp:useBean>
+<jsp:useBean id="rdao" class="com.ksj.review.ReviewDAO"></jsp:useBean>
 <%
 String sid = (String)session.getAttribute("sid");
 String productsIds = request.getParameter("productsIds");
@@ -22,7 +25,17 @@ if(productsIds==null||productsIds.equals("")){
 ProductDTO pdto = pdao.ProductList(prodcutsId);
 ArrayList<ProductImagesDTO> arr= pidao.ProductImagesList(prodcutsId);
 FavoriteProductsDTO fdto = fdao.favoriteProductsList(prodcutsId, sid);
-ArrayList<UserDTO> userArr;
+ReviewDTO rdto = rdao.getReviewSeller(sid, productsIds);
+SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+if (sid == null) {
+	%>
+	<script>
+	window.alert('로그인 후 이용가능한 서비스입니다.');
+	location.href = '/semi2/page/user/login/login.jsp';
+	</script>
+	<%
+    return;
+}
 %>
 <!DOCTYPE html>
 <html>
@@ -163,11 +176,16 @@ width:100%;
 <script>
 window.onload=function(){
 	<%
-	
 	if(sid.equals(pdto.getSeller_id())){
-		%>		
-		document.getElementById("tradestateid").disabled = false;
-		<%
+		if((rdto!=null)){
+			%>		
+			document.getElementById("tradestateid").disabled = true;
+			<%
+		}else{
+			%>
+			document.getElementById("tradestateid").disabled = false;			
+			<%
+		}
 	}else{
 		%>
 		document.getElementById("tradestateid").disabled = true;
@@ -175,6 +193,15 @@ window.onload=function(){
 	}
 	%>
 	document.getElementById("tradestateid").value = <%=pdto.getTrade_state()%>
+	<%
+	if(rdto==null){	
+		if(pdto.getTrade_state()==2&&sid.equals(pdto.getSeller_id())){
+			%>
+			window.open('/semi2/page/user/review/writeReview.jsp?productsIds=<%=productsIds%>','writeReview','width=450,height=350')		
+			<%
+		}
+	}
+	%>
 }
 function trade(tradestate){
 	location.href = "productTrade_ok.jsp?productId="+<%=prodcutsId%>+"&trade="+tradestate.value;
@@ -287,8 +314,8 @@ function openReWrite(url) {
 											}
 											if(sellerlist.get(i).getComment_div()==0){
 											%>											
-												<%=sellerlist.get(i).getSeller_id() %>
-												<%=sellerlist.get(i).getCreate_date() %>
+												<%=udao.myinfo((sellerlist.get(i).getSeller_id())).get(0).getNickname()%>
+												<%=timeFormat.format(sellerlist.get(i).getCreate_date()) %>
 												<%=sellerlist.get(i).getComment_content() %>
 												<%if(sellerlist.get(i).getSeller_id().equals(sid)){
 													%>
@@ -333,8 +360,8 @@ function openReWrite(url) {
 												}
 												if(buyerlist.get(i).getComment_div()==0){
 												%>
-												<%=buyerlist.get(i).getSeller_id() %>
-												<%=buyerlist.get(i).getCreate_date() %>
+												<%=udao.myinfo(buyerlist.get(i).getSeller_id()).get(0).getNickname() %>
+												<%=timeFormat.format(buyerlist.get(i).getCreate_date()) %>
 												<%=buyerlist.get(i).getComment_content() %>
 												<%if(buyerlist.get(i).getSeller_id().equals(sid)){
 													%>
@@ -359,6 +386,9 @@ function openReWrite(url) {
 						%>
 				</tbody>
 				<tfoot>
+				<%
+				if(pdto.getSeller_id().equals(sid)==false){
+					%>
 					<tr>
 						<td>
 							<div class="comment-box">
@@ -366,7 +396,7 @@ function openReWrite(url) {
 							        <a href="../mypage/mypage.jsp">
 							            <i class="fa-solid fa-circle-user"></i>
 							        </a>
-							        <span class="user-id"><%=sid %></span>
+							        <span class="user-id"><%=udao.myinfo(sid).get(0).getNickname() %></span>
 							    </div>
 							    <input type="hidden" value="<%=sid %>" name="buyerId">
 							    <input type="hidden" value="<%=prodcutsId %>" name="prodcutsId">
@@ -376,6 +406,9 @@ function openReWrite(url) {
 							</div>
 						</td>
 					</tr>
+					<%
+				}
+					%>
 				</tfoot>
 			</table>
 		</div>

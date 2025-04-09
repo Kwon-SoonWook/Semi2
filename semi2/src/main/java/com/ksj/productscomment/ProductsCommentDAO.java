@@ -1,7 +1,6 @@
 package com.ksj.productscomment;
 import java.util.*;
 import java.sql.*;
-import java.sql.Date;
 
 public class ProductsCommentDAO {
 	private Connection conn;
@@ -23,7 +22,7 @@ public class ProductsCommentDAO {
 				String buyerId = rs.getString("buyer_id");
 				String sellerId = rs.getString("seller_id");
 				String commentContent = rs.getString("comment_content");
-				java.sql.Date create_date = rs.getDate("create_date");				
+				java.sql.Timestamp create_date = rs.getTimestamp("create_date");				
 				int ref = rs.getInt("ref");
 				int lev = rs.getInt("lev");
 				int sunbun = rs.getInt("sunbun");
@@ -59,7 +58,7 @@ public class ProductsCommentDAO {
 				int productsId = rs.getInt("products_id");
 				String sellerId = rs.getString("seller_id");
 				String commentContent = rs.getString("comment_content");
-				java.sql.Date create_date = rs.getDate("create_date");				
+				java.sql.Timestamp create_date = rs.getTimestamp("create_date");				
 				int ref = rs.getInt("ref");
 				int lev = rs.getInt("lev");
 				int sunbun = rs.getInt("sunbun");
@@ -79,6 +78,31 @@ public class ProductsCommentDAO {
 			} catch (Exception e2) {}
 		}
 	}
+	/**해당 물품에 댓글적은 구매자작성자들만 가지고오기*/
+	public ArrayList<String> productsCommentBuyerId(int products_id){
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+			String sql = "select DISTINCT(buyer_id) from products_comment where products_id= ? ";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, products_id);
+			rs = ps.executeQuery();
+			ArrayList<String> arr = new ArrayList<String>();
+			while(rs.next()) {
+				String sellerId = rs.getString("buyer_id");
+				arr.add(sellerId);
+			}
+			return arr;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}finally {
+			try {
+				if(rs!=null)rs.close();
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();																
+			} catch (Exception e2) {}
+		}		
+	}
 	/**products_comment_idx 이용해 답글할 댓글 가져오기*/
 	public ProductsCommentDTO productsCommentList(int products_comment_idx){
 		try {
@@ -93,7 +117,7 @@ public class ProductsCommentDAO {
 				String buyerId = rs.getString("buyer_id");
 				String sellerId = rs.getString("seller_id");
 				String commentContent = rs.getString("comment_content");
-				java.sql.Date create_date = rs.getDate("create_date");				
+				java.sql.Timestamp create_date = rs.getTimestamp("create_date");				
 				int ref = rs.getInt("ref");
 				int lev = rs.getInt("lev");
 				int sunbun = rs.getInt("sunbun");
@@ -126,7 +150,7 @@ public class ProductsCommentDAO {
 				String buyerId = rs.getString("buyer_id");
 				String sellerId = rs.getString("seller_id");
 				String commentContent = rs.getString("comment_content");
-				java.sql.Date create_date = rs.getDate("create_date");								
+				java.sql.Timestamp create_date = rs.getTimestamp("create_date");								
 				int ref = rs.getInt("ref");
 				int lev = rs.getInt("lev");
 				int sunbun = rs.getInt("sunbun");

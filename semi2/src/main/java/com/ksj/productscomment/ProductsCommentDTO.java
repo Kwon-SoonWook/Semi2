@@ -1,6 +1,5 @@
 package com.ksj.productscomment;
 import java.sql.*;
-import java.sql.Date;
 
 public class ProductsCommentDTO {
     private int products_comment_idx;
@@ -8,7 +7,7 @@ public class ProductsCommentDTO {
     private String buyer_id;
     private String seller_id;
     private String comment_content;
-    private Date create_date;
+    private java.sql.Timestamp create_date;
     private int ref;//대댓글
     private int lev;
     private int sunbun;
@@ -19,7 +18,7 @@ public class ProductsCommentDTO {
 	}
 
 	public ProductsCommentDTO(int products_comment_idx, int products_id, String buyer_id, String seller_id,
-			String comment_content, Date create_date, int ref, int lev, int sunbun, int comment_div) {
+			String comment_content, java.sql.Timestamp create_date, int ref, int lev, int sunbun, int comment_div) {
 		super();
 		this.products_comment_idx = products_comment_idx;
 		this.products_id = products_id;
@@ -57,11 +56,11 @@ public class ProductsCommentDTO {
 		this.comment_content = comment_content;
 	}
 
-	public Date getCreate_date() {
+	public java.sql.Timestamp getCreate_date() {
 		return create_date;
 	}
 
-	public void setCreate_date(Date create_date) {
+	public void setCreate_date(java.sql.Timestamp create_date) {
 		this.create_date = create_date;
 	}
 

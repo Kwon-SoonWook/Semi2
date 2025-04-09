@@ -15,13 +15,13 @@
 <link rel="stylesheet" type="text/css" href="mainLayout.css">
 <style>
 section {
-	width: 680px;
+	
 }
 
 
 body {
 	margin: 0px auto;
-	width: 680px;
+    height: 100%;
 }
 </style>
 <script>
@@ -154,7 +154,7 @@ if(pdto==null||pdto.equals("")){
 						<th>상품이미지(최대5개)</th>
 						<td>
 					<% for(int i=0;i<5;i++){ %>
-						<input type="file" name="img<%=i %>" accept="image/*">
+						<input type="file" name="img<%=i %>" accept="image/*" onchange="">
 					<%	}  %>	
 						</td>
 					</tr>
