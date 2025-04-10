@@ -70,5 +70,24 @@ public class ProductImagesDAO {
 			} catch (Exception e2) {}
 		}
 	}
-
+	/**물품아이디에 저장되어있는 이미지 불러온뒤 변경할때 삭제하는 메서드*/
+	public int deleteLoadProductImages(int productId,String product_images_id) {
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+			String sql = "delete from product_images where product_id = ? product_images_id = ? ";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, productId);
+			ps.setString(2, product_images_id);
+			int result = ps.executeUpdate();
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				if(ps!=null)ps.close();
+				if(conn!=null)conn.close();																
+			} catch (Exception e2) {}
+		}
+	}
 }

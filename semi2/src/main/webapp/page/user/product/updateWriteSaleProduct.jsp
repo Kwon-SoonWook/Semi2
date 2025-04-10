@@ -1,3 +1,4 @@
+<%@page import="com.ksj.productimages.ProductImagesDTO"%>
 <%@page import="com.ksj.product.ProductDTO"%>
 <%@page import="com.ksj.tempproduct.TempProductDTO"%>
 <%@page import="java.util.ArrayList"%>
@@ -8,6 +9,7 @@
 <jsp:useBean id="cdao" class="com.ksj.category.CategoryDAO"></jsp:useBean>
 <jsp:useBean id="pdao" class="com.ksj.product.ProductDAO"></jsp:useBean>
 <jsp:useBean id="tpdao" class="com.ksj.tempproduct.TempProductDAO"></jsp:useBean>
+<jsp:useBean id="pidao" class="com.ksj.productimages.ProductImagesDAO"></jsp:useBean>>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -79,6 +81,7 @@ function show(){
         document.getElementById("imageContainer"+idx).style.display = "none"; // 미리보기 숨기기
         document.getElementById("imageUpload"+idx).style.display = "block"; // 파일 선택 버튼 다시 표시
         document.getElementById("imageUpload"+idx).value = "";
+        document.getElementById("loadimage"+idx).value="";
         if(event){
         	event.preventDefault();
         }
@@ -95,6 +98,11 @@ if(productIds==null||productIds.equals("")){
 	productId = Integer.parseInt(productIds);
 }
 ProductDTO pdto = pdao.ProductList(productId);
+ArrayList<ProductImagesDTO> imgArr = pidao.ProductImagesList(productId);
+//for(int i=imgArr.size();i<5;i++){
+//	imgArr.add(null);
+//}
+//System.out.println(imgArr.get(0).getProductImagesId());
 if(pdto==null||pdto.equals("")){
 	if(tpdto!=null){
 		%>
@@ -132,7 +140,7 @@ if(pdto==null||pdto.equals("")){
 	<%
 	ArrayList<CategoryDTO> arr = cdao.categoryList();
 	%>
-			<form name="writeSaleProduct" action="writeSaleProduct_ok.jsp" method="post" enctype="multipart/form-data">
+			<form name="writeSaleProduct" action="writeSaleProduct_ok.jsp" >
 			<input type="hidden" name ="productId" value="<%=productId%>">
 				<table>
 					<tr>
@@ -143,17 +151,33 @@ if(pdto==null||pdto.equals("")){
 						<th>상품이미지(최대5개)</th>
 						<td>
 						<div style="display: flex; align-items: center; gap: 10px;">
-							<% for(int i=0;i<5;i++){ %>
-						    <input type="file" name="img<%=i %>" id="imageUpload<%=i %>" accept="image/*" onchange="previewImage(event,<%=i %>)" style="display: block;">
-						    <div id="imageContainer<%=i %>" style="position: relative; display: none;">
-						        <img id="previewImage<%=i %>" src="" style="width: 150px; height: auto;">
-						        <button id="removeImage<%=i %>" onclick="removePreview(<%=i %>)" style="
-						            position: absolute; top: 5px; right: 5px; background: red; color: white;
-						            border: none; padding: 5px; cursor: pointer; font-size: 14px;">
-						            ✖
-						        </button>
-						    </div>
-							<%	}  %>	
+						<%
+							for(int i=0;i<imgArr.size();i++){ 
+								%>
+								    <input type="file" name="img<%=i %>" id="imageUpload<%=i %>" accept="image/*" onchange="previewImage(event,<%=i %>)" style="display:<%=imgArr.get(i).getProductImagesId()!=null?"none":"block" %>;">
+								    <div id="imageContainer<%=i %>" style="position: relative; display: <%=imgArr.get(i).getProductImagesId()!=null?"block" : "none" %>;">
+								        <img id="previewImage<%=i %>" alt="" src="img/<%=imgArr.get(i).getProductImagesId()%>" style="width: 150px; height: auto;">
+								        <input type="hidden" name="loadimage<%=i %>" id="loadimage<%=i %>" value="<%=imgArr.get(i).getProductImagesId()%>">
+								        <button id="removeImage<%=i %>" onclick="removePreview(<%=i %>)" style="
+								            position: absolute; top: 5px; right: 5px; background: red; color: white;
+								            border: none; padding: 5px; cursor: pointer; font-size: 14px;">
+								            ✖
+								        </button>
+								    </div>
+									<%	}														
+							for(int i=imgArr.size();i<5;i++){ 
+								%>
+								    <input type="file" name="img<%=i %>" id="imageUpload<%=i %>" accept="image/*" onchange="previewImage(event,<%=i %>)" style="display: block;">
+								    <div id="imageContainer<%=i %>" style="position: relative; display: none;">
+								        <img id="previewImage<%=i %>" src="" style="width: 150px; height: auto;">
+								        <button id="removeImage<%=i %>" onclick="removePreview(<%=i %>)" style="
+								            position: absolute; top: 5px; right: 5px; background: red; color: white;
+								            border: none; padding: 5px; cursor: pointer; font-size: 14px;">
+								            ✖
+								        </button>
+								    </div>
+									<%	}							
+						%>	
 						</div>
 						</td>					
 						</tr>
@@ -199,7 +223,7 @@ if(pdto==null||pdto.equals("")){
 					<tr>
 						<td colspan="3" align="right"><input type="reset" value="초기화">
 							<input type="submit" name="tempsave" value="임시저장" onclick="return show()" formaction="temporarySave.jsp"> 
-							<input type="submit" name="save" value="저장" onclick="return check()" formaction="writeSaleProduct_ok.jsp"></td>
+							<input type="submit" name="save" value="수정하기" onclick="return check()" formaction="updateWriteSaleProduct_ok.jsp"></td>
 					</tr>
 				</table>
 			</form>

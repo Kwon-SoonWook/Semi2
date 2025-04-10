@@ -270,7 +270,7 @@ public class ProductDAO {
 	public int upadteProductBuyerId(String buyer_id, int products_id) {
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
-			String sql = "UPDATE products SET = ? where products_id = ?";
+			String sql = "UPDATE products SET buyer_id = ? where products_id = ?";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, buyer_id);
 			ps.setInt(2, products_id);
