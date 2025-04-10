@@ -27,7 +27,7 @@ h2 {
 }
 
 section {
-	width: 1000px;
+	width: 900px;
 	margin: auto;
 }
 

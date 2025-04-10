@@ -62,6 +62,41 @@ th, td {
 th {
 	background-color: #f1f2f6;
 }
+
+input[type="submit"] {
+	padding: 10px 20px;
+	background-color: #8c8c8c;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+input[type="reset"] {
+	padding: 10px 20px;
+	background-color: #8c8c8c;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+input[type="text"] {
+	padding: 10px;
+	font-size: 14px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+textarea {
+	padding: 10px;
+	font-size: 14px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	margin-right: 10px;
+}
 </style>
 </head>
 <body>
@@ -82,12 +117,12 @@ th {
 						<tr>
 							<th>제목</th>
 							<td colspan='3'>
-								<input type='text' name='ask_title' size='45' value='RE:<%=ask_title%>'>
+								<input type='text' name='ask_title' size='55' value='RE:<%=ask_title%>'>
 							</td>
 						</tr>
 						<tr>
 							<td colspan='4'>
-								<textarea rows="8" cols="53" name='ask_content'></textarea>
+								<textarea rows="10" cols="70" name='ask_content'></textarea>
 							</td>
 						</tr>
 						<tr>
