@@ -29,6 +29,7 @@ body {
 .sidebar h2 {
     text-align: center;
     margin-bottom: 30px;
+    color: white;
 }
 
 .sidebar ul {

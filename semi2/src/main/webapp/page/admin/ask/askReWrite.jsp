@@ -16,199 +16,61 @@ String sunbun = request.getParameter("sunbun");
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel='stylesheet' type='text/css' href='/semi2/css/adminLayout.css'>
+<link rel='stylesheet' type='text/css' href='/semi2/page/admin/adminLayout.css'>
 <style>
-h2{
+.container1 {
+	display: flex;
+}
+
+.main-content1 {
+	flex: 1;
+	background-color: #fff;
+	padding: 30px;
+	box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+h2 {
+	text-align: center;
+	margin-bottom: 30px;
+	color: #2f3640;
+}
+
+section {
+	width: 600px;
+	margin: auto;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+/* 예: userInfoList.jsp에서 테이블이 있을 경우를 대비한 기본 테이블 스타일 */
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 20px;
+}
+
+th, td {
+	border: 1px solid #dcdde1;
+	padding: 10px;
 	text-align: center;
 }
-table{
-	width: 800px;
-	margin: 0px auto;
-	border-top: 3px solid gray;
-	border-bottom: 3px solid gray;
-	font-size: 12px;
-}
-table th{
-	background-color: silver;
-}
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
-body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    min-height: 100vh;
-    background-color: #f4f7fc;
-}
-
-.container {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-}
-
-.sidebar {
-    width: 250px;
-    background-color: #2c3e50;
-    color: white;
-    padding: 20px;
-    height: 100vh;
-}
-
-.sidebar h2 {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.sidebar ul {
-    list-style-type: none;
-}
-
-.sidebar ul li {
-    margin-bottom: 20px;
-}
-
-.sidebar ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-}
-
-.sidebar ul li a:hover {
-    color: #3498db;
-}
-
-.content {
-    flex-grow: 1;
-    padding: 30px;
-}
-
-h1 {
-    color: #333;
-    font-size: 2em;
-    margin-bottom: 30px;
-}
-
-.cards {
-    display: flex;
-    justify-content: space-between;
-}
-
-.card {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    width: 30%;
-    padding: 20px;
-    text-align: center;
-}
-
-.card-icon {
-    font-size: 40px;
-    margin-bottom: 20px;
-    color: #3498db;
-}
-
-.card-info h3 {
-    font-size: 1.2em;
-    margin-bottom: 10px;
-}
-
-.card-info p {
-    font-size: 1.5em;
-    font-weight: bold;
-}
-
-.container {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-}
-
-.sidebar {
-    width: 250px;
-    background-color: #2c3e50;
-    color: white;
-    padding: 20px;
-    height: 100vh;
-}
-
-.sidebar h2 {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.sidebar ul {
-    list-style-type: none;
-}
-
-.sidebar ul li {
-    margin-bottom: 20px;
-}
-
-.sidebar ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-}
-
-.sidebar ul li a:hover {
-    color: #3498db;
-}
-
-.content {
-    flex-grow: 1;
-    padding: 30px;
-}
-
-h1 {
-    color: #333;
-    font-size: 2em;
-    margin-bottom: 30px;
-}
-
-.cards {
-    display: flex;
-    justify-content: space-between;
-}
-
-.card {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    width: 30%;
-    padding: 20px;
-    text-align: center;
-}
-
-.card-icon {
-    font-size: 40px;
-    margin-bottom: 20px;
-    color: #3498db;
-}
-
-.card-info h3 {
-    font-size: 1.2em;
-    margin-bottom: 10px;
-}
-
-.card-info p {
-    font-size: 1.5em;
-    font-weight: bold;
+th {
+	background-color: #f1f2f6;
 }
 </style>
 </head>
 <body>
 <%@include file="../main/adminHeader.jsp" %>
-	<div class="container">
+	<div class="container1">
         <%@include file="../main/adminCategory.jsp" %>
-       	 <main class="main-content">
-			<section style="width: 800px; margin: auto;">
+       	 <main class="main-content1">
+			<section>
 				<article>
-				<h2></h2>
 				<form name='askReWrite' action='askReWrite_ok.jsp'>
 				<input type='hidden' name='ask_id' value='<%=ask_id%>'>
 				<input type='hidden' name='ask_writer' value='<%=ask_writer%>'>
