@@ -173,7 +173,7 @@ section:hover > div:nth-of-type(1) {
 <script src="https://kit.fontawesome.com/f0cba69f8f.js" crossorigin="anonymous"></script>
 <%
 
-String id = (String)session.getAttribute("sid");
+String categoryid = (String)session.getAttribute("sid");
 
 %>
 </head>
@@ -189,13 +189,13 @@ String id = (String)session.getAttribute("sid");
      	
         <div class="menu-item"><a href="/semi2/page/user/main/index.jsp"><i class="fas fa-home"></i><span> 홈</span></a></div>
         <div class="menu-item"><a href="/semi2/page/user/bbs/noticeBbs.jsp"><i class="fa-solid fa-bullhorn"></i><span> 공지사항</span></a></div>
-        <%if(id != null){ %>
+        <%if(categoryid != null){ %>
         <div class="menu-item"><a href="/semi2/page/user/mypage/mypage.jsp"><i class="fa-solid fa-circle-question"></i><span> 문의사항</span></a></div>
         <div class="menu-item"><a href="/semi2/page/user/product/writeSaleProduct.jsp"><i class="fa-solid fa-pen-to-square"></i><span> 글쓰기</span></a></div>
         <%} %>
         <div class="menu-item"><a href="/semi2/page/user/bbs/communityBbs.jsp"><i class="fa-solid fa-comments"></i><span> 커뮤니티</span></a></div>
         <div class="menu-item"><a href="/semi2/page/user/bbs/buyBbs.jsp"><i class="fa-solid fa-cart-shopping"></i><span> 삽니다</span></a></div>
-        <%if("admin".equals(id)){ %>
+        <%if("admin".equals(categoryid)){ %>
         <div class="menu-item"><a href="/semi2/page/admin/main/adminIndex.jsp"><i class="fa-solid fa-user-tie"></i><span> 관리자페이지</span></a></div>
    		<%} %>
     </nav>
