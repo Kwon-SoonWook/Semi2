@@ -1,3 +1,5 @@
+<%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
+<%@page import="com.oreilly.servlet.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -5,7 +7,12 @@
     <jsp:setProperty property="*" name="kdto"/>
     <jsp:useBean id="kdao" class = "com.ksj.login.loginDAO"></jsp:useBean>
 <%
-int result = kdao.signUp(kdto);    
+String savepath = request.getRealPath("/page/user/login/profile");
+
+MultipartRequest mr =
+new MultipartRequest(request,savepath,1024*1024*30,"utf-8",new DefaultFileRenamePolicy());
+
+int result = kdao.signUp(mr);    
 String msg = result>0?"등록완료":"등록실패";
 
  
