@@ -66,7 +66,7 @@ String sname = (String)session.getAttribute("sname");
 
 <header class="top-bar">
 	<div>
-		<a href="/semi2/page/admin/main/adminIndex.jsp"><image src="/semi2/page/user/main/logo.png" width="30" height="30"></a>
+		<a href="/semi2/page/admin/main/adminIndex.jsp"><image src="/semi2/page/user/main/logo.png" width="40" height="40"></a>
 	</div>
 	<div class="search-bar">
 	</div>

@@ -50,13 +50,27 @@ public class ProductDAO {
 		}
 	}
 	/*검색물품 찾기*/
-	public ArrayList<ProductDTO> SearchProductList(String keyword) {
+	public ArrayList<ProductDTO> SearchProductList(String keyword, String sort) {
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
-			String sql = "select * from products where title like ? order by create_date desc";
+			String sql = "select * from products where title like ?";
+			
+			switch(sort) {
+			case "oldest" :
+				sql += " order by create_date asc";
+				break;
+			case "lowprice" :
+				sql += " order by price asc";
+				break;
+			case "highprice" :
+				sql += " order by price desc";
+				break;
+			default:
+				sql += " order by create_date desc";
+				break;
+			}
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, "%"+keyword+"%");
-			ProductDTO dto = null;
 			rs = ps.executeQuery();
 			ArrayList<ProductDTO> arr = new ArrayList<ProductDTO>();
 			while(rs.next()) {
@@ -75,7 +89,7 @@ public class ProductDAO {
 				java.sql.Date create_date = rs.getDate("create_date");
 				java.sql.Date update_date = rs.getDate("update_date");
 				String image_uri = rs.getString("image_uri");
-				dto = new ProductDTO(products_id, category_id, buyer_id, seller_id, price, title, content, location, trade_state, bbs_state, thumb_image, view_cnt, create_date, update_date, image_uri);
+				ProductDTO dto = new ProductDTO(products_id, category_id, buyer_id, seller_id, price, title, content, location, trade_state, bbs_state, thumb_image, view_cnt, create_date, update_date, image_uri);
 				arr.add(dto);
 			}
 			return arr;
@@ -270,7 +284,7 @@ public class ProductDAO {
 	public int upadteProductBuyerId(String buyer_id, int products_id) {
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
-			String sql = "UPDATE products SET = ? where products_id = ?";
+			String sql = "UPDATE products SET buyer_id = ? where products_id = ?";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, buyer_id);
 			ps.setInt(2, products_id);
@@ -474,5 +488,4 @@ public class ProductDAO {
 			}
 		}
 	}
-	
 }

@@ -64,12 +64,24 @@ if(cp_s == null || cp_s.equals("")){
 int cp = Integer.parseInt(cp_s);
 int userGroup = cp/pageSize;
 if(cp % pageSize == 0) userGroup--;
+
+request.setCharacterEncoding("UTF-8");
+String keyword = request.getParameter("keyword");
+if(keyword==null){
+	keyword="";
+}
+
+String select = request.getParameter("select");
+if(select==null){
+	select="title";
+}
 %>
 <body>
 <%@include file="/page/user/main/header.jsp" %>
 <div id="container">
     <%@include file="/page/user/main/category.jsp" %>
 	<main class="main-content">
+		<form name="buyFind" method="get" action="">
 		<div class="page">
 			<h2>삽니다 게시판</h2>
 			<table>
@@ -86,7 +98,7 @@ if(cp % pageSize == 0) userGroup--;
 					</tr>
 				</thead>
 				<tbody>
-				<% 
+				<%
 				ArrayList<BbsDTO> arr = bdao.bbsList(bbsdiv, cp, listSize);
 				if(arr == null || arr.size()==0){
 					%>
@@ -108,7 +120,7 @@ if(cp % pageSize == 0) userGroup--;
 						</tr>
 						<%
 					}
-				}
+				}	
 				%>
 				</tbody>
 				<caption style="caption-side:bottom; height: 50px; vertical-align: center;">
@@ -128,16 +140,19 @@ if(cp % pageSize == 0) userGroup--;
 					<%} %>
 				</caption>
 				<caption style="caption-side:bottom; height: 50px; vertical-align: center;">
-					<select>
-						<option>제목</option>
-						<option>작성자</option>
-						<option>내용</option>
-					</select>
-					<input type="text">
+				
+					<input type="hidden" name="keyword" value="<%=keyword %>">
+						<select id="select" name="select" onchange="this.form.submit()">
+							<option value="title" <%="title".equals(request.getParameter("sort"))?"selected":"" %>>제목</option>
+							<option value="writer" <%="writer".equals(request.getParameter("sort"))?"selected":"" %>>작성자</option>
+						</select>
+					<input type="text" name="input">
 					<input type="submit" value="검색">
+
 				</caption>
 			</table>  	
-		</div>	          
+		</div>
+		</form>	          
 	</main>   
 </div>
 </body>

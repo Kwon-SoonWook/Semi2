@@ -17,7 +17,19 @@ request.setCharacterEncoding("utf-8");
 <jsp:useBean id="tpdao" class="com.ksj.tempproduct.TempProductDAO"></jsp:useBean>
 <%
 	String sid = (String)session.getAttribute("sid");
+	String productId_s = request.getParameter("productId");
+	int productId = 0;
+	if(productId_s!=null&&productId_s.length()!=0){
+		productId = Integer.parseInt(productId_s);
+	}
 	String savepath = request.getRealPath("/page/user/product/img");
+	ArrayList<String> loadImg = new ArrayList<String>();
+	for(int i=0; i<5; i++){
+		if(request.getParameter("loadimg"+i)!=null){
+			loadImg.add(request.getParameter("loadimg"+i));
+		}
+	}
+	ArrayList<ProductImagesDTO> imgArr = idao.ProductImagesList(productId);
 	ArrayList saveFiles = new ArrayList();
 	ArrayList images = new ArrayList();
 	MultipartRequest mr = new MultipartRequest(request,savepath,1024*1024*20,"utf-8",new DefaultFileRenamePolicy());
@@ -57,7 +69,7 @@ request.setCharacterEncoding("utf-8");
 	}
 	String imagePath = (images.size() > 0) ? (String)images.get(0) : ""; 
 	ProductDTO pdto = new ProductDTO(0,categoryid,buyerId,sellerId,price,title,content,location,tradeState,bbsState,imagePath,0,null,null,savepath);
-	String msgProduct = pdao.productInsert(pdto)>0?"등록 성공":"등록 실패";
+	String msgProduct = pdao.upadteProduct(pdto)>0?"등록 성공":"등록 실패";
 	for(int i=0;i<images.size();i++){
 		ProductImagesDTO idto = new ProductImagesDTO((String)images.get(i),pdao.searchProductIdx());
 		idao.addProductImages(idto);
@@ -68,4 +80,3 @@ request.setCharacterEncoding("utf-8");
 window.alert('<%=msgProduct%>');
 location.href='../main/index.jsp';
 </script>
-

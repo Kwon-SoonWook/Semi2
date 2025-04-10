@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel='stylesheet' type='text/css' href='/semi2/css/adminLayout.css'>
+<link rel='stylesheet' type='text/css' href='/semi2/page/admin/adminLayout.css'>
 </head>
 <body>
 <%@include file="../main/adminHeader.jsp" %>

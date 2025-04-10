@@ -3,6 +3,7 @@
 <%@ page import="java.util.*" %>
 <%@ page import="com.ksj.user.*" %>
 <jsp:useBean id="udao" class="com.ksj.user.UserDAO"></jsp:useBean>
+
 <%
 String input = request.getParameter("input");
 String select_str = request.getParameter("select");
@@ -44,12 +45,12 @@ if(cp%pageSize==0) userGroup--;
 <table>
 	<thead>
 		<tr>
-			<th style="width: 100px; text-align: center;">ID</th>
-			<th style="width: 100px; text-align: center;">이름</th>
-			<th style="width: 80px; text-align: center;">닉네임</th>
+			<th style="width: 120px; text-align: center;">ID</th>
+			<th style="width: 120px; text-align: center;">이름</th>
+			<th style="width: 120px; text-align: center;">닉네임</th>
 			<th style="width: 150px; text-align: center;">주소</th>
 			<th>E-mail</th>
-			<th style="width: 80px; text-align: center;">가입일자</th>
+			<th style="width: 120px; text-align: center;">가입일자</th>
 			<th style="width: 30px;"><input type='submit' value='삭제'></th>
 		</tr>
 	</thead>
@@ -81,7 +82,7 @@ if(cp%pageSize==0) userGroup--;
 	</tbody>
 	<tfoot>
 		<tr>
-			<td colspan='6' align='center'>
+			<td colspan='7' align='center'>
 			<%
 			
 			if(userGroup!=0){
