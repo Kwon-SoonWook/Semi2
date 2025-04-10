@@ -66,7 +66,7 @@ if(sort==null){
 	            <div class="photo-card">
 		            <a href="/semi2/page/user/product/saleProductView.jsp?productsIds=<%=arr.get(i).getProducts_id()%>">
 			            <%if(arr.get(i).getThumb_image()!=null) {%>
-			        		<img src="/semi2/page/uhttp://localhost:9090/semi2/page/user/bbs/communityBbs.jspser/product/img/<%=arr.get(i).getThumb_image()%>"class="thumbnail">
+			        		<img src="/semi2/page/user/product/img/<%=arr.get(i).getThumb_image()%>"class="thumbnail">
 						<%}else{ %>
 							<div class="thumbnail"></div>
 						<%} %>

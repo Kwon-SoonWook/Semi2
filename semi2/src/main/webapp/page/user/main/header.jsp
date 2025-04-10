@@ -92,7 +92,7 @@ function searchClick(){
 </script>
 <header class="top-bar">
 	<div>
-		<a href="../main/index.jsp"><image src="../main/logo.png" width="30" height="30"></a>
+		<a href="/semi2/page/user/main/index.jsp"><image src="/semi2/page/user/main/logo.png" width="30" height="30"></a>
 	</div>
     <div class="search-bar">
     <form id=searchform method="post" action="/semi2/page/user/main/search.jsp">
@@ -102,11 +102,11 @@ function searchClick(){
     </div>
      <%if(headname == null){ %>
      	<div class="login-button">
-   	 		<a href="../login/login.jsp" class="btn-login"><i class="fa-regular fa-circle-user" style="font-size: 20px;"></i>로그인</a>
+   	 		<a href="/semi2/page/user/login/login.jsp" class="btn-login"><i class="fa-regular fa-circle-user" style="font-size: 20px;"></i>로그인</a>
     	</div>
     <%}else{ %>
     	<div class="mypage">
-	    	<a href="../mypage/mypage.jsp"><%=headnickname %>님 &nbsp;
+	    	<a href="/semi2/page/user/mypage/mypage.jsp"><%=headnickname %>님 &nbsp;
 	    	<%if(!arr2.isEmpty() && arr2.get(0).getProfile_uri() != null){ %>
 				<img src="/<%=arr2.get(0).getProfile_uri() %>" alt="프로필 이미지" width="40" height="40" style=border-radius:50% />
 		    <%}else{ %>
@@ -116,7 +116,7 @@ function searchClick(){
 	    	&emsp;
     	</div>
     	<div class="logout-button">
-    		<a href="../login/logout.jsp" class="btn-logout"><i class="fa-solid fa-right-from-bracket" style="font-size: 20px;"></i>로그아웃</a>
+    		<a href="/semi2/page/user/login/logout.jsp" class="btn-logout"><i class="fa-solid fa-right-from-bracket" style="font-size: 20px;"></i>로그아웃</a>
     	</div>
     <%} %>
     
