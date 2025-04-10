@@ -3,6 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:useBean id="pcdao" class="com.ksj.productscomment.ProductsCommentDAO"></jsp:useBean>
+<jsp:useBean id="udao" class="com.ksj.user.UserDAO"></jsp:useBean>
 <%
 String productsId_s = request.getParameter("productsIds");
 int productsId = 0;
@@ -42,7 +43,7 @@ ArrayList<String> arr= pcdao.productsCommentBuyerId(productsId);
 }
 </style>
 <script>
-window.onload=function(){	
+window.onunload=function(){	
 }
 </script>
 </head>
@@ -53,10 +54,9 @@ window.onload=function(){
 			<input type="hidden" name=products_id value=<%=productsId %>>
 				<h2>거래자 선택</h2>
 				<select name="user_id">
-				<option>거래자선택</option>
 				<%
 				for(int i=0;i<arr.size();i++){
-					%><option value="<%=arr.get(i)%>"><%=arr.get(i)%></option><%
+					%><option value="<%=arr.get(i)%>"><%=udao.myinfo(arr.get(i)).get(0).getNickname()%></option><%
 				}
 				%>
 				</select>				
@@ -77,3 +77,10 @@ window.onload=function(){
 	</section>
 </body>
 </html>
+<script>
+window.onunload = function() {
+    if (window.opener) {
+        window.opener.document.getElementById("tradestateid").value = "0";
+    }
+};
+</script>

@@ -36,13 +36,14 @@ if (sid == null) {
 	<%
     return;
 }
+String reviewValue = request.getParameter("reviewValue");
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="/page/user/main/mainLayout.css">
+<link rel="stylesheet" type="text/css" href="/semi2/page/user/main/mainLayout.css">
 <style>
 /* 전체 레이아웃: 이미지 왼쪽, 내용 오른쪽 */
 .sale-product-container {
@@ -197,7 +198,7 @@ window.onload=function(){
 	if(rdto==null){	
 		if(pdto.getTrade_state()==2&&sid.equals(pdto.getSeller_id())){
 			%>
-			window.open('/semi2/page/user/review/writeReview.jsp?productsIds=<%=productsIds%>','writeReview','width=450,height=350')		
+			var popup = window.open('/semi2/page/user/review/writeReview.jsp?productsIds=<%=productsIds%>','writeReview','width=450,height=350');		
 			<%
 		}
 	}
@@ -225,10 +226,11 @@ function openReWrite(url) {
 }
 </script>
 </head>
-<body>
 <%@include file="/page/user/main/header.jsp"%>
-<section>
-	<article>
+<body>
+<div class="container">
+	<%@include file="/page/user/main/category.jsp" %>
+    <main class="main-content">
 		<form name="saleProductiVeiw" action="productComment_ok.jsp">
 		<div class="sale-product-container">
 			<div class="image-container">
@@ -259,7 +261,7 @@ function openReWrite(url) {
 				<div class="product-actions">
 				<% if(sid!=null&&sid.equals(pdto.getSeller_id())){
 					%>
-				<input type="button" name="update_products" value="수정하기" onclick="location.href='writeSaleProduct.jsp?productId=<%=prodcutsId%>'">
+				<input type="button" name="update_products" value="수정하기" onclick="location.href='updateWriteSaleProduct.jsp?productId=<%=prodcutsId%>'">
 				<input type="button" name="delete_products" value="삭제하기" onclick="location.href='deleteSaleProduct.jsp?productId=<%=prodcutsId%>'">
 				<input type="button" name="hidden_products" value="<%=pdto.getBbs_state()==0?"숨기기":"보이기" %>" onclick="location.href='hideSaleProduct.jsp?productId=<%=prodcutsId%>'">
 					<%
@@ -413,8 +415,10 @@ function openReWrite(url) {
 			</table>
 		</div>
 		</form>
-	</article>
-</section>
-<%@include file="/page/user/main/footer.jsp" %>
+    </main>   
+</div>
 </body>
+<footer>
+<%@include file="/page/user/main/footer.jsp" %>
+</footer>
 </html> 
