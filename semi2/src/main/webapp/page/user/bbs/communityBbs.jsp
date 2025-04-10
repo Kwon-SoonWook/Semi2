@@ -53,14 +53,17 @@ String indexid = (String) session.getAttribute("sid");
 String select = request.getParameter("select");
 String input = request.getParameter("find");
 
-select = "0";
-if(select.equals("title")){
-	select = "1";
-}else if(select.equals("writer")){
+if(select==null){
+	select = "0";
+}
+if(select.equals("title")&&input!=""){
 	select = "2";
+}else if(select.equals("writer")&&input!=""){
+	select = "1";
 }else{
 	select = "0";
 }
+
 %>
 </head>
 <%@include file="/page/user/main/header.jsp"%>
@@ -104,7 +107,7 @@ if(select.equals("title")){
 						
 					</table>
 						<div class = "right-write">
-						<form action = "communityBbs.jsp?input=<%=input%>&select=<%=select%>">
+						<form action = "communityBbs.jsp">
 						<select name = "select">
 						<option value = "title">제목</option>
 						<option value = "writer">작성자</option>
@@ -115,7 +118,6 @@ if(select.equals("title")){
 						<input type="submit" value="글쓰기" onclick="location.href='writeBbsPost.jsp'">
 					</div>
 					<div style="text-align: center; padding-top:5px;">
-						
 					</div>
 				</article>
 			</section>

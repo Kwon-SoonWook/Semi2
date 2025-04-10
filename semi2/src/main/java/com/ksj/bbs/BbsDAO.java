@@ -115,9 +115,9 @@ public class BbsDAO {
 				ps = conn.prepareStatement(sql);
 				ps.setString(1, input);
 			}else if(cate==2) {
-				sql = "select * from bbs where title = ?";
+				sql = "select * from bbs where title like ?";
 				ps = conn.prepareStatement(sql);
-				ps.setString(1, input);
+				ps.setString(1, "%"+input+"%");
 			}
 			
 			
@@ -265,5 +265,84 @@ public class BbsDAO {
 			}
 		}
 		
+	}
+	
+	
+	public void viewCnt(int idx) {
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+			
+			String sql = "update bbs set view_cnt = view_cnt+1 where bbs_idx = ? ";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, idx);
+			
+			int count = ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				ps.close();
+				conn.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+		}
+	}
+	
+	public int cmtUpload(int idx,String comm) {
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+			
+			String sql = "insert into bbs_comment values(bbs_comment_idx.nextval,?,?,?,?,?)";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, comm);
+			ps.setInt(2, idx);
+			ps.setInt(3, 0);
+			ps.setInt(4, 0);
+			ps.setInt(5, 0);
+			
+			int count = ps.executeUpdate();
+			return count;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				ps.close();
+				conn.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+		}
+	}
+	
+	public void showCmt(int idx) {
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+			
+			String sql = "select * from bbs_comment where idx = ?";
+			ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, idx);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				
+				int comment_idx = rs.getInt("bbs_comment_idx");
+				String content = rs.getString("comment_content");
+				int bbs_idx  = rs.getInt("bbs_idx");
+				int ref = rs.getInt("ref");
+				int lev = rs.getInt("lev");
+				int sunbun = rs.getInt("sunbun");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+		}
 	}
 }
