@@ -43,7 +43,14 @@ String rid = (String)session.getAttribute("sid");
 //총 게시물 수
 int reviewCnt = rdao.getReviewCnt(rid); // db로부터 조회
 session.setAttribute("reviewCnt", reviewCnt);
+
 %>
+<script>
+function reviewWrite(reviewid){
+	 window.open("/semi2/page/user/review/sallerWriteReview.jsp?review_id="+reviewid, 'popup', 'width=450; height=350');
+}
+</script>
+
 <body>
 <section>
 <article>
@@ -62,7 +69,8 @@ session.setAttribute("reviewCnt", reviewCnt);
 			        <h3><%=arr.get(i).getUsere_id() %></h3>
 			        <p><%=arr.get(i).getReview_content() %></p>
 			        <p><%=arr.get(i).getRate() %></p>
-			        <input type="button" value="답변하기" onclick="">
+			        <p><%=arr.get(i).getReview_id()%></p>
+			        <input type="button" value="답변하기" onclick="reviewWrite(<%=arr.get(i).getReview_id() %>);">
 	            </a> 
             </div>
         	<% 
@@ -71,5 +79,6 @@ session.setAttribute("reviewCnt", reviewCnt);
     </div>
 </article>
 </section>
+
 </body>
 </html>
