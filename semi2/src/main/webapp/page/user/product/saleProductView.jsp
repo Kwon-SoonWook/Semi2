@@ -266,7 +266,7 @@ window.onload=function(){
 		if(pdto.getTrade_state()==2&&sid.equals(pdto.getSeller_id())){
 			%>
 			var popup = window.open('/semi2/page/user/review/writeReview.jsp?productsIds=<%=productsIds%>','writeReview','width=650,height=450');		
-			<%
+			<% 
 		}
 	}else{
 		

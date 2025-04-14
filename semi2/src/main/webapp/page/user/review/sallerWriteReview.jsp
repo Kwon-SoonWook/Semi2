@@ -71,7 +71,7 @@ function check(){
 			<input type="hidden" name=products_id value=<%=rdto.getProducts_id() %>>
 				<h2>거래자 선택</h2>
 				<select name="user_id">
-				<option value="<%=rdto.getUsere_id()%>"><%=udao.myinfo(rdto.getUsere_id()).get(0).getNickname()%></option>
+				<option value="<%=rdto.getUsere_id()%>"><%=udao.myinfo(rdto.getUsere_id()).get(0).getNickname()%></option> 
 				</select>				
 				<h2>거래후기</h2>
 				<textarea placeholder="댓글을 작성해주세요" name="review_content"></textarea>
