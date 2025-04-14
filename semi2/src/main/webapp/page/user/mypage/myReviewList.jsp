@@ -35,7 +35,10 @@ h2{
 .photo-card a:hover{
     color: gray;
 }
-
+.rating label {
+	font-size: 30px;
+    color: gold;
+}
 </style>
 </head>
 <%
@@ -50,7 +53,6 @@ function reviewWrite(reviewid){
 	 window.open("/semi2/page/user/review/sallerWriteReview.jsp?review_id="+reviewid, 'popup', 'width=450; height=350');
 }
 </script>
-
 <body>
 <section>
 <article>
@@ -68,9 +70,12 @@ function reviewWrite(reviewid){
 	                <div class="thumbnail"></div>
 			        <h3><%=arr.get(i).getUsere_id() %></h3>
 			        <p><%=arr.get(i).getReview_content() %></p>
-			        <p><%=arr.get(i).getRate() %></p>
-			        <p><%=arr.get(i).getReview_id()%></p>
-			        <input type="button" value="답변하기" onclick="reviewWrite(<%=arr.get(i).getReview_id() %>);">
+			        <div class="rating">
+			        <%for(int j=0; j<arr.get(i).getRate(); j++){ %>
+			        <label for="star">★</label>
+			        <%} %>
+			        </div>
+			        <p><input type="button" value="답변하기" onclick="reviewWrite(<%=arr.get(i).getReview_id() %>);"></p>
 	            </a> 
             </div>
         	<% 
