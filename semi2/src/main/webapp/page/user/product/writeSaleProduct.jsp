@@ -74,14 +74,14 @@ function show(){
         }
     }
 
-    function removePreview(idx) {
+    function removePreview(event,idx) {
+        if(event){
+        	event.preventDefault();
+        }
         document.getElementById("previewImage"+idx).src = ""; // 이미지 제거
         document.getElementById("imageContainer"+idx).style.display = "none"; // 미리보기 숨기기
         document.getElementById("imageUpload"+idx).style.display = "block"; // 파일 선택 버튼 다시 표시
         document.getElementById("imageUpload"+idx).value = "";
-        if(event){
-        	event.preventDefault();
-        }
     }    
 </script>
 <%
@@ -147,7 +147,7 @@ if(pdto==null||pdto.equals("")){
 						    <input type="file" name="img<%=i %>" id="imageUpload<%=i %>" accept="image/*" onchange="previewImage(event,<%=i %>)" style="display: block;">
 						    <div id="imageContainer<%=i %>" style="position: relative; display: none;">
 						        <img id="previewImage<%=i %>" src="" style="width: 150px; height: auto;">
-						        <button id="removeImage<%=i %>" onclick="removePreview(<%=i %>)" style="
+						        <button id="removeImage<%=i %>" onclick="removePreview(event,<%=i %>)" style="
 						            position: absolute; top: 5px; right: 5px; background: red; color: white;
 						            border: none; padding: 5px; cursor: pointer; font-size: 14px;">
 						            ✖
