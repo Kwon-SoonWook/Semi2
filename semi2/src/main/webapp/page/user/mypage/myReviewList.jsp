@@ -62,6 +62,7 @@ session.setAttribute("reviewCnt", reviewCnt);
 			        <h3><%=arr.get(i).getUsere_id() %></h3>
 			        <p><%=arr.get(i).getReview_content() %></p>
 			        <p><%=arr.get(i).getRate() %></p>
+			        <input type="button" value="답변하기" onclick="">
 	            </a> 
             </div>
         	<% 
