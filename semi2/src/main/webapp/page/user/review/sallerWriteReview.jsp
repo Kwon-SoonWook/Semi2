@@ -7,7 +7,7 @@
 <jsp:useBean id="rdao" class="com.ksj.review.ReviewDAO" scope="session"></jsp:useBean>
 <jsp:useBean id="pcdao" class="com.ksj.productscomment.ProductsCommentDAO"></jsp:useBean>
 <jsp:useBean id="udao" class="com.ksj.user.UserDAO"></jsp:useBean>
-<jsp:useBean id="pdao" class="com.ksj.product.ProductDAO"></jsp:useBean>>
+<jsp:useBean id="pdao" class="com.ksj.product.ProductDAO"></jsp:useBean>
 <%
 String review_id = request.getParameter("review_id");
 ReviewDTO rdto = rdao.reviewlist(review_id);
@@ -21,7 +21,7 @@ ReviewDTO rdto = rdao.reviewlist(review_id);
 .rating {
     display: flex;
     flex-direction: row-reverse;
-    justify-content: center;
+    justify-content: left;
 }
 
 .rating input {
@@ -83,6 +83,7 @@ function check(){
 				<input type="radio" name="rate" id="star2" value="2"><label for="star2">★</label>
 				<input type="radio" name="rate" id="star1" value="1"><label for="star1">★</label>
 				</div>
+				<input type="hidden" name=review_type value=1>
 				<input type="reset" value="초기화">
 				<input type="submit" value="후기작성" onclick="return check()">
 			</form>

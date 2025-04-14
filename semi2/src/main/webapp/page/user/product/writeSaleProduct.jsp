@@ -46,21 +46,9 @@ function check(){
 					     alert("거래희망장소를 입력해주세요!");
 					     return false;		  
 				 }
-		document.forms["writeSaleProduct"].enctype ="multipart/form-data";
 }
 function show(){
-		<%for(int i=0;i<5;i++){
-			%>
-			var filename = document.writeSaleProduct.img<%=i%>.value;			
-			if(filename!=""){
-				  window.alert('임시저장은 이미지가 없어야 저장이 됩니다');
-				  return false;
-				}
-			<%
-			}
-			%>
-			document.forms["writeSaleProduct"].enctype ="application/x-www-form-urlencoded";
-		}
+}
     function previewImage(event,idx) {
         var file = event.target.files[0]; // 파일 가져오기
         if (file) {
@@ -175,7 +163,8 @@ if(pdto==null||pdto.equals("")){
 								if(i==0){
 									%><input type="radio" name="category" value="<%=arr.get(i).getCategoryId()%>" checked="checked"><%=arr.get(i).getCategoryName()%><%
 								}else{
-							%><input type="radio" name="category" value="<%=arr.get(i).getCategoryId()%>"><%=arr.get(i).getCategoryName()%>
+							%>
+							<input type="radio" name="category" value="<%=arr.get(i).getCategoryId()%>"><%=arr.get(i).getCategoryName()%>
 							<%
 								}
 							}

@@ -9,7 +9,7 @@
 <jsp:useBean id="cdao" class="com.ksj.category.CategoryDAO"></jsp:useBean>
 <jsp:useBean id="pdao" class="com.ksj.product.ProductDAO"></jsp:useBean>
 <jsp:useBean id="tpdao" class="com.ksj.tempproduct.TempProductDAO"></jsp:useBean>
-<jsp:useBean id="pidao" class="com.ksj.productimages.ProductImagesDAO"></jsp:useBean>>
+<jsp:useBean id="pidao" class="com.ksj.productimages.ProductImagesDAO"></jsp:useBean>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -99,10 +99,6 @@ if(productIds==null||productIds.equals("")){
 }
 ProductDTO pdto = pdao.ProductList(productId);
 ArrayList<ProductImagesDTO> imgArr = pidao.ProductImagesList(productId);
-//for(int i=imgArr.size();i<5;i++){
-//	imgArr.add(null);
-//}
-//System.out.println(imgArr.get(0).getProductImagesId());
 if(pdto==null||pdto.equals("")){
 	if(tpdto!=null){
 		%>
@@ -163,7 +159,7 @@ if(pdto==null||pdto.equals("")){
 								%>
 								    <input type="file" name="img<%=i %>" id="imageUpload<%=i %>" accept="image/*" onchange="previewImage(event,<%=i %>)" style="display:<%=imgStringArr.get(i)!=null?"none":"block" %>;">
 								    <div id="imageContainer<%=i %>" style="position: relative; display: <%=imgStringArr.get(i)!=null?"block" : "none" %>;">
-								        <img id="previewImage<%=i %>" alt="" src="img/<%=imgStringArr.get(i)%>" style="width: 150px; height: auto;">
+								        <img id="previewImage<%=i %>" alt="" src="img/<%=imgStringArr.get(i)%>" style="width: 150px; height: 150px;">
 								        <input type="hidden" name="loadimage<%=i %>" id="loadimage<%=i %>" value="<%=imgStringArr.get(i)%>">
 								        <button id="removeImage<%=i %>" onclick="removePreview(event,<%=i %>)" style="
 								            position: absolute; top: 5px; right: 5px; background: red; color: white;
@@ -176,7 +172,7 @@ if(pdto==null||pdto.equals("")){
 								%>
 								    <input type="file" name="img<%=i %>" id="imageUpload<%=i %>"accept="image/*" onchange="previewImage(event,<%=i %>)" style="display: block;">
 								    <div id="imageContainer<%=i %>" style="position: relative; display: none;">
-								        <img id="previewImage<%=i %>" src="" style="width: 150px; height: auto;">
+								        <img id="previewImage<%=i %>" src="" style="width: 150px; height: 150px;">
 								        <button id="removeImage<%=i %>" onclick="removePreview(event,<%=i %>)" style="
 								            position: absolute; top: 5px; right: 5px; background: red; color: white;
 								            border: none; padding: 5px; cursor: pointer; font-size: 14px;">

@@ -36,7 +36,7 @@ request.setCharacterEncoding("utf-8");
 	}
 	//불러온 이미지를 제외한 기존에있던 이미지 삭제
 	ArrayList<ProductImagesDTO> imgArr = idao.ProductImagesList(productId, imagesIdArr);
-	if(imgArr!=null||imgArr.size()!=0){
+	if(imgArr!=null&&imgArr.size()!=0){
 		for(int i=0; i<imgArr.size(); i++){
 			idao.deleteLoadProductImages(productId, imgArr.get(i).getProductImagesId());
 			File f = new File(savepath+"\\"+imgArr.get(i).getProductImagesId());
@@ -89,12 +89,11 @@ request.setCharacterEncoding("utf-8");
 	}
 	String imagePath = imagesIdArr.get(0).toString();
 	ProductDTO pdto = new ProductDTO(productId,categoryid,buyerId,sellerId,price,title,content,location,0,0,imagePath,0,null,null,savepath);
-	String msgProduct = pdao.upadteProduct(pdto)>0?"등록 성공":"등록 실패";
+	String msgProduct = pdao.upadteProduct(pdto)>0?"수정 성공":"수정 실패";
 	for(int i=0;i<images.size();i++){
 		ProductImagesDTO idto = new ProductImagesDTO((String)images.get(i),productId);
 		idao.addProductImages(idto);
 	}
-	tpdao.deleteTempProduct(sid);
 %>
 <script>
 window.alert('<%=msgProduct%>');

@@ -22,11 +22,8 @@
 	if(imageResult>0){
 		for(int i=0; i< arr.size();i++){
 			File f = new File(dto.getImage_uri()+"\\"+arr.get(i).getProductImagesId());
-			System.out.println(dto.getImage_uri()+"\\"+arr.get(i).getProductImagesId());
 			if(f.isFile()) {
 				f.delete();
-				System.out.println(dto.getImage_uri()+"\\"+arr.get(i).getProductImagesId());
-				System.out.println("파일삭제성공");
 			}
 		}			
 	}

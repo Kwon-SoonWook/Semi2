@@ -19,6 +19,5 @@
 	String msg = pdao.updateBbsProduct(dto)>0?"수정완료":"수정실패";
 %>
 <script>
-window.alert('<%=msg%>');
 location.href='saleProductView.jsp?productsIds=<%=productId%>';
 </script>

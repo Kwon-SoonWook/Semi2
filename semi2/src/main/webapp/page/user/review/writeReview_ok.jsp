@@ -8,6 +8,9 @@
 <%
 rdto.setUsere_id((String)session.getAttribute("sid"));
 rdto.setReview_type(0);
+if(request.getParameter("review_type")!=null&&request.getParameter("review_type").length()!=0){
+	rdto.setReview_type(1);
+}
 pdao.upadteProductBuyerId(rdto.getUser_id(), Integer.parseInt(rdto.getProducts_id()));
 String msg = rdao.addReview(rdto)>0?"등록성공":"등록실패";
 %>
