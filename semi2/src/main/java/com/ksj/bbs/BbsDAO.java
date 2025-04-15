@@ -219,6 +219,54 @@ public class BbsDAO {
 			}
 		}
 	}
+	   /*목록관련 메서드222*/
+	   public ArrayList<BbsDTO> bbsList2(int bbsdiv, int cp, int ls) {
+	      try {
+	         conn = com.ksj.db.DB.getConn();
+	         
+	         int start = (cp-1)*ls+1;
+	         int end = cp*ls;
+	         
+	         String sql = "select * from (select rownum as rnum, a.* from (select * from bbs where bbs_div = ?)a)b where rnum >= ? and rnum<= ?";
+	         
+	         ps = conn.prepareStatement(sql);
+	         ps.setInt(1, bbsdiv);
+	         ps.setInt(2, start);
+	         ps.setInt(3, end);
+	         rs = ps.executeQuery();
+	         ArrayList<BbsDTO> arr = new ArrayList<BbsDTO>();
+	         
+	         while(rs.next()) {
+	            int idx = rs.getInt("bbs_idx");
+	            String id = rs.getString("bbs_id");
+	            String title = rs.getString("title");
+	            String content = rs.getString("content");
+	            int view_cnt = rs.getInt("view_cnt");
+	            Date create_date = rs.getDate("create_date");
+	            Date update_date = rs.getDate("update_date");
+	            int bbs_div = rs.getInt("bbs_div");
+	            String image = rs.getString("bbs_image");
+	            
+	            BbsDTO dto = new BbsDTO(idx, id, title, content, view_cnt, create_date, update_date, bbs_div,image);
+	            arr.add(dto);
+	         }
+	         return arr;
+	         
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	         return null;
+	      }finally {
+	         try {
+	            rs.close();
+	            ps.close();
+	            conn.close();
+	         } catch (Exception e2) {
+	            // TODO: handle exception
+	         }
+	      }
+	      
+	   }
+	
 	/*목록관련 메서드*/
 	 public ArrayList<BbsDTO> bbsList(int cp, int listSize) {
 	      try {

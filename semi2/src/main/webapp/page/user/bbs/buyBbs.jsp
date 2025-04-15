@@ -99,7 +99,7 @@ if(select==null){
 				</thead>
 				<tbody>
 				<%
-				ArrayList<BbsDTO> arr = bdao.bbsList(bbsdiv, cp, listSize);
+				ArrayList<BbsDTO> arr = bdao.bbsList2(bbsdiv, cp, listSize);
 				if(arr == null || arr.size()==0){
 					%>
 					<tr>
