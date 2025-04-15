@@ -1,12 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>사용자 관리</title>
 <link rel='stylesheet' type='text/css' href='/semi2/page/admin/adminLayout.css'>
 <style>
 .container1 {
@@ -34,7 +32,6 @@ section {
 form {
 	display: flex;
 	flex-direction: column;
-	gap: 20px;
 }
 
 .search-bar {
@@ -44,7 +41,7 @@ form {
 
 .search-bar select,
 .search-bar input[type="text"] {
-	padding: 10px;
+	padding: 5px;
 	font-size: 14px;
 	border: 1px solid #ccc;
 	border-radius: 5px;
@@ -52,7 +49,7 @@ form {
 }
 
 .search-bar input[type="button"] {
-	padding: 10px 20px;
+	padding: 5px 15px;
 	background-color: #0984e3;
 	color: white;
 	border: none;
@@ -104,7 +101,6 @@ function show(){
 	                <h2>사용자 관리</h2>
 	                <form name='userManagement' action='deleteUserInfo.jsp'>
 	                    <%@include file="userInfoList.jsp" %>
-	
 	                    <div class="search-bar">
 	                        <select name="select">
 	                            <option>전체</option>

@@ -51,7 +51,7 @@ if(cp%pageSize==0) userGroup--;
 			<th style="width: 150px; text-align: center;">주소</th>
 			<th>E-mail</th>
 			<th style="width: 120px; text-align: center;">가입일자</th>
-			<th style="width: 30px;"><input type='submit' value='삭제'></th>
+			<th style="width: 60px;"><input type="submit" value="삭제"></th>
 		</tr>
 	</thead>
 	<tbody>

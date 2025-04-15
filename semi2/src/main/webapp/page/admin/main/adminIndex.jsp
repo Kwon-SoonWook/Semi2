@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<jsp:useBean id="bdao" class="com.ksj.content.BbsDAO"></jsp:useBean>
+<jsp:useBean id="pdao" class="com.ksj.content.ProductDAO"></jsp:useBean>
+<jsp:useBean id="udao" class="com.ksj.user.UserDAO"></jsp:useBean>
+<jsp:useBean id="adao" class="com.ksj.ask.AskDAO"></jsp:useBean>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -19,6 +24,11 @@
 	    <%
 	    int totalCount = (int) session.getAttribute("totalCount");
 	    int todayCount = (int) session.getAttribute("todayCount");
+	    int todayBbs = bdao.getTodayBbs();
+	    int todayProduct = pdao.getTodayProduct();
+	    int todayAsk = adao.getTodayAsk();
+	    int todayJoinUser = udao.getTodayJoinUser();
+	    
 	    %>
 	
 	    <!-- 대시보드 내용 -->
@@ -47,7 +57,7 @@
 	                </div>
 	                <div class="card-info">
 	                    <h3>최근 문의</h3>
-	                    <p>1개</p>
+	                    <p><%=todayAsk %>개</p>
 	                </div>
 	                </a>
 	            </div>
@@ -62,19 +72,19 @@
 	                </div>
 	                <div class="card-info">
 	                    <h3>신규 가입자</h3>
-	                    <p>5명</p>
+	                    <p><%=todayJoinUser %>명</p>
 	                </div>
 	                </a>
 	            </div>
 	            <!-- 최근 게시물 카드 -->
 	            <div class="card">
-	            	<a href="../post/bbs/postList.jsp" style="color: black; text-decoration: none;">
+	            	<a href="../post/contentList.jsp" style="color: black; text-decoration: none;">
 	                <div class="card-icon">
 	                    <i class="fas fa-pencil-alt"></i>
 	                </div>
 	                <div class="card-info">
 	                    <h3>최근 게시물</h3>
-	                    <p>2개</p>
+	                    <p><%=todayBbs+todayProduct %>개</p>
 	                </div>
 	                </a>
 	            </div>

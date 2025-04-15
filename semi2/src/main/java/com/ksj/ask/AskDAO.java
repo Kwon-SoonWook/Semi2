@@ -227,7 +227,7 @@ public class AskDAO {
 	public void askUpdate(int ask_id) {
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
-			String sql = "update ask set ask_type=1 where ask_id=?";
+			String sql = "update ask set ask_type=1 where ask_id=? and aks_type != 2";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, ask_id);
 			ps.executeUpdate();
@@ -237,6 +237,31 @@ public class AskDAO {
 			try {
 				if(ps != null) ps.close();
 				if(conn != null) conn.close();
+			}catch(Exception e2) {
+				
+			}
+		}
+	}
+	
+	public int getTodayAsk() {
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+			String sql = "select count(*) from ask where to_char(ask_date, 'yy/mm/dd') = to_char(sysdate, 'yy/mm/dd') and ask_type != 2";
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			int count = 0;
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+			return count;
+		}catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				if(rs!=null) rs.close();
+				if(ps!=null) ps.close();
+				if(conn!=null) conn.close();
 			}catch(Exception e2) {
 				
 			}

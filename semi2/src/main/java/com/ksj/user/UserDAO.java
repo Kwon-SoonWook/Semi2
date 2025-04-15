@@ -223,5 +223,30 @@ public class UserDAO {
 			}
 		}
 	}
+	
+	public int getTodayJoinUser() {
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+			String sql = "select count(*) from user_info where to_char(create_date, 'yy/mm/dd') = to_char(sysdate, 'yy/mm/dd')";
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			int count = 0;
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+			return count;
+		}catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				if(rs!=null) rs.close();
+				if(ps!=null) ps.close();
+				if(conn!=null) conn.close();
+			}catch(Exception e2) {
+				
+			}
+		}
+	}
 }
 

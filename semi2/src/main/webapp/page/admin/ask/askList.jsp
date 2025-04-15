@@ -31,7 +31,7 @@ if(cp%pageSize==0) userGroup--;
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>문의함</title>
 <link rel='stylesheet' type='text/css' href='/semi2/page/admin/adminLayout.css'>
 <style>
 .container1 {
@@ -59,7 +59,6 @@ section {
 form {
 	display: flex;
 	flex-direction: column;
-	gap: 20px;
 }
 
 .search-bar {

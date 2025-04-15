@@ -86,4 +86,58 @@ public class VisitCountDAO {
 			}
 		}
 	}
+	
+	public int getVisitDateCount(int day) {
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+			String sql = "select count(*) from visit where substr(to_char(visit_date), 0, 10) = to_char(sysdate-"+day+", 'yy/mm/dd')";
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			int count = 0;
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}else {
+				count = -1;
+			}
+			return count;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				if(rs!=null) rs.close();
+				if(ps!=null) ps.close();
+				if(conn!=null) conn.close();
+			}catch(Exception e2) {
+				
+			}
+		}
+	}
+	
+	public String getVisitDate(int day) {
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+			String sql = "select to_char(sysdate-"+day+", 'yy/mm/dd') from dual";
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			String date = null;
+			if(rs.next()) {
+				date = rs.getString(1);
+			}else {
+				date = null;
+			}
+			return date;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}finally {
+			try {
+				if(rs!=null) rs.close();
+				if(ps!=null) ps.close();
+				if(conn!=null) conn.close();
+			}catch(Exception e2) {
+				
+			}
+		}
+	}
 }
