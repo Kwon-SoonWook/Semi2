@@ -1,3 +1,4 @@
+<%@page import="com.ksj.tempproductimages.TempProductImagesDTO"%>
 <%@page import="com.ksj.productimages.ProductImagesDTO"%>
 <%@page import="com.ksj.product.ProductDTO"%>
 <%@page import="com.ksj.tempproduct.TempProductDTO"%>
@@ -19,6 +20,91 @@
 body {
 	margin: 0px auto;
     height: 100%;
+}
+ul {
+    display: flex;
+    gap: 10px; /* 요소 간 간격 설정 */
+    list-style: none; /* 기본 리스트 스타일 제거 */
+    padding: 0;
+}
+/* 전체 컨테이너 */
+.productcontainer {
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* 제목 */
+h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* 입력 폼 스타일 */
+.form-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+/* 라벨 */
+.form-group label {
+    flex: 1;
+    font-size: 16px;
+    font-weight: bold;
+    color: #444;
+}
+
+/* 입력 필드 */
+.form-group input,
+.form-group textarea {
+    flex: 2;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* 파일 입력 필드 */
+input[type="file"] {
+    border: none;
+}
+.image-upload-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.image-upload-wrapper input[type="file"],
+.image-upload-wrapper .image-preview {
+    margin: 0;
+}
+.image-preview img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+.image-preview {
+    position: relative;
+}
+.image-preview button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: red;
+    color: white;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+.submit-btn:hover {
+    background: #e55a00;
 }
 </style>
 <script>
@@ -85,7 +171,16 @@ function show(){
         document.getElementById("imageUpload"+idx).style.display = "block"; // 파일 선택 버튼 다시 표시
         document.getElementById("imageUpload"+idx).value = "";
         document.getElementById("loadimage"+idx).value="";
-    }    
+    }
+    function removeImg(){
+    	for(var i=0;i<5;i++){
+            document.getElementById("previewImage"+i).src = ""; // 이미지 제거
+            document.getElementById("imageContainer"+i).style.display = "none"; // 미리보기 숨기기
+            document.getElementById("imageUpload"+i).style.display = "block"; // 파일 선택 버튼 다시 표시
+            document.getElementById("imageUpload"+i).value = "";
+            document.getElementById("loadimage"+i).value="";    		
+    	}
+    }
 </script>
 <%
 String sid = (String)session.getAttribute("sid");
@@ -99,21 +194,8 @@ if(productIds==null||productIds.equals("")){
 }
 ProductDTO pdto = pdao.ProductList(productId);
 ArrayList<ProductImagesDTO> imgArr = pidao.ProductImagesList(productId);
-if(pdto==null||pdto.equals("")){
-	if(tpdto!=null){
-		%>
-		<script>
-		window.onload =function(){
-			document.writeSaleProduct.title.value = "<%=tpdto.getTitle()%>";
-			document.writeSaleProduct.category.value = "<%=tpdto.getCategory_id()%>";
-			document.writeSaleProduct.content.value = "<%=tpdto.getContent()%>";
-			document.writeSaleProduct.price.value = "<%=tpdto.getPrice()%>";
-			document.writeSaleProduct.location.value = "<%=tpdto.getWish_location()%>";
-		}
-		</script>
-		<%
-	}
-}else{
+
+if(pdto!=null){
 	%>
 	<script>
 	window.onload =function(){
@@ -126,6 +208,15 @@ if(pdto==null||pdto.equals("")){
 	</script>
 	<%	
 }
+if (sid == null) {
+	%>
+	<script>
+	window.alert('로그인 후 이용가능한 서비스입니다.');
+	location.href = '/semi2/page/user/login/login.jsp';
+	</script>
+	<%
+    return;
+}
 %>
 </head>
 	<%@include file="/page/user/main/header.jsp"%>
@@ -136,17 +227,14 @@ if(pdto==null||pdto.equals("")){
 	<%
 	ArrayList<CategoryDTO> arr = cdao.categoryList();
 	%>
+		<div class="productcontainer">
 			<form name="writeSaleProduct" action="" method="post" enctype="multipart/form-data">
 			<input type="hidden" name ="productId" value="<%=productId%>">
-				<table>
-					<tr>
-						<th>상품정보</th>
-					</tr>
-					
-					<tr>
-						<th>상품이미지(최대5개)</th>
-						<td>
-						<div style="display: flex; align-items: center; gap: 10px;">
+					<div>
+						<h2>상품정보</h2>
+						<div class="form-group">
+						<label>상품이미지(최대5개)</label>
+						<div class="image-upload-wrapper">
 						<%
 							ArrayList<String> imgStringArr = new ArrayList<String>();
 							imgStringArr.add(pdao.ProductList(productId).getThumb_image());
@@ -180,23 +268,23 @@ if(pdto==null||pdto.equals("")){
 								        </button>
 								    </div>
 									<%	}							
-						%>	
+						%>
+						</div>	
 						</div>
-						</td>					
-						</tr>
-					<tr>
-						<th>상품명</th>
-						<td><input type="text" name="title"></td>
-					</tr>
-					<tr>
-						<th>카테고리</th>
+						</div>
+				        <div class="form-group">
+				        <label for="title">상품명</label>
+				            <input type="text" id="title" name="title" placeholder="상품명을 입력하세요" required>
+				        </div>
+						<ul>
+						<li>카테고리
 						<%
 						if (arr == null || arr.size() == 0) {
 						%>
-						<td>등록된 카테고리가 없습니다</td>
+						등록된 카테고리가 없습니다</li>
 						<%
 						} else {
-						%><td>
+						%>
 							<%
 							for (int i = 0; i < arr.size(); i++) {
 								if(i==0){
@@ -207,29 +295,30 @@ if(pdto==null||pdto.equals("")){
 								}
 							}
 							%>
-						</td>
+						</li>
 						<%
 						}
 						%>
-					</tr>
-					<tr>
-						<th>상품설명</th>
-						<td><textarea rows="8" cols="45" name="content"></textarea></td>
-					</tr>
-					<th>가격</th>
-					<td><input type="text" name="price" value="0"></td>
-					</tr>
-					<tr>
-						<th>거래희망장소</th>
-						<td><input type="text" name="location"></td>
-					</tr>
-					<tr>
-						<td colspan="3" align="right"><input type="reset" value="초기화">
-							<!--<input type="submit" name="tempsave" value="임시저장" onclick="return show()" formaction="temporarySave.jsp"> 수정할때 임시저장할 필요는 없을거같음--> 
-							<input type="submit" name="save" value="수정하기" onclick="return check()" formaction="updateWriteSaleProduct_ok.jsp"></td>
-					</tr>
-				</table>
+					</ul>
+			        <div class="form-group">
+			            <label for="description">상품 설명</label>
+			            <textarea id="content" name="content" rows="4" placeholder="상품 설명을 입력하세요" required></textarea>
+			        </div>
+			        <div class="form-group">
+			            <label for="price">가격</label>
+			            <input type="number" id="price" name="price" placeholder="가격 입력" required>
+			        </div>
+			        <div class="form-group">
+			            <label for="location">거래 장소</label>
+			            <input type="text" id="location" name="location" placeholder="거래 장소 입력" required>
+			        </div>
+			        </tbody>
+				</div>
+					<input type="reset" value="초기화" onclick="removeImg()">
+					<!--<input type="submit" name="tempsave" value="임시저장" onclick="return show()" formaction="temporarySave.jsp"> 수정할때 임시저장할 필요는 없을거같음--> 
+					<input type="submit" name="save" value="수정하기" onclick="return check()" formaction="updateWriteSaleProduct_ok.jsp"></td>
 			</form>
+			</div>
     </main>   
 </div>
 </body>

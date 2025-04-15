@@ -33,7 +33,7 @@ public class TempProductImagesDAO {
 	public ArrayList<TempProductImagesDTO> TempProductImagesList(String temp_product_id){
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
-			String sql = "select * from product_images where temp_product_id = ?";
+			String sql = "select * from temp_product_images where temp_product_id = ?";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, temp_product_id);
 			rs = ps.executeQuery();
@@ -86,12 +86,12 @@ public class TempProductImagesDAO {
 		}
 	}
 	/**임시저장 물품아이디에 저장되어있는 이미지 삭제하기*/
-	public int deleteProductImages(int productId) {
+	public int deleteProductImages(String temp_product_id) {
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
-			String sql = "delete from product_images where product_id = ?";
+			String sql = "delete from temp_product_images where temp_product_id = ?";
 			ps = conn.prepareStatement(sql);
-			ps.setInt(1, productId);
+			ps.setString(1, temp_product_id);
 			int result = ps.executeUpdate();
 			return result;
 		} catch (Exception e) {
