@@ -4,17 +4,30 @@
 <!DOCTYPE html>
 
 <%
+String user_id = (String)session.getAttribute("sid");
+String nickname = (String)session.getAttribute("nickname");
 String comm = request.getParameter("comm");
 int idx = Integer.parseInt(request.getParameter("idx"));
-int result = kdao.cmtUpload(idx, comm);
+if(nickname==null){
+	%>
+	<script>
+	window.alert('로그인 후 이용해주세요~');
+	const login = confirm('로그인 하시겠습니까?');
+	if(login == true){
+		location.href = "../login/login.jsp"
+	}
+	</script>
+	<%
+}else{
+	int result = kdao.cmtUpload(idx, comm,nickname);
+}
 
-String msg = result>0?"등록완료":"등록실패";
+
+
 
 
 %>
 
 <script>
-
-window.alert('<%=msg%>');
-location.href = "bbsContent.jsp?id=<%=idx%>"
+location.href = "bbsContent.jsp?id=<%=idx%>";
 </script>
