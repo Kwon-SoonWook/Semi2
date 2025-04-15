@@ -22,6 +22,18 @@ String msg = "";
 
 if(result==0){
 	msg = "로그인 후 이용해주세요~";
+	%>
+	<script>
+	window.alert('<%=msg%>')
+	const result = confirm('로그인하시겠습니까?')
+	
+	if(result){
+		location.href = "/semi2/page/user/login/login.jsp"
+	}else{
+		location.href = 'communityBbs.jsp';
+	}
+	</script>
+	<%
 }else if(result ==1){
 	msg = "게시글이 등록 되었습니다.";
 }else{  
