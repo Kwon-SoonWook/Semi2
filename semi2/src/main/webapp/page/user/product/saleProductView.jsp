@@ -25,9 +25,13 @@ if(productsIds==null||productsIds.equals("")){
 }
 ProductDTO pdto = pdao.ProductList(prodcutsId);
 ArrayList<ProductImagesDTO> arr= pidao.ProductImagesList(prodcutsId);
-FavoriteProductsDTO fdto = fdao.favoriteProductsList(prodcutsId, sid);
 ReviewDTO rdto = rdao.getReviewSeller(sid, productsIds);
 SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+FavoriteProductsDTO fdto = fdao.favoriteProductsList(prodcutsId, sid);
+if(fdto==null){
+	FavoriteProductsDTO dto = new FavoriteProductsDTO(sid,prodcutsId,0);
+	fdao.addFavoriteProducts(dto);
+}
 if (sid == null) {
 	%>
 	<script>
@@ -45,14 +49,24 @@ if (sid == null) {
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="/semi2/page/user/main/mainLayout.css">
 <style>
-/* 전체 레이아웃: 이미지 왼쪽, 내용 오른쪽 */
-.sale-product-container {
-width:100%;
-    display: flex;
-    align-items: flex-start; /* 위쪽 정렬 */
-    gap: 20px; /* 요소 간 간격 */
+.center-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* 위에서부터 정렬, 필요시 center 로 변경 */
+  margin-top: 20px; /* 위 간격 */
 }
 
+/* 전체 레이아웃: 이미지 왼쪽, 내용 오른쪽 */
+.sale-product-container {
+	width:350px;
+    display: flex;
+    align-items: flex-start; /* 위쪽 정렬 */
+    gap: 100px; /* 요소 간 간격 */
+	margin-left:160px;
+}
+.product-container{
+	width:100%;
+}
 /* 왼쪽 이미지 영역 */
 .image-container {
     flex: 1; /* 왼쪽 영역 크기 지정 */
@@ -107,7 +121,7 @@ width:100%;
     margin-top: 15px;
 }
 .comment-section {
-    width: 100%;
+    width: 80%;
     max-width: 1400px;
     margin: 20px auto;
     padding: 10px;
@@ -117,7 +131,7 @@ width:100%;
 }
 
 .comment-section table {
-    width: 100%; /* 부모 요소의 전체 너비를 사용 */
+    width: 99%; /* 부모 요소의 전체 너비를 사용 */
     max-width: 1400px; /* 필요하면 최대 크기 지정 */
     border-collapse: collapse; /* 테이블 테두리 정리 */
 }
@@ -264,8 +278,9 @@ window.onload=function(){
 	<%
 	if(rdto==null){	
 		if(pdto.getTrade_state()==2&&sid.equals(pdto.getSeller_id())){
+			
 			%>
-			var popup = window.open('/semi2/page/user/review/writeReview.jsp?productsIds=<%=productsIds%>','writeReview','width=650,height=450');		
+			var popup = window.open('/semi2/page/user/review/writeReview.jsp?productsIds=<%=productsIds%>','writeReview','width=650,height=550,top=100,left=550');		
 			<% 
 		}
 	}else{
@@ -301,60 +316,62 @@ function openReWrite(url) {
 	<%@include file="/page/user/main/category.jsp" %>
     <main class="main-content">
 		<form name="saleProductiVeiw" action="productComment_ok.jsp">
-		<div class="sale-product-container">
-			<div class="image-container">
-			<img alt="" src="img/<%=pdto.getThumb_image()%>" width="400" height="400" id="big">
-				<div class="thumbnail-container">
-				<%
-				if(arr!=null||arr.size()!=0){
-					for(int i=0;i<arr.size();i++){
-						%><img src="img/<%=arr.get(i).getProductImagesId()%>"class="thumbnail" onmouseover="showbig('<%=arr.get(i).getProductImagesId()%>');"><%
-					}
-				}
-				%>
-				</div>
-			</div>
-			<div class="product-info">
-				<div>
-				<h2>제목:<%=pdto.getTitle() %></h2>
-					<select name = "tradestate" id ="tradestateid" onchange="trade(this);" >
-					<option value=0>판매중</option>	
-					<option value=1>예약중</option>	
-					<option value=2>거래완료</option>	
-					</select>
-				</div>
-				<hr>
-				<div>가격:<%=pdto.getPrice() %></div>
-				<div><%=pdto.getContent() %></div>
-				<div><%=pdto.getLocation() %></div>
-				<div class="product-actions">
-				<% if(sid!=null&&sid.equals(pdto.getSeller_id())){
-					%>
-				<input type="button" name="update_products" value="수정하기" onclick="location.href='updateWriteSaleProduct.jsp?productId=<%=prodcutsId%>'">
-				<input type="button" name="delete_products" value="삭제하기" onclick="location.href='deleteSaleProduct.jsp?productId=<%=prodcutsId%>'">
-				<input type="button" name="hidden_products" value="<%=pdto.getBbs_state()==0?"숨기기":"보이기" %>" onclick="location.href='hideSaleProduct.jsp?productId=<%=prodcutsId%>'">
+    	<div>
+			<div class="sale-product-container">
+				<div class="image-container">
+				<img alt="" src="img/<%=pdto.getThumb_image()%>" width="400" height="400" id="big">
+					<div class="thumbnail-container">
 					<%
-				}else{
-					if(fdto==null){
-						%>
-						<input type="button" name="favorite_products" value="찜" onclick="location.href='isValidfavoriteProduct.jsp?productId=<%=prodcutsId%>'">										
-						<%
-					}else{
-						if(fdto.getIs_valid()==0){
-							%>
-							<input type="button" name="favorite_products" value="찜" onclick="location.href='isValidfavoriteProduct.jsp?productId=<%=prodcutsId%>'">										
-							<%							
-						}else if(fdto.getIs_valid()==1){
-							%>
-							<input type="button" name="favorite_products" value="찜취소" onclick="location.href='isValidfavoriteProduct.jsp?productId=<%=prodcutsId%>'">										
-							<%							
+					if(arr!=null||arr.size()!=0){
+						for(int i=0;i<arr.size();i++){
+							%><img src="img/<%=arr.get(i).getProductImagesId()%>"class="thumbnail" onmouseover="showbig('<%=arr.get(i).getProductImagesId()%>');"><%
 						}
 					}
-				}
+					%>
+					</div>
+				</div>
+				<div class="product-info">
+					<div>
+					<h2>제목:<%=pdto.getTitle() %></h2>
+						<select name = "tradestate" id ="tradestateid" onchange="trade(this);" >
+						<option value=0>판매중</option>	
+						<option value=1>예약중</option>	
+						<option value=2>거래완료</option>	
+						</select>
+					</div>
+					<hr>
+					<div>가격:<%=pdto.getPrice() %></div>
+					<div><%=pdto.getContent() %></div>
+					<div><%=pdto.getLocation() %></div>
+					<div class="product-actions">
+					<% if(sid!=null&&sid.equals(pdto.getSeller_id())){
+						%>
+					<input type="button" name="update_products" value="수정하기" onclick="location.href='updateWriteSaleProduct.jsp?productId=<%=prodcutsId%>'">
+					<input type="button" name="delete_products" value="삭제하기" onclick="location.href='deleteSaleProduct.jsp?productId=<%=prodcutsId%>'">
+					<input type="button" name="hidden_products" value="<%=pdto.getBbs_state()==0?"숨기기":"보이기" %>" onclick="location.href='hideSaleProduct.jsp?productId=<%=prodcutsId%>'">
+						<%
+					}else{
+						if(fdto==null){
+							%>
+							<input type="button" name="favorite_products" value="찜" onclick="location.href='isValidfavoriteProduct.jsp?productId=<%=prodcutsId%>'">										
+							<%
+						}else{
+							if(fdto.getIs_valid()==0){
+								%>
+								<input type="button" name="favorite_products" value="찜" onclick="location.href='isValidfavoriteProduct.jsp?productId=<%=prodcutsId%>'">										
+								<%							
+							}else if(fdto.getIs_valid()==1){
+								%>
+								<input type="button" name="favorite_products" value="찜취소" onclick="location.href='isValidfavoriteProduct.jsp?productId=<%=prodcutsId%>'">										
+								<%							
+							}
+						}
+					}
 					%>
 				</div>
 			</div>	
 		</div>
+	</div>
 		
 		<div class="comment-section">
 			<table>
@@ -376,6 +393,7 @@ function openReWrite(url) {
 									%>
 										<tr>
 											<td>
+												<div class="reply">
 											<%
 											for(int z=0;z<sellerlist.get(i).getLev();z++){
 												%>
@@ -433,6 +451,7 @@ function openReWrite(url) {
 												<%
 											}
 											 %>
+											 	</div>
 											</td>
 										</tr>
 									<%								
@@ -519,9 +538,6 @@ function openReWrite(url) {
 						%>
 				</tbody>
 				<tfoot>
-				<%
-				if(pdto.getSeller_id().equals(sid)==false){
-					%>
 					<tr>
 						<td>
 							<div class="comment-box">
@@ -543,13 +559,11 @@ function openReWrite(url) {
 							</div>
 						</td>
 					</tr>
-					<%
-				}
-					%>
 				</tfoot>
 			</table>
 		</div>
 		</form>
+		</div>
     </main>   
 </div>
 </body>

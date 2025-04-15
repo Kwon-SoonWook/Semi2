@@ -41,6 +41,17 @@ ReviewDTO rdto = rdao.reviewlist(review_id);
 .rating label:hover ~ label {
     color: gold; /* 마우스를 올렸을 때 별이 금색으로 변함 */
 }
+textarea {
+    width: 70%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    color: #333;
+    resize: vertical;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
+}
+
 </style>
 <script>
 window.onunload=function(){	
@@ -74,7 +85,7 @@ function check(){
 				<option value="<%=rdto.getUsere_id()%>"><%=udao.myinfo(rdto.getUsere_id()).get(0).getNickname()%></option> 
 				</select>				
 				<h2>거래후기</h2>
-				<textarea placeholder="댓글을 작성해주세요" name="review_content"></textarea>
+				<textarea placeholder="댓글을 작성해주세요" rows="8" cols="45" name="review_content"></textarea>
 				<h2>평점</h2>
 				<div class="rating">
 				<input type="radio" name="rate" id="star5" value="5"><label for="star5">★</label>
