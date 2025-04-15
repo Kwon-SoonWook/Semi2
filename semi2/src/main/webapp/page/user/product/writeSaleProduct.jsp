@@ -1,3 +1,4 @@
+<%@page import="com.ksj.tempproductimages.TempProductImagesDTO"%>
 <%@page import="com.ksj.product.ProductDTO"%>
 <%@page import="com.ksj.tempproduct.TempProductDTO"%>
 <%@page import="java.util.ArrayList"%>
@@ -8,6 +9,7 @@
 <jsp:useBean id="cdao" class="com.ksj.category.CategoryDAO"></jsp:useBean>
 <jsp:useBean id="pdao" class="com.ksj.product.ProductDAO"></jsp:useBean>
 <jsp:useBean id="tpdao" class="com.ksj.tempproduct.TempProductDAO"></jsp:useBean>
+<jsp:useBean id="tidao" class="com.ksj.tempproductimages.TempProductImagesDAO"></jsp:useBean>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -46,21 +48,9 @@ function check(){
 					     alert("거래희망장소를 입력해주세요!");
 					     return false;		  
 				 }
-		document.forms["writeSaleProduct"].enctype ="multipart/form-data";
 }
 function show(){
-		<%for(int i=0;i<5;i++){
-			%>
-			var filename = document.writeSaleProduct.img<%=i%>.value;			
-			if(filename!=""){
-				  window.alert('임시저장은 이미지가 없어야 저장이 됩니다');
-				  return false;
-				}
-			<%
-			}
-			%>
-			document.forms["writeSaleProduct"].enctype ="application/x-www-form-urlencoded";
-		}
+}
     function previewImage(event,idx) {
         var file = event.target.files[0]; // 파일 가져오기
         if (file) {
@@ -74,15 +64,26 @@ function show(){
         }
     }
 
-    function removePreview(idx) {
+    function removePreview(event,idx) {
+        if(event){
+        	event.preventDefault();
+        }
         document.getElementById("previewImage"+idx).src = ""; // 이미지 제거
         document.getElementById("imageContainer"+idx).style.display = "none"; // 미리보기 숨기기
         document.getElementById("imageUpload"+idx).style.display = "block"; // 파일 선택 버튼 다시 표시
         document.getElementById("imageUpload"+idx).value = "";
-        if(event){
-        	event.preventDefault();
-        }
-    }    
+        document.getElementById("loadimage"+idx).value="";
+
+    }
+    function removeImg(){
+    	for(var i=0;i<5;i++){
+            document.getElementById("previewImage"+i).src = ""; // 이미지 제거
+            document.getElementById("imageContainer"+i).style.display = "none"; // 미리보기 숨기기
+            document.getElementById("imageUpload"+i).style.display = "block"; // 파일 선택 버튼 다시 표시
+            document.getElementById("imageUpload"+i).value = "";
+            document.getElementById("loadimage"+i).value="";    		
+    	}
+    }
 </script>
 <%
 String sid = (String)session.getAttribute("sid");
@@ -95,16 +96,40 @@ if(productIds==null||productIds.equals("")){
 	productId = Integer.parseInt(productIds);
 }
 ProductDTO pdto = pdao.ProductList(productId);
+ArrayList<TempProductImagesDTO> tempImgArr = tidao.TempProductImagesList(sid);
 if(pdto==null||pdto.equals("")){
 	if(tpdto!=null){
 		%>
 		<script>
-		window.onload =function(){
-			document.writeSaleProduct.title.value = "<%=tpdto.getTitle()%>";
-			document.writeSaleProduct.category.value = "<%=tpdto.getCategory_id()%>";
-			document.writeSaleProduct.content.value = "<%=tpdto.getContent()%>";
-			document.writeSaleProduct.price.value = "<%=tpdto.getPrice()%>";
-			document.writeSaleProduct.location.value = "<%=tpdto.getWish_location()%>";
+		if(confirm("임시저장된 데이터를 불러올까요?")){
+			window.onload =function(){
+				document.writeSaleProduct.title.value = "<%=tpdto.getTitle()%>";
+				document.writeSaleProduct.category.value = "<%=tpdto.getCategory_id()%>";
+				document.writeSaleProduct.content.value = "<%=tpdto.getContent()%>";
+				document.writeSaleProduct.price.value = "<%=tpdto.getPrice()%>";
+				document.writeSaleProduct.location.value = "<%=tpdto.getWish_location()%>";
+				<%
+				if(tempImgArr!=null&&tempImgArr.size()!=0){
+					ArrayList<TempProductImagesDTO> imgArr = tidao.TempProductImagesList(sid);
+					ArrayList<String> imgStringArr = new ArrayList<String>();
+					imgStringArr.add(tpdao.tempProductList(sid).getThumb_image());
+					
+					for(int i=0;i<imgArr.size();i++){
+						if(!(imgArr.get(i).getTemp_product_images_id().equals(tpdao.tempProductList(sid).getThumb_image()))){
+							imgStringArr.add(imgArr.get(i).getTemp_product_images_id());
+						}
+					}
+					for(int i=0;i<tempImgArr.size();i++){
+						%>
+						document.getElementById("loadimage<%=i%>").value = "<%=imgStringArr.get(i)%>"
+				        document.getElementById("previewImage<%=i%>").src = "img/<%=imgStringArr.get(i)%>";
+						document.getElementById("imageContainer<%=i%>").style.display = "block";
+						document.getElementById("imageUpload<%=i%>").style.display = "none";						
+						<%
+					}
+				}
+				%>
+			}
 		}
 		</script>
 		<%
@@ -121,6 +146,15 @@ if(pdto==null||pdto.equals("")){
 	}
 	</script>
 	<%	
+}
+if (sid == null) {
+	%>
+	<script>
+	window.alert('로그인 후 이용가능한 서비스입니다.');
+	location.href = '/semi2/page/user/login/login.jsp';
+	</script>
+	<%
+    return;
 }
 %>
 </head>
@@ -146,8 +180,9 @@ if(pdto==null||pdto.equals("")){
 							<% for(int i=0;i<5;i++){ %>
 						    <input type="file" name="img<%=i %>" id="imageUpload<%=i %>" accept="image/*" onchange="previewImage(event,<%=i %>)" style="display: block;">
 						    <div id="imageContainer<%=i %>" style="position: relative; display: none;">
-						        <img id="previewImage<%=i %>" src="" style="width: 150px; height: auto;">
-						        <button id="removeImage<%=i %>" onclick="removePreview(<%=i %>)" style="
+						        <img id="previewImage<%=i %>" src="" style="width: 150px; height: 150px;">
+								<input type="hidden" name="loadimage<%=i %>" id="loadimage<%=i %>" value="">
+						        <button id="removeImage<%=i %>" onclick="removePreview(event,<%=i %>)" style="
 						            position: absolute; top: 5px; right: 5px; background: red; color: white;
 						            border: none; padding: 5px; cursor: pointer; font-size: 14px;">
 						            ✖
@@ -175,7 +210,8 @@ if(pdto==null||pdto.equals("")){
 								if(i==0){
 									%><input type="radio" name="category" value="<%=arr.get(i).getCategoryId()%>" checked="checked"><%=arr.get(i).getCategoryName()%><%
 								}else{
-							%><input type="radio" name="category" value="<%=arr.get(i).getCategoryId()%>"><%=arr.get(i).getCategoryName()%>
+							%>
+							<input type="radio" name="category" value="<%=arr.get(i).getCategoryId()%>"><%=arr.get(i).getCategoryName()%>
 							<%
 								}
 							}
@@ -196,12 +232,12 @@ if(pdto==null||pdto.equals("")){
 						<th>거래희망장소</th>
 						<td><input type="text" name="location"></td>
 					</tr>
-					<tr>
-						<td colspan="3" align="right"><input type="reset" value="초기화">
-							<input type="submit" name="tempsave" value="임시저장" onclick="return show()" formaction="temporarySave.jsp"> 
-							<input type="submit" name="save" value="저장" onclick="return check()" formaction="writeSaleProduct_ok.jsp"></td>
-					</tr>
 				</table>
+				<tfoot>
+					<input type="reset" value="초기화" onclick="removeImg()">
+					<input type="submit" name="tempsave" value="임시저장" onclick="return show()" formaction="temporarySave.jsp"> 
+					<input type="submit" name="save" value="저장" onclick="return check()" formaction="writeSaleProduct_ok.jsp"></td>
+				</tfoot>
 			</form>
     </main>   
 </div>

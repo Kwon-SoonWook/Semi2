@@ -1,3 +1,4 @@
+<%@page import="java.io.PrintWriter"%>
 <%@page import="com.ksj.review.ReviewDTO"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.ksj.favoriteproducts.FavoriteProductsDTO"%>
@@ -36,7 +37,6 @@ if (sid == null) {
 	<%
     return;
 }
-String reviewValue = request.getParameter("reviewValue");
 %>
 <!DOCTYPE html>
 <html>
@@ -172,7 +172,74 @@ width:100%;
 .comment-submit:hover {
     background: #0071e3;
 }
+.reply {
+  display: flex;
+  align-items: flex-start;
+  padding: 12px 0;
+  font-size: 14px;
+  line-height: 1.6;
+  gap: 10px;
+  
+  height: auto; 
+  padding-top: 0px; 
+  padding-bottom: 0px; 
+  margin-top: 0px; 
+  margin-bottom: 0px;
+  
+}
 
+.reply .avatar {
+  font-size: 25px;
+  color: darkgray;
+}
+
+.reply .main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.reply .meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.reply .content {
+  margin-bottom: 8px;
+  color: #222;
+}
+
+.reply .actions {
+  font-size: 8px;
+  color: #666;
+}
+
+.reply .actions input[type="button"] {
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+}
+
+.reply .actions input[type="button"]:hover {
+  text-decoration: underline;
+  color: #111;
+}
+
+.reply-indent {
+  margin-left: 20px;
+  padding-left: 10px;
+      
+  height: auto; 
+  padding-top: 0px; 
+  padding-bottom: 0px; 
+  margin-top: 0px; 
+  margin-bottom: 0px;
+}
 </style>
 <script>
 window.onload=function(){
@@ -198,9 +265,11 @@ window.onload=function(){
 	if(rdto==null){	
 		if(pdto.getTrade_state()==2&&sid.equals(pdto.getSeller_id())){
 			%>
-			var popup = window.open('/semi2/page/user/review/writeReview.jsp?productsIds=<%=productsIds%>','writeReview','width=450,height=350');		
-			<%
+			var popup = window.open('/semi2/page/user/review/writeReview.jsp?productsIds=<%=productsIds%>','writeReview','width=650,height=450');		
+			<% 
 		}
+	}else{
+		
 	}
 	%>
 }
@@ -309,16 +378,33 @@ function openReWrite(url) {
 											<td>
 											<%
 											for(int z=0;z<sellerlist.get(i).getLev();z++){
-												out.println("&nbsp;&nbsp;");
-											}
-											if(sellerlist.get(i).getLev()!=0){
-												out.println("ㄴ");
+												%>
+												<div class="reply <%= sellerlist.get(i).getLev() > 0 ? "reply-indent" : " " %>">
+												<%
 											}
 											if(sellerlist.get(i).getComment_div()==0){
+												if(i==0){
+													%>
+												<div class="reply <%= sellerlist.get(i).getLev() > 0 ? "reply-indent" : " " %>">
+													<%													
+												}
 											%>											
-												<%=udao.myinfo((sellerlist.get(i).getSeller_id())).get(0).getNickname()%>
-												<%=timeFormat.format(sellerlist.get(i).getCreate_date()) %>
+												<div class="avatar">												
+											    	<%if(!headudao.myinfo(sellerlist.get(i).getSeller_id()).isEmpty() && headudao.myinfo(sellerlist.get(i).getSeller_id()).get(0).getProfile_uri() != null){ %>
+														<img src="/<%=headudao.myinfo(sellerlist.get(i).getSeller_id()).get(0).getProfile_uri() %>" alt="프로필 이미지" width="40" height="40" style=border-radius:50% />
+												    <%}else{ %>
+												         <i class="fa-solid fa-circle-user" style="color: darkgray; font-size: 25px;"></i>
+												    <%} %>
+												</div>
+												<div class="main">
+												<div class="meta">											          
+											        <span class="user-id"><%=udao.myinfo((sellerlist.get(i).getSeller_id())).get(0).getNickname()%></span>
+													<span class="date"><%=timeFormat.format(sellerlist.get(i).getCreate_date()) %></span>
+											    </div>												
+											    <div class="content">
 												<%=sellerlist.get(i).getComment_content() %>
+											    </div>
+											    <div class="actions">												
 												<%if(sellerlist.get(i).getSeller_id().equals(sid)){
 													%>
 												<input type="button" value="수정하기" onclick="openReWrite('productCommentUpdate.jsp?idx=<%=sellerlist.get(i).getProducts_comment_idx()%>')">
@@ -330,9 +416,23 @@ function openReWrite(url) {
 													<%
 												}
 											}else{
-												%>삭제되었습니다</td><%
+												%>삭제되었습니다<%
 											}
 											%>
+											    </div>
+											    </div>
+											<%
+											if(i==0){
+											%>
+											    </div>
+											<%												
+											}
+											for(int z=0;z<sellerlist.get(i).getLev();z++){
+												%>
+												</div>
+												<%
+											}
+											 %>
 											</td>
 										</tr>
 									<%								
@@ -354,17 +454,34 @@ function openReWrite(url) {
 									<tr>
 											<td>
 											<%
-											for(int z=0;z<buyerlist.get(i).getLev();z++){
-												out.println("&nbsp;&nbsp;");
-											}
-												if(buyerlist.get(i).getLev()!=0){
-													out.println("ㄴ");
-												}
-												if(buyerlist.get(i).getComment_div()==0){
+											for(int z=0;z<=buyerlist.get(i).getLev();z++){
 												%>
-												<%=udao.myinfo(buyerlist.get(i).getSeller_id()).get(0).getNickname() %>
-												<%=timeFormat.format(buyerlist.get(i).getCreate_date()) %>
+												<div class="reply <%= buyerlist.get(i).getLev() > 0 ? "reply-indent" : " " %>">
+												<%
+											}
+												if(buyerlist.get(i).getComment_div()==0){
+													if(i==0){
+														%>
+														<div class="reply <%= buyerlist.get(i).getLev() > 0 ? "reply-indent" : " " %>">
+														<%														
+													}
+												%>
+												<div class="avatar">												
+											    	<%if(!headudao.myinfo(buyerlist.get(i).getSeller_id()).isEmpty() && headudao.myinfo(buyerlist.get(i).getSeller_id()).get(0).getProfile_uri() != null){ %>
+														<img src="/<%=headudao.myinfo(buyerlist.get(i).getSeller_id()).get(0).getProfile_uri() %>" alt="프로필 이미지" width="40" height="40" style=border-radius:50% />
+												    <%}else{ %>
+												         <i class="fa-solid fa-circle-user" style="color: darkgray; font-size: 25px;"></i>
+												    <%} %>
+												</div>
+												<div class="main">
+												<div class="meta">											          
+											        <span class="user-id"><%=udao.myinfo(buyerlist.get(i).getSeller_id()).get(0).getNickname() %></span>
+													<span class="date"><%=timeFormat.format(buyerlist.get(i).getCreate_date()) %></span>										        
+											    </div>												
+											    <div class="content">												
 												<%=buyerlist.get(i).getComment_content() %>
+											    </div>
+											    <div class="actions">																								
 												<%if(buyerlist.get(i).getSeller_id().equals(sid)){
 													%>
 													<input type="button" value="수정하기" onclick="openReWrite('productCommentUpdate.jsp?idx=<%=buyerlist.get(i).getProducts_comment_idx()%>')">
@@ -376,9 +493,23 @@ function openReWrite(url) {
 													<%												
 												}
 											}else{
-												%>삭제되었습니다</td><%
+												%>삭제되었습니다<%
 											}
 											%>
+											</div>
+											</div>	
+											<%
+											if(i==0){
+												%>
+												</div>	
+												<%											
+											}
+											for(int z=0;z<buyerlist.get(i).getLev();z++){
+												%>
+												</div>
+												<%
+											}
+											 %>
 											</td>
 										</tr>
 									<%																
@@ -396,7 +527,11 @@ function openReWrite(url) {
 							<div class="comment-box">
 							    <div class="comment-header">
 							        <a href="../mypage/mypage.jsp">
-							            <i class="fa-solid fa-circle-user"></i>
+							    	<%if(!arr2.isEmpty() && arr2.get(0).getProfile_uri() != null){ %>
+										<img src="/<%=arr2.get(0).getProfile_uri() %>" alt="프로필 이미지" width="40" height="40" style=border-radius:50% />
+								    <%}else{ %>
+								         <i class="fa-solid fa-circle-user" style="color: darkgray; font-size: 25px;"></i>
+								    <%} %>
 							        </a>
 							        <span class="user-id"><%=udao.myinfo(sid).get(0).getNickname() %></span>
 							    </div>

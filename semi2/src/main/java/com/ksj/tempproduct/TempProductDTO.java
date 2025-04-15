@@ -7,12 +7,15 @@ public class TempProductDTO {
     private String content;
     private int price;
     private String wish_location;
+	private String thumb_image; 
+    private String image_uri; 
     
     public TempProductDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public TempProductDTO(String id, String title, int category_id, String content, int price, String wish_location) {
+	public TempProductDTO(String id, String title, int category_id, String content, int price, String wish_location,
+			String thumb_image, String image_uri) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -20,6 +23,8 @@ public class TempProductDTO {
 		this.content = content;
 		this.price = price;
 		this.wish_location = wish_location;
+		this.thumb_image = thumb_image;
+		this.image_uri = image_uri;
 	}
 
 	public String getId() {
@@ -69,6 +74,22 @@ public class TempProductDTO {
 	public void setWish_location(String wish_location) {
 		this.wish_location = wish_location;
 	}
-    
+
+	public String getThumb_image() {
+		return thumb_image;
+	}
+
+	public void setThumb_image(String thumb_image) {
+		this.thumb_image = thumb_image;
+	}
+
+	public String getImage_uri() {
+		return image_uri;
+	}
+
+	public void setImage_uri(String image_uri) {
+		this.image_uri = image_uri;
+	}
+
 
 }

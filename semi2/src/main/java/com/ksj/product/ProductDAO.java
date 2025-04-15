@@ -260,14 +260,15 @@ public class ProductDAO {
 	public int upadteProduct(ProductDTO dto) {
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
-			String sql = "UPDATE products SET category_id = ?, price= ?,title= ?,content= ?,location = ?, update_date = sysdate where products_id = ?";
+			String sql = "UPDATE products SET category_id = ?, price= ?,title= ?,content= ?,location = ?,thumb_image=?, update_date = sysdate where products_id = ?";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, dto.getCategory_id());
 			ps.setInt(2, dto.getPrice());
 			ps.setString(3, dto.getTitle());
 			ps.setString(4, dto.getContent());
 			ps.setString(5, dto.getLocation());
-			ps.setInt(6, dto.getProducts_id());
+			ps.setString(6, dto.getThumb_image());
+			ps.setInt(7, dto.getProducts_id());
 			int result = ps.executeUpdate();
 			return result;
 		} catch (Exception e) {

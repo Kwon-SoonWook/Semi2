@@ -1,19 +1,16 @@
+<%@page import="com.ksj.review.ReviewDTO"%>
 <%@page import="com.ksj.product.ProductDTO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.ksj.productscomment.ProductsCommentDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<jsp:useBean id="rdao" class="com.ksj.review.ReviewDAO" scope="session"></jsp:useBean>
 <jsp:useBean id="pcdao" class="com.ksj.productscomment.ProductsCommentDAO"></jsp:useBean>
 <jsp:useBean id="udao" class="com.ksj.user.UserDAO"></jsp:useBean>
 <jsp:useBean id="pdao" class="com.ksj.product.ProductDAO"></jsp:useBean>
 <%
-String productsId_s = request.getParameter("productsIds");
-int productsId = 0;
-if(productsId_s!=null&&productsId_s.length()!=0){
-	productsId = Integer.parseInt(productsId_s);
-}
-ArrayList<String> arr= pcdao.productsCommentBuyerId(productsId);
-ProductDTO pdto = pdao.ProductList(productsId);
+String review_id = request.getParameter("review_id");
+ReviewDTO rdto = rdao.reviewlist(review_id);
 %>
 <!DOCTYPE html>
 <html>
@@ -71,14 +68,10 @@ function check(){
 	<section>
 		<article>
 			<form name ="writeReview" action="writeReview_ok.jsp">
-			<input type="hidden" name=products_id value=<%=productsId %>>
+			<input type="hidden" name=products_id value=<%=rdto.getProducts_id() %>>
 				<h2>거래자 선택</h2>
 				<select name="user_id">
-				<%
-				for(int i=0;i<arr.size();i++){
-					%><option value="<%=arr.get(i)%>"><%=udao.myinfo(arr.get(i)).get(0).getNickname()%></option><%
-				}
-				%>
+				<option value="<%=rdto.getUsere_id()%>"><%=udao.myinfo(rdto.getUsere_id()).get(0).getNickname()%></option> 
 				</select>				
 				<h2>거래후기</h2>
 				<textarea placeholder="댓글을 작성해주세요" name="review_content"></textarea>
@@ -90,6 +83,7 @@ function check(){
 				<input type="radio" name="rate" id="star2" value="2"><label for="star2">★</label>
 				<input type="radio" name="rate" id="star1" value="1"><label for="star1">★</label>
 				</div>
+				<input type="hidden" name=review_type value=1>
 				<input type="reset" value="초기화">
 				<input type="submit" value="후기작성" onclick="return check()">
 			</form>
@@ -97,14 +91,3 @@ function check(){
 	</section>
 </body>
 </html>
-<script>
-window.onbeforeunload = function () {
-    if (window.opener) {
-        fetch('/semi2/page/user/product/productTrade_ok.jsp?productId=<%=productsId%>&trade=0')
-        .then(() => {
-            window.opener.document.getElementById("tradestateid").value = "0"; // ✅ 부모 창 값 변경
-            window.opener.location.reload(); // ✅ 부모 창 새로고침
-        });
-    }
-};
-</script>

@@ -14,7 +14,7 @@ public class TempProductDAO {
 	public int addTempProdcuct(TempProductDTO dto) {
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
-			String sql = "insert into temp_products values(?,?,?,?,?,?)";
+			String sql = "insert into temp_products values(?,?,?,?,?,?,?,?)";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, dto.getId());
 			ps.setString(2, dto.getTitle());
@@ -22,6 +22,8 @@ public class TempProductDAO {
 			ps.setString(4, dto.getContent());
 			ps.setInt(5, dto.getPrice());
 			ps.setString(6, dto.getWish_location());
+			ps.setString(7, dto.getThumb_image());
+			ps.setString(8, dto.getImage_uri());
 			int result = ps.executeUpdate();
 			return result;
 		} catch (Exception e) {
@@ -37,14 +39,16 @@ public class TempProductDAO {
 	public int updateTempProdcuct(TempProductDTO dto) {
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
-			String sql = "update temp_products set title=?, category_id=?, content=?, price=?, wish_location=? where id=?";
+			String sql = "update temp_products set title=?, category_id=?, content=?, price=?, wish_location=?,thumb_image=?,image_uri=? where id=?";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, dto.getTitle());
 			ps.setInt(2, dto.getCategory_id());
 			ps.setString(3, dto.getContent());
 			ps.setInt(4, dto.getPrice());
 			ps.setString(5, dto.getWish_location());
-			ps.setString(6, dto.getId());
+			ps.setString(6, dto.getThumb_image());
+			ps.setString(7, dto.getImage_uri());
+			ps.setString(8, dto.getId());
 			int result = ps.executeUpdate();
 			return result;
 		} catch (Exception e) {
@@ -71,7 +75,9 @@ public class TempProductDAO {
 				String content = rs.getString("content")==null?"":rs.getString("content");
 				int price = rs.getInt("price");
 				String wishLocation = rs.getString("wish_location")==null?"":rs.getString("wish_location");
-				dto = new TempProductDTO(id, title, categoryId, content, price, wishLocation);
+				String thumb_image = rs.getString("thumb_image")==null?"":rs.getString("thumb_image");
+				String image_uri = rs.getString("image_uri")==null?"":rs.getString("image_uri");
+				dto = new TempProductDTO(id, title, categoryId, content, price, wishLocation,thumb_image,image_uri);
 			}
 			return dto;
 		} catch (Exception e) {
