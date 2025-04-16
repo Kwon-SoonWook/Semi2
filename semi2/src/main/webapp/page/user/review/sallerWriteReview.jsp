@@ -80,6 +80,7 @@ function check(){
 		<article>
 			<form name ="writeReview" action="writeReview_ok.jsp">
 			<input type="hidden" name=products_id value=<%=rdto.getProducts_id() %>>
+			<input type="hidden" name=review_div value=1>
 				<h2>거래자 선택</h2>
 				<select name="user_id">
 				<option value="<%=rdto.getUsere_id()%>"><%=udao.myinfo(rdto.getUsere_id()).get(0).getNickname()%></option> 

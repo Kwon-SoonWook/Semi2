@@ -118,7 +118,7 @@ if (sid == null) {
 .product-actions {
     display: flex;
     gap: 10px;
-    margin-top: 15px;
+    margin-top: 10px;
 }
 .comment-section {
     width: 80%;
@@ -140,7 +140,6 @@ if (sid == null) {
     display: flex;
     align-items: center;
     width: 100%;
-    max-width: 1400px;
     border: 1px solid #ddd;
     padding: 10px;
     border-radius: 5px;
@@ -254,6 +253,51 @@ if (sid == null) {
   margin-top: 0px; 
   margin-bottom: 0px;
 }
+
+.reply-form {
+    display: none; /* 기본적으로 숨김 */
+    align-items: center;
+    width: 90%;
+    margin-left: auto;    
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    background: #f9f9f9;
+}
+
+.reply-form-header {
+    display: none;
+    align-items: center;
+    gap: 10px;
+}
+
+.reply-form-header i {
+    font-size: 25px;
+    color: darkgray;
+}
+
+
+.reply-form textarea{
+    align-items: center;
+    width: 85%;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    background: #f9f9f9;
+}
+.reply-form button {
+    width: 60px;
+    height: 40px;
+   	margin-left: auto;    
+    margin-right: 10px;
+    background: #008cff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 </style>
 <script>
 window.onload=function(){
@@ -308,6 +352,37 @@ function showbig(val){
 function openReWrite(url) {
 	window.open(url,'reWrite','width=450,height=350');
 }
+function reWrite(idx){
+	var reContentname = document.getElementById("reContentname"+idx).value;
+	if(reContentname.trim()==""){
+		alert("댓글을 입력해주세요");
+		return false;
+	}else{
+		return true;
+	}	
+}
+function toggleReplyForm(commentIdx) {
+    let replyForms = document.getElementsByClassName("reply-form"); // 모든 답글 폼 가져오기
+
+    if (!replyForms || replyForms.length === 0) {
+        console.error("replyForms 요소가 존재하지 않습니다.");
+        return;
+    }
+
+    let replyForm = document.getElementById("reply-form-" + commentIdx);
+
+    // 현재 폼이 열려 있으면 닫고, 닫혀 있으면 열기
+    if (replyForm.style.display === "flex") {
+        replyForm.style.display = "none";
+    } else {
+        for (let i = 0; i < replyForms.length; i++) {
+            replyForms[i].style.display = "none";
+        }
+        replyForm.style.display = "flex";
+    }
+}
+
+
 </script>
 </head>
 <%@include file="/page/user/main/header.jsp"%>
@@ -315,7 +390,6 @@ function openReWrite(url) {
 <div class="container">
 	<%@include file="/page/user/main/category.jsp" %>
     <main class="main-content">
-		<form name="saleProductiVeiw" action="productComment_ok.jsp">
     	<div>
 			<div class="sale-product-container">
 				<div class="image-container">
@@ -377,169 +451,158 @@ function openReWrite(url) {
 			<table>
 				<thead><tr><th colspan="3">댓글</th></tr></thead>
 				<tbody>
-						<%
-						if(sid!=null&&sid.equals(pdto.getSeller_id())){
+						<%if(sid!=null&&sid.equals(pdto.getSeller_id())){
 							ArrayList<ProductsCommentDTO> sellerlist= pcdao.productsSellerCommentList(prodcutsId);
-							if(sellerlist==null||sellerlist.size()==0){
-							%>
+							if(sellerlist==null||sellerlist.size()==0){%>
 								<tr>
 									<td colspan="3" align="center">
 									등록된 댓글이 없습니다
 									</td>
-								</tr>								
-							<%								
+								</tr><%								
 							}else{
-								for(int i=0;i<sellerlist.size();i++){
-									%>
-										<tr>
-											<td>
-												<div class="reply">
-											<%
-											for(int z=0;z<sellerlist.get(i).getLev();z++){
-												%>
-												<div class="reply <%= sellerlist.get(i).getLev() > 0 ? "reply-indent" : " " %>">
-												<%
-											}
-											if(sellerlist.get(i).getComment_div()==0){
-												if(i==0){
-													%>
-												<div class="reply <%= sellerlist.get(i).getLev() > 0 ? "reply-indent" : " " %>">
-													<%													
+								for(int i=0;i<sellerlist.size();i++){%>
+									<tr>
+										<td>
+											<div class="reply"><%
+												for(int z=0;z<sellerlist.get(i).getLev();z++){
+													%><div class="reply <%= sellerlist.get(i).getLev() > 0 ? "reply-indent" : " " %>"><%
 												}
-											%>											
-												<div class="avatar">												
-											    	<%if(!headudao.myinfo(sellerlist.get(i).getSeller_id()).isEmpty() && headudao.myinfo(sellerlist.get(i).getSeller_id()).get(0).getProfile_uri() != null){ %>
-														<img src="/<%=headudao.myinfo(sellerlist.get(i).getSeller_id()).get(0).getProfile_uri() %>" alt="프로필 이미지" width="40" height="40" style=border-radius:50% />
-												    <%}else{ %>
-												         <i class="fa-solid fa-circle-user" style="color: darkgray; font-size: 25px;"></i>
-												    <%} %>
-												</div>
-												<div class="main">
-												<div class="meta">											          
-											        <span class="user-id"><%=udao.myinfo((sellerlist.get(i).getSeller_id())).get(0).getNickname()%></span>
-													<span class="date"><%=timeFormat.format(sellerlist.get(i).getCreate_date()) %></span>
-											    </div>												
-											    <div class="content">
-												<%=sellerlist.get(i).getComment_content() %>
-											    </div>
-											    <div class="actions">												
-												<%if(sellerlist.get(i).getSeller_id().equals(sid)){
-													%>
-												<input type="button" value="수정하기" onclick="openReWrite('productCommentUpdate.jsp?idx=<%=sellerlist.get(i).getProducts_comment_idx()%>')">
-												<input type="button" value="삭제하기" onclick="location.href='deleteProductComment_ok.jsp?idx=<%=sellerlist.get(i).getProducts_comment_idx()%>'">
-													<%
+												if(sellerlist.get(i).getComment_div()==0){
+													if(i==0){
+														%><div class="reply <%= sellerlist.get(i).getLev() > 0 ? "reply-indent" : " " %>"><%													
+													}%>											
+													<div class="avatar">												
+												    	<%if(!headudao.myinfo(sellerlist.get(i).getSeller_id()).isEmpty() && headudao.myinfo(sellerlist.get(i).getSeller_id()).get(0).getProfile_uri() != null){ %>
+															<img src="/<%=headudao.myinfo(sellerlist.get(i).getSeller_id()).get(0).getProfile_uri() %>" alt="프로필 이미지" width="40" height="40" style=border-radius:50% />
+													    <%}else{ %>
+													         <i class="fa-solid fa-circle-user" style="color: darkgray; font-size: 25px;"></i>
+													    <%} %>
+													</div>
+													<div class="main">
+														<div class="meta">											          
+													        <span class="user-id"><%=udao.myinfo((sellerlist.get(i).getSeller_id())).get(0).getNickname()%></span>
+															<span class="date"><%=timeFormat.format(sellerlist.get(i).getCreate_date()) %></span>
+													    </div>												
+													    <div class="content">
+															<%=sellerlist.get(i).getComment_content() %>
+													    </div>
+													    <div class="actions">												
+															<%if(sellerlist.get(i).getSeller_id().equals(sid)){%>
+																<input type="button" value="수정하기" onclick="openReWrite('productCommentUpdate.jsp?idx=<%=sellerlist.get(i).getProducts_comment_idx()%>')">
+																<input type="button" value="삭제하기" onclick="location.href='deleteProductComment_ok.jsp?idx=<%=sellerlist.get(i).getProducts_comment_idx()%>'">
+															<%														
+															}else{%>
+																<input type="button" value="답글쓰기" onclick="toggleReplyForm(<%=sellerlist.get(i).getProducts_comment_idx()%>)">
+
+															<%
+															}%>
+														</div>
+													</div>	
+											    	<%
 												}else{
-													%>
-												<input type="button" value="답글쓰기" onclick="openReWrite('productCommentReWrite.jsp?idx=<%=sellerlist.get(i).getProducts_comment_idx()%>')">												
-													<%
+													%>댓글이 삭제되었습니다<%
 												}
-											}else{
-												%>삭제되었습니다<%
-											}
-											%>
-											    </div>
-											    </div>
-											<%
-											if(i==0){
-											%>
-											    </div>
-											<%												
-											}
-											for(int z=0;z<sellerlist.get(i).getLev();z++){
-												%>
-												</div>
-												<%
-											}
-											 %>
-											 	</div>
-											</td>
-										</tr>
-									<%								
+												if(i==0){
+												%></div><%												
+												}
+												for(int z=0;z<sellerlist.get(i).getLev();z++){
+													%></div><%
+												}%>
+											 </div>
+											 <!-- 대댓글 입력 폼 -->
+										<form name="productComment" action="productCommentReWrite_ok.jsp">
+											<div id="reply-form-<%=sellerlist.get(i).getProducts_comment_idx()%>" class="reply-form">
+											    <input type="hidden" value="<%=prodcutsId %>" name="Products_id">
+												<%ProductsCommentDTO pcdto = pcdao.productsCommentList(sellerlist.get(i).getProducts_comment_idx());%>
+												<textarea placeholder="댓글을 작성해주세요" name="comment_content" id="reContentname<%=sellerlist.get(i).getProducts_comment_idx()%>"></textarea>
+											    <input type="hidden" value="<%=pcdto.getBuyer_id() %>" name="Buyer_id">
+											    <input type="hidden" value="<%=sid %>" name="seller_id">
+											    <input type="hidden" value="<%=pcdto.getRef() %>" name="ref">
+											    <input type="hidden" value="<%=pcdto.getLev() %>" name="lev">
+											    <input type="hidden" value="<%=pcdto.getSunbun() %>" name="sunbun">
+												<button onclick="return reWrite('<%=sellerlist.get(i).getProducts_comment_idx()%>')">댓글작성</button>
+											</div>
+										</form>											 
+										</td>
+									</tr><%								
 								}
 							}
 						}else{
 							ArrayList<ProductsCommentDTO> buyerlist= pcdao.buyerProductsCommentList(sid,prodcutsId);
-							if(buyerlist==null||buyerlist.size()==0){
-								%>
+							if(buyerlist==null||buyerlist.size()==0){%>
 									<tr>
 										<td colspan="3" align="center">
 										등록된 댓글이 없습니다
 										</td>
-									</tr>								
-								<%
+									</tr><%
 							}else{
-								for(int i=0;i<buyerlist.size();i++){
-									%>
+								for(int i=0;i<buyerlist.size();i++){%>
 									<tr>
-											<td>
-											<%
+										<td><%
 											for(int z=0;z<=buyerlist.get(i).getLev();z++){
-												%>
-												<div class="reply <%= buyerlist.get(i).getLev() > 0 ? "reply-indent" : " " %>">
-												<%
+												%><div class="reply <%= buyerlist.get(i).getLev() > 0 ? "reply-indent" : " " %>"><%
 											}
-												if(buyerlist.get(i).getComment_div()==0){
-													if(i==0){
-														%>
-														<div class="reply <%= buyerlist.get(i).getLev() > 0 ? "reply-indent" : " " %>">
-														<%														
-													}
-												%>
-												<div class="avatar">												
-											    	<%if(!headudao.myinfo(buyerlist.get(i).getSeller_id()).isEmpty() && headudao.myinfo(buyerlist.get(i).getSeller_id()).get(0).getProfile_uri() != null){ %>
+											if(buyerlist.get(i).getComment_div()==0){
+												if(i==0){
+													%><div class="reply <%= buyerlist.get(i).getLev() > 0 ? "reply-indent" : " " %>"><%														
+												}
+												%><div class="avatar"><%
+											    	if(!headudao.myinfo(buyerlist.get(i).getSeller_id()).isEmpty() && headudao.myinfo(buyerlist.get(i).getSeller_id()).get(0).getProfile_uri() != null){ %>
 														<img src="/<%=headudao.myinfo(buyerlist.get(i).getSeller_id()).get(0).getProfile_uri() %>" alt="프로필 이미지" width="40" height="40" style=border-radius:50% />
 												    <%}else{ %>
 												         <i class="fa-solid fa-circle-user" style="color: darkgray; font-size: 25px;"></i>
 												    <%} %>
 												</div>
 												<div class="main">
-												<div class="meta">											          
-											        <span class="user-id"><%=udao.myinfo(buyerlist.get(i).getSeller_id()).get(0).getNickname() %></span>
-													<span class="date"><%=timeFormat.format(buyerlist.get(i).getCreate_date()) %></span>										        
-											    </div>												
-											    <div class="content">												
-												<%=buyerlist.get(i).getComment_content() %>
-											    </div>
-											    <div class="actions">																								
-												<%if(buyerlist.get(i).getSeller_id().equals(sid)){
-													%>
-													<input type="button" value="수정하기" onclick="openReWrite('productCommentUpdate.jsp?idx=<%=buyerlist.get(i).getProducts_comment_idx()%>')">
-													<input type="button" value="삭제하기" onclick="location.href='deleteProductComment_ok.jsp?idx=<%=buyerlist.get(i).getProducts_comment_idx()%>'">
-													<%																								
+													<div class="meta">											          
+												        <span class="user-id"><%=udao.myinfo(buyerlist.get(i).getSeller_id()).get(0).getNickname() %></span>
+														<span class="date"><%=timeFormat.format(buyerlist.get(i).getCreate_date()) %></span>										        
+												    </div>												
+												    <div class="content">												
+													<%=buyerlist.get(i).getComment_content() %>
+												    </div>
+												    <div class="actions">																								
+													<%if(buyerlist.get(i).getSeller_id().equals(sid)){
+														%><input type="button" value="수정하기" onclick="openReWrite('productCommentUpdate.jsp?idx=<%=buyerlist.get(i).getProducts_comment_idx()%>')">
+														<input type="button" value="삭제하기" onclick="location.href='deleteProductComment_ok.jsp?idx=<%=buyerlist.get(i).getProducts_comment_idx()%>'"><%																								
+													}else{
+														%><input type="button" value="답글쓰기" onclick="toggleReplyForm(<%=buyerlist.get(i).getProducts_comment_idx()%>)"><%												
+													}%>
+													</div>
+												</div><%	
 												}else{
-													%>
-												<input type="button" value="답글쓰기" onclick="openReWrite('productCommentReWrite.jsp?idx=<%=buyerlist.get(i).getProducts_comment_idx()%>')">												
-													<%												
+													%>댓글이 삭제되었습니다<%
 												}
-											}else{
-												%>삭제되었습니다<%
-											}
-											%>
-											</div>
-											</div>	
-											<%
 											if(i==0){
-												%>
-												</div>	
-												<%											
+												%></div><%											
 											}
 											for(int z=0;z<buyerlist.get(i).getLev();z++){
-												%>
-												</div>
-												<%
-											}
-											 %>
-											</td>
-										</tr>
-									<%																
+												%></div><%
+											}%>
+											</div>
+											<form name="productComment" action="productCommentReWrite_ok.jsp">
+											<div id="reply-form-<%=buyerlist.get(i).getProducts_comment_idx()%>" class="reply-form">
+											    <input type="hidden" value="<%=prodcutsId %>" name="Products_id">
+												<%ProductsCommentDTO pcdto = pcdao.productsCommentList(buyerlist.get(i).getProducts_comment_idx());%>
+												<textarea placeholder="댓글을 작성해주세요" name="comment_content" id="reContentname<%=buyerlist.get(i).getProducts_comment_idx()%>"></textarea>
+											    <input type="hidden" value="<%=pcdto.getBuyer_id() %>" name="Buyer_id">
+											    <input type="hidden" value="<%=sid %>" name="seller_id">
+											    <input type="hidden" value="<%=pcdto.getRef() %>" name="ref">
+											    <input type="hidden" value="<%=pcdto.getLev() %>" name="lev">
+											    <input type="hidden" value="<%=pcdto.getSunbun() %>" name="sunbun">
+												<button onclick="return reWrite('<%=buyerlist.get(i).getProducts_comment_idx()%>')">댓글작성</button>
+											</div>
+										</form>											 	
+										</td>
+									</tr><%																
 								}
 							}
-						}
-						%>
+						}%>
 				</tbody>
 				<tfoot>
 					<tr>
 						<td>
+						<form name="saleProductiVeiw" action="productComment_ok.jsp">
 							<div class="comment-box">
 							    <div class="comment-header">
 							        <a href="../mypage/mypage.jsp">
@@ -557,12 +620,12 @@ function openReWrite(url) {
 							    <textarea class="comment-input" placeholder="댓글을 작성해주세요" name="contentname"></textarea>
 							    <button class="comment-submit" onclick="return contentclick()">댓글 작성</button>
 							</div>
+						</form>
 						</td>
 					</tr>
 				</tfoot>
 			</table>
 		</div>
-		</form>
 		</div>
     </main>   
 </div>

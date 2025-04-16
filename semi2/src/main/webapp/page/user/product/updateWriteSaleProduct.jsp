@@ -13,7 +13,19 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title> 
+<title>Insert title here</title>
+<%
+String sid = (String)session.getAttribute("sid");
+if (sid == null) {
+	%>
+	<script>
+	window.alert('로그인 후 이용가능한 서비스입니다.');
+	location.href = '/semi2/page/user/login/login.jsp';
+	</script>
+	<%
+    return;
+}
+%> 
 <link rel="stylesheet" type="text/css" href="/semi2/page/user/main/mainLayout.css">
 <style>
 .form-section {
@@ -132,12 +144,16 @@ function check(){
 		        alert("가격을 입력해주세요!");
 		        return false;		  
 		  }
-			var location = document.writeSaleProduct.location.value;
-				 if(location==null||location==""){
-					     alert("거래희망장소를 입력해주세요!");
-					     return false;		  
-				 }
-		document.forms["writeSaleProduct"].enctype ="multipart/form-data";
+		var location = document.writeSaleProduct.location.value;
+		if(location==null||location==""){
+			alert("거래희망장소를 입력해주세요!");
+			return false;		  
+		}
+		var id = <%=sid%>;
+		if(id==null||id==""){
+			alert("로그인후 이용해주세요");
+			return false;		  			
+		}		
 }
 function show(){
 		<%for(int i=0;i<5;i++){
@@ -184,9 +200,21 @@ function show(){
             document.getElementById("loadimage"+i).value="";    		
     	}
     }
+    function isNumberkey(event){
+        // 허용할 키 목록
+        const allowedKeys = ["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Enter", "Tab","F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12","Escape","CapsLock"];
+    	if(event.key >="0" && event.key <= "9"||allowedKeys.includes(event.key)){
+    		return true;
+    	}else{
+    		alert("정수만 입력해주세요");
+    		return false;
+    	}
+    }
+    function filterInvalidInput(event) {
+        event.target.value = event.target.value.replace(/[^0-9]/g, ''); // 숫자만 남기기
+    }    
 </script>
 <%
-String sid = (String)session.getAttribute("sid");
 TempProductDTO tpdto = tpdao.tempProductList(sid);
 String productIds = request.getParameter("productId");
 int productId;
@@ -299,7 +327,7 @@ if(pdto==null||pdto.equals("")){
 					</div>
 					<div class="form-group">
 						<label>가격</label>
-						<input type="text" name="price" value="0">
+						<input type="text" name="price" value="0" onkeydown="return isNumberkey(event)" oninput="filterInvalidInput(event)">
 					</div>
 					<div class="form-group">
 						<label>거래희망장소</label>

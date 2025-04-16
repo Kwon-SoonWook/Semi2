@@ -14,6 +14,16 @@ if(productsId_s!=null&&productsId_s.length()!=0){
 }
 ArrayList<String> arr= pcdao.productsCommentBuyerId(productsId);
 ProductDTO pdto = pdao.ProductList(productsId);
+String sid = (String)session.getAttribute("sid");
+if (sid == null) {
+	%>
+	<script>
+	window.alert('로그인 후 이용가능한 서비스입니다.');
+	location.href = '/semi2/page/user/login/login.jsp';
+	</script>
+	<%
+    return;
+}
 %>
 <!DOCTYPE html>
 <html>
@@ -82,11 +92,14 @@ function check(){
 		<article>
 			<form name ="writeReview" action="writeReview_ok.jsp">
 			<input type="hidden" name=products_id value=<%=productsId %>>
+			<input type="hidden" name=review_div value=0>
 				<h2>거래자 선택</h2>
 				<select name="user_id">
 				<%
 				for(int i=0;i<arr.size();i++){
+					if(!(sid.equals(arr.get(i)))){
 					%><option value="<%=arr.get(i)%>"><%=udao.myinfo(arr.get(i)).get(0).getNickname()%></option><%
+					}
 				}
 				%>
 				</select>				
