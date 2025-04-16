@@ -122,18 +122,18 @@ input[type="submit"]:hover {
 									}
 									if (bbs_div.equals("1")) {
 										%>
-										<option value="bbs" selected>커뮤니티</option>
-										<option value="buy">삽니다</option>
+										<option value="bbs" selected>자유게시판</option>
+										<option value="buy">구매게시판</option>
 										<%
 									} else if (bbs_div.equals("2")) {
 										%>
-										<option value="bbs">커뮤니티</option>
-										<option value="buy" selected>삽니다</option>
+										<option value="bbs">자유게시판</option>
+										<option value="buy" selected>구매게시판</option>
 										<%
 									} else {
 										%>
-										<option value="bbs">커뮤니티</option>
-										<option value="buy">삽니다</option>
+										<option value="bbs">자유게시판</option>
+										<option value="buy">구매게시판</option>
 										<%
 									}
 									%>

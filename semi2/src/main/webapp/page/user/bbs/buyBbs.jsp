@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width"> <!-- 반응형 화면 변환 -->
-<title>커뮤니티 게시판</title>
+<title>구매게시판</title>
 <script src="https://kit.fontawesome.com/f0cba69f8f.js" crossorigin="anonymous"></script><!-- 안보이면 해당 사이트 로그인 후 주소받기 -->
 </head>
 <style>
@@ -114,7 +114,7 @@ if (cp % pageSize == 0) userGroup--;
 	<main class="main-content">
 		<form name="buyFind" method="get" action="buyBbs.jsp">
 		<div class="page">
-			<h2>삽니다 게시판</h2>
+			<h2>구매게시판</h2>
 			<table>	
 				<thead>
 					<tr>

@@ -115,7 +115,7 @@ if (cp % pageSize == 0) userGroup--;
 	<main class="main-content">
 		<form name="noticeFind" method="get" action="noticeBbs.jsp">
 		<div class="page">
-			<h2>공지사항 게시판</h2>
+			<h2>공지사항</h2>
 			<table>
 				<thead>
 					<tr>
