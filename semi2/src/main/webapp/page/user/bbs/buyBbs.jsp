@@ -65,6 +65,26 @@ table th {
 table td {
     padding: 12px 10px;
 }
+
+.page input[type="text"], select {
+	padding: 5px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	font-size: 14px;
+	resize: vertical;
+}
+
+
+.page input[type="submit"], input[type="reset"], input[type="button"] {
+	background-color: #8c8c8c;
+	color: white;
+	border: none;
+	padding: 5px 20px;
+	font-size: 14px;
+	border-radius: 5px;
+	cursor: pointer;
+	margin-top: 5px;
+}
 </style>
 <% 
 
