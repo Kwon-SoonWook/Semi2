@@ -24,7 +24,8 @@ public class ReviewDAO {
 				int rate = rs.getInt("rate");
 				String review_content = rs.getString("review_content");
 				int review_type = rs.getInt("review_type");
-				ReviewDTO dto = new ReviewDTO(review_id, usere_id, user_id, products_id, rate, review_content, review_type);
+				int review_div = rs.getInt("review_div");
+				ReviewDTO dto = new ReviewDTO(review_id, usere_id, user_id, products_id, rate, review_content, review_type,review_div);
 				arr.add(dto);
 			}
 			return arr;
@@ -79,7 +80,8 @@ public class ReviewDAO {
 				int rate = rs.getInt("rate");
 				String review_content = rs.getString("review_content");
 				int review_type = rs.getInt("review_type");
-				dto = new ReviewDTO(review_id, usere_id, user_id, products_id, rate, review_content, review_type);
+				int review_div = rs.getInt("review_div");
+				dto = new ReviewDTO(review_id, usere_id, user_id, products_id, rate, review_content, review_type,review_div);
 			}
 			return dto;
 		} catch (Exception e) {
@@ -109,7 +111,8 @@ public class ReviewDAO {
 				int rate = rs.getInt("rate");
 				String review_content = rs.getString("review_content");
 				int review_type = rs.getInt("review_type");
-				dto = new ReviewDTO(review_id, usere_id, user_id, products_id, rate, review_content, review_type);
+				int review_div = rs.getInt("review_div");
+				dto = new ReviewDTO(review_id, usere_id, user_id, products_id, rate, review_content, review_type,review_div);
 			}
 			return dto;
 		} catch (Exception e) {
@@ -127,7 +130,7 @@ public class ReviewDAO {
 	public int addReview(ReviewDTO dto) {
 		try {
 			conn=com.ksj.db.ConnectionDB.getConn();
-			String sql = "insert into user_review values(review_idx.nextval,?,?,?,?,?,?)";
+			String sql = "insert into user_review values(review_idx.nextval,?,?,?,?,?,?,?)";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, dto.getUsere_id());
 			ps.setString(2, dto.getUser_id());
@@ -135,6 +138,7 @@ public class ReviewDAO {
 			ps.setInt(4, dto.getRate());
 			ps.setString(5, dto.getReview_content());
 			ps.setInt(6, dto.getReview_type());
+			ps.setInt(7, dto.getReview_div());
 			int result = ps.executeUpdate();
 			return result;
 		} catch (Exception e) {

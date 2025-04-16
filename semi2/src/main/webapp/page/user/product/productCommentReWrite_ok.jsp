@@ -32,7 +32,5 @@ ProductsCommentDTO pcdto = new ProductsCommentDTO(0,id,buyerId,sellerId,commentC
 String msg = pcdao.productsCommentReWrite(pcdto)>0?"답글성공":"답글실패";
 %>
 <script>
-window.alert('<%=msg%>');
-opener.location.reload();
-window.self.close();
+location.href='saleProductView.jsp?productsIds=<%=id%>';
 </script>

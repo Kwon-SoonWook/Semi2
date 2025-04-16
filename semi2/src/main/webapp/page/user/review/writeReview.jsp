@@ -14,6 +14,16 @@ if(productsId_s!=null&&productsId_s.length()!=0){
 }
 ArrayList<String> arr= pcdao.productsCommentBuyerId(productsId);
 ProductDTO pdto = pdao.ProductList(productsId);
+String sid = (String)session.getAttribute("sid");
+if (sid == null) {
+	%>
+	<script>
+	window.alert('로그인 후 이용가능한 서비스입니다.');
+	location.href = '/semi2/page/user/login/login.jsp';
+	</script>
+	<%
+    return;
+}
 %>
 <!DOCTYPE html>
 <html>
@@ -44,6 +54,16 @@ ProductDTO pdto = pdao.ProductList(productsId);
 .rating label:hover ~ label {
     color: gold; /* 마우스를 올렸을 때 별이 금색으로 변함 */
 }
+textarea {
+    width: 70%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    color: #333;
+    resize: vertical;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
+}
 </style>
 <script>
 window.onunload=function(){	
@@ -55,13 +75,13 @@ function check(){
 	        return false;		  
 	  }
 		var review_content = document.writeReview.review_content.value;
-		  if(review_content==null||review_content==""){
-		        alert("평점을 선택해주세요!");
+		  if(review_content==null||review_content.trim()==""){
+		        alert("거래후기를 적어주세요!");
 		        return false;		  
 		  }
 	  var rate = document.querySelector('input[name="rate"]:checked'); // 선택된 라디오 버튼 가져오기
 	    if (!rate) {
-	        alert("카테고리를 선택해주세요!");
+	        alert("평점을 선택해주세요!");
 	        return false;
 	    }
 }
@@ -72,16 +92,19 @@ function check(){
 		<article>
 			<form name ="writeReview" action="writeReview_ok.jsp">
 			<input type="hidden" name=products_id value=<%=productsId %>>
+			<input type="hidden" name=review_div value=0>
 				<h2>거래자 선택</h2>
 				<select name="user_id">
 				<%
 				for(int i=0;i<arr.size();i++){
+					if(!(sid.equals(arr.get(i)))){
 					%><option value="<%=arr.get(i)%>"><%=udao.myinfo(arr.get(i)).get(0).getNickname()%></option><%
+					}
 				}
 				%>
 				</select>				
 				<h2>거래후기</h2>
-				<textarea placeholder="댓글을 작성해주세요" name="review_content"></textarea>
+				<textarea placeholder="댓글을 작성해주세요" rows="8" cols="45" name="review_content"></textarea>
 				<h2>평점</h2>
 				<div class="rating">
 				<input type="radio" name="rate" id="star5" value="5"><label for="star5">★</label>
@@ -102,8 +125,8 @@ window.onbeforeunload = function () {
     if (window.opener) {
         fetch('/semi2/page/user/product/productTrade_ok.jsp?productId=<%=productsId%>&trade=0')
         .then(() => {
-            window.opener.document.getElementById("tradestateid").value = "0"; // ✅ 부모 창 값 변경
-            window.opener.location.reload(); // ✅ 부모 창 새로고침
+            window.opener.document.getElementById("tradestateid").value = "0"; // 부모 창 값 변경
+            window.opener.location.reload(); // 부모 창 새로고침
         });
     }
 };

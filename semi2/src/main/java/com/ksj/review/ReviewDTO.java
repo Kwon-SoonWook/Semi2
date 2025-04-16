@@ -9,13 +9,14 @@ public class ReviewDTO {
 	private int rate;
 	private String review_content;
 	private int review_type;
+	private int review_div;
 	
 	public ReviewDTO() {
 		// TODO Auto-generated constructor stub
 	}
 	
 	public ReviewDTO(String review_id, String usere_id, String user_id, String products_id, int rate,
-			String review_content, int review_type) {
+			String review_content, int review_type,int review_div) {
 		super();
 		this.review_id = review_id;
 		this.usere_id = usere_id;
@@ -24,6 +25,7 @@ public class ReviewDTO {
 		this.rate = rate;
 		this.review_content = review_content;
 		this.review_type = review_type;
+		this.review_div = review_div;
 	}
 
 	public String getReview_id() {
@@ -82,6 +84,12 @@ public class ReviewDTO {
 		this.review_type = review_type;
 	}
 	
-	
+	public int getReview_div() {
+		return review_div;
+	}
+
+	public void setReview_div(int review_div) {
+		this.review_div = review_div;
+	}
 }
 

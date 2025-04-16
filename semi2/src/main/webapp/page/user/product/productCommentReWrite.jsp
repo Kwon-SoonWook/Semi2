@@ -16,6 +16,17 @@ if(!(id_s==null||id_s.equals(""))){
 }
 ProductsCommentDTO dto = pcdao.productsCommentList(id);
 %>
+<script>
+function contentclick(){
+	var contentname = document.productCommentReWrite.comment_content.value;
+	if(contentname.trim()==""){
+		alert("댓글을 입력해주세요");
+		return false;
+	}else{
+		return true;
+	}
+}
+</script>
 </head>
 <body>
 	<section>
@@ -30,7 +41,7 @@ ProductsCommentDTO dto = pcdao.productsCommentList(id);
 					</tr>
 					<tr>
 						<td><textarea name="comment_content"></textarea></td>
-						<td colspan="2"><input type="submit" value="글쓰기">
+						<td colspan="2"><input type="submit" onclick="return contentclick()"value="글쓰기">
 						<input type="reset" value="초기화">
 						</td>
 					</tr>
