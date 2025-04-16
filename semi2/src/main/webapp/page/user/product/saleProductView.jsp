@@ -93,13 +93,6 @@ width:100%;
     transform: scale(1.1);
 }
 
-/* 오른쪽 제품 정보 */
-.product-info {
-    flex: 2; /* 오른쪽 영역 크기 지정 */
-    display: flex;
-    flex-direction: column;
-}
-
 /* 버튼 스타일 */
 .product-actions {
     display: flex;
@@ -133,22 +126,7 @@ width:100%;
     background: #f9f9f9;
 }
 
-.comment-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
 
-.comment-header i {
-    font-size: 25px;
-    color: darkgray;
-}
-
-
-.comment-section td {
-    padding: 15px;
-    border-bottom: 1px solid #ddd;
-}
 
 .comment-input {
     flex: 1; /* 입력창이 가능한 넓게 차지하도록 설정 */

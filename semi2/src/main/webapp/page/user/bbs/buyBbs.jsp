@@ -51,7 +51,7 @@ table td{
 }
 </style>
 <% 
-int bbsdiv = 1;
+int bbsdiv = 2;
 int totalCnt = bdao.getTotalCnt(bbsdiv);
 int listSize = 5;
 int totalPage = (totalCnt/listSize)+1;

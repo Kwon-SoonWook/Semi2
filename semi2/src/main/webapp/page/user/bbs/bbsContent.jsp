@@ -69,8 +69,6 @@ article {
     margin-bottom: 30px; /* 하단 여백 추가 */
     border-top: 1px solid #ddd;
     font-family: 'Malgun Gothic', sans-serif;
-    max-height: none; /* 높이 제한 제거 */
-    overflow: visible; /* 스크롤 제거 */
 }
 
 .comment-list>div:first-child {
@@ -153,22 +151,16 @@ article {
     font-size: 14px;
 }
 
-footer {
-    margin-top: auto; /* 컨텐츠 다음에 배치 */
-    position: relative; /* 절대 위치에서 상대 위치로 변경 */
-    clear: both; /* float 요소 해제 */
-}
+/* 전체 컨테이너 설정 */
 .container {
-    position: relative;
-    min-height: 100vh; /* 최소 높이를 뷰포트 높이로 설정 */
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* 최소 높이를 화면 전체로 설정 */
 }
-.main-content {
-    padding-bottom: 50px; /* footer와의 간격 확보 */
-    min-height: 500px; /* 최소 높이 설정 */
-    overflow: visible; /* 내용이 넘쳐도 보이게 설정 */
-}
+
+
+
+
 </style>
 <html>
 <head>
@@ -204,8 +196,6 @@ kdao.viewCnt(id);
 	<div class="container">
 		<%@include file="/page/user/main/category.jsp"%>
 		<main class="main-content">
-			<section>
-				<article class="bbs-article">
 					<h1><%=arr.get(0).getTitle()%></h1>
 					<hr>
 					<div class="bbs-meta">
@@ -226,9 +216,8 @@ kdao.viewCnt(id);
 						%>
 					</div>
 					<form action="bbsComment_ok.jsp" class="comment-form">
-						댓글 입력 <input type="text" name="comm"> <input type="hidden"
-							name="idx" value="<%=arr.get(0).getBbs_idx()%>"> <input
-							type="submit" value="등록">
+						댓글 입력 <input type="text" name="comm"> <input type="hidden" name="idx" value="<%=arr.get(0).getBbs_idx()%>"> 
+							<input type="submit" value="등록">
 					</form>
 
 					<div class="comment-list">
@@ -265,13 +254,12 @@ kdao.viewCnt(id);
 						}
 						%>
 					</div>
-				</article>
-			</section>
 		</main>
 		
 	</div>
-</body>
-<footer>
+	<footer>
 			<%@include file="/page/user/main/footer.jsp"%>
 </footer>
+</body>
+
 </html>

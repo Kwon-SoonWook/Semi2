@@ -67,7 +67,7 @@ form div input[type="button"]:hover {
 
 form input[type="submit"] {
     width: calc(100% - 20px);
-    background-color: #28a745;
+    background-color: #007BFF;
     color: white;
     border: none;
     padding: 10px 15px;
@@ -76,7 +76,7 @@ form input[type="submit"] {
 }
 
 form input[type="submit"]:hover {
-    background-color: #218838;
+    background-color: #0056b3;
 }
 </style>
 </head>
