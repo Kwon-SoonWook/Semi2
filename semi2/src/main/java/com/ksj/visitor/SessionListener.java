@@ -17,7 +17,6 @@ public class SessionListener implements HttpSessionListener{
 		int todayCount = dao.getVisitTodayCount();
 		int totalCount = dao.getVisitTotalCount();
 		
-		System.out.println(totalCount);
 		HttpSession session = se.getSession();
 		
 		session.setAttribute("totalCount", totalCount);
