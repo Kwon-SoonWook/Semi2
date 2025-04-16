@@ -64,17 +64,16 @@ session.setAttribute("reviewCnt", reviewCnt);
 		<%for(int i=0; i<arr.size(); i++){%>
             <div class="photo-card">
 		        <div class="thumbnail"></div>
-				<h3><%=arr.get(i).getUsere_id() %></h3> 
+				<h3><%=arr.get(i).getUsere_id() %></h3>
 				<p><%=arr.get(i).getReview_content() %></p>
 				<div class="rating">
 					<%for(int j=0; j<arr.get(i).getRate(); j++){ %>
 				        <label for="star">★</label>
 				    <%} %>
 			    </div>
-			        <%if(arr.get(i).getReview_type()!=1){ %>
+			        <%if(arr.get(i).getReview_div()!=1){ %>
 			        	<p><input type="button" value="답변하기" onclick="reviewWrite(<%=arr.get(i).getReview_id() %>);"></p>
             		<%} %>
-            		
             </div>
         <% 
 		}
