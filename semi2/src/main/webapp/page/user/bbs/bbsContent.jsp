@@ -124,6 +124,13 @@ article {
    color: #888;
 }
 
+.comment-item.reply:before {
+   content: "↳";
+   position: absolute;
+   left: 20px;
+   color: #888;
+}
+
 /* 대댓글 입력 폼 스타일 */
 .reply-form {
     display: none; /* 기본적으로 숨김 */
@@ -189,6 +196,7 @@ function toggleReplyForm(commentId) {
 <%
 int id = Integer.parseInt(request.getParameter("id"));
 String nickname = (String)session.getAttribute("nickname");
+String cp = (String)(request.getParameter("cp"));
 ArrayList<BbsDTO> arr = kdao.showContent(id);
 kdao.viewCnt(id);
 %>
@@ -197,10 +205,21 @@ kdao.viewCnt(id);
 		<%@include file="/page/user/main/category.jsp"%>
 		<main class="main-content">
 					<h1><%=arr.get(0).getTitle()%></h1>
+					<%
+					if(cp==null||cp==""){
+						%>
+						<input type = "button" name = "목록으로" value="목록으로" onclick="location.href='communityBbs.jsp'">
+						<%
+					}else{
+						%>
+						<input type = "button" name = "목록으로" value="목록으로" onclick="location.href='communityBbs.jsp?cp=<%=cp%>'">
+						<%
+					}
+					%>
 					<hr>
 					<div class="bbs-meta">
 						<span>작성자: <%=arr.get(0).getBbs_id()%></span> | <span>작성일자:
-							<%=arr.get(0).getCreate_date()%></span>
+							<%=arr.get(0).getCreate_date()%></span> | <span>조회수: <%=arr.get(0).getView_cnt() %></span>
 					</div>
 					<div class="bbs-body">
 						<p><%=arr.get(0).getContent()%></p>
@@ -226,7 +245,7 @@ kdao.viewCnt(id);
 						ArrayList<CommentDTO> cmtarr = kdao.showCmt(arr.get(0).getBbs_idx());
 						for (int i = 0; i < cmtarr.size(); i++) {
 							if (cmtarr.size() > 0) {
-								boolean isReply = cmtarr.get(i).getLev() > 0; // 답글 여부 확인 (DTO에 depth 필드가 있다고 가정)
+								boolean isReply = cmtarr.get(i).getLev()==0?false:true; // 답글 여부 확인 (DTO에 depth 필드가 있다고 가정)
 								int commentId = cmtarr.get(i).getBbs_comment_idx(); // 댓글 ID 가져오기
 						%>
 						<div class="comment-item <%=isReply ? "reply" : ""%>">
@@ -242,9 +261,14 @@ kdao.viewCnt(id);
 							<!-- 대댓글 입력 폼 -->
 							<div id="reply-form-<%=commentId%>" class="reply-form">
 								<form action="bbsReplyComment_ok.jsp">
-									대댓글 입력 <input type="text" name="reply">
-									<input type="hidden" name="idx" value="<%=arr.get(0).getBbs_idx()%>">
-									<input type="hidden" name="parent_id" value="<%=commentId%>">
+									대댓글 입력 <input type="text" name="comment_content">
+									<input type="hidden" name="bbs_idx" value="<%=cmtarr.get(0).getBbs_idx()%>">
+									<input type="hidden" name="bbs_comment_idx" value="<%=commentId%>">
+									<input type="hidden" name="nickname" value="<%=nickname%>">
+									<input type="hidden" name="ref" value="<%=cmtarr.get(0).getRef()%>">
+									<input type="hidden" name="lev" value="<%=cmtarr.get(0).getLev()%>">
+									<input type="hidden" name="sunbun" value="<%=cmtarr.get(0).getSunbun()%>">
+									
 									<input type="submit" value="등록">
 								</form> 
 							</div>

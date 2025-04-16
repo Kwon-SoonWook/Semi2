@@ -144,7 +144,7 @@ ArrayList<BbsDTO> arr = kdao.bbsList(cp, listSize);
 							%>
 							<tr>
 								<td><%=arr.get(i).getBbs_idx()%></td>
-								<td><a href="bbsContent.jsp?id=<%=arr.get(i).getBbs_idx()%>"><%=arr.get(i).getTitle()%></a></td>
+								<td><a href="bbsContent.jsp?id=<%=arr.get(i).getBbs_idx()%>&cp=<%=cp%>"><%=arr.get(i).getTitle()%></a></td>
 								<td><%=arr.get(i).getBbs_id()%></td>
 								<td><%=arr.get(i).getCreate_date()%></td>
 								<td><%=arr.get(i).getView_cnt()%></td>

@@ -157,13 +157,6 @@ if (cks != null) {
     </div>
     <input type="submit" value="Login">
 
-    <%
-    if (session.getAttribute("sid") != null || session.getAttribute("sname") != null) {
-        %>
-        <input type="button" value="Log Out" onclick="location.href='logout.jsp'">
-        <%
-    }
-    %>
     
 </form>
 
