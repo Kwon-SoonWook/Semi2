@@ -64,7 +64,7 @@ public class BbsDAO {
 		try {
 			conn = com.ksj.db.DB.getConn();
 			
-			String sql = "insert into bbs values(bbs_comment_idx.nextval,?,?,?,0,sysdate,sysdate,?,?)";
+			String sql = "insert into bbs values(bbs_idx.nextval,?,?,?,0,sysdate,sysdate,?,?)";
 			ps= conn.prepareStatement(sql);
 			
 			String image = mr.getFilesystemName("file");
