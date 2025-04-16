@@ -1,3 +1,4 @@
+<%@page import="com.ksj.review.ReviewDTO"%>
 <%@page import="javax.websocket.Session"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -8,6 +9,12 @@
 <%
 rdto.setUsere_id((String)session.getAttribute("sid"));
 rdto.setReview_type(0);
+String review_id = request.getParameter("review_id");
+if(review_id!=null&&review_id.length()!=0){
+	if(rdao.reviewlist(review_id)!=null){
+		rdao.updateReview(review_id);
+	}
+}
 if(request.getParameter("review_type")!=null&&request.getParameter("review_type").length()!=0){
 	rdto.setReview_type(1);
 }
