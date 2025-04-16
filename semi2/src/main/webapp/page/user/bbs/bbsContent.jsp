@@ -3,7 +3,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.ksj.bbs.BbsDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <jsp:useBean id="kdao" class="com.ksj.bbs.BbsDAO"></jsp:useBean>
 <jsp:useBean id="cdao" class="com.ksj.bbs.CommentDAO"></jsp:useBean>
 <!DOCTYPE html>
@@ -11,56 +11,56 @@
 <style>
 /* 기존 스타일 유지 */
 .bbs-article h1 {
-	font-size: 24px;
-	margin-bottom: 10px;
+   font-size: 24px;
+   margin-bottom: 10px;
 }
 
 .bbs-meta {
-	font-size: 14px;
-	color: #666;
+   font-size: 14px;
+   color: #666;
 }
 
 .bbs-body p {
-	margin-top: 20px;
+   margin-top: 20px;
 }
 
 .bbs-image img {
-	display: block;
-	margin-top: 20px;
+   display: block;
+   margin-top: 20px;
 }
 
 article {
-	position: relative;
-	left: 30px;
+   position: relative;
+   left: 30px;
 }
 
 /* 댓글 입력 폼 스타일 */
 .comment-form {
-	margin-top: 20px;
-	padding: 0;
-	background-color: transparent;
+   margin-top: 20px;
+   padding: 0;
+   background-color: transparent;
 }
 
 .comment-form input[type="text"] {
-	width: 300px;
-	padding: 10px;
-	border: 1px solid #ddd;
-	border-radius: 4px;
-	font-size: 14px;
+   width: 300px;
+   padding: 10px;
+   border: 1px solid #ddd;
+   border-radius: 4px;
+   font-size: 14px;
 }
 
 .comment-form input[type="submit"] {
-	padding: 10px 20px;
-	background-color: #007bff;
-	color: #fff;
-	border: none;
-	border-radius: 4px;
-	cursor: pointer;
-	font-size: 14px;
+   padding: 10px 20px;
+   background-color: #007bff;
+   color: #fff;
+   border: none;
+   border-radius: 4px;
+   cursor: pointer;
+   font-size: 14px;
 }
 
 .comment-form input[type="submit"]:hover {
-	background-color: #0056b3;
+   background-color: #0056b3;
 }
 
 /* 댓글 리스트 스타일 */
@@ -69,61 +69,59 @@ article {
     margin-bottom: 30px; /* 하단 여백 추가 */
     border-top: 1px solid #ddd;
     font-family: 'Malgun Gothic', sans-serif;
-    max-height: none; /* 높이 제한 제거 */
-    overflow: visible; /* 스크롤 제거 */
 }
 
 .comment-list>div:first-child {
-	padding: 10px 0;
-	font-weight: bold;
-	border-bottom: 1px solid #ddd;
+   padding: 10px 0;
+   font-weight: bold;
+   border-bottom: 1px solid #ddd;
 }
 
 .comment-item {
-	padding: 10px 0;
-	border-bottom: 1px solid #ddd;
-	position: relative;
+   padding: 10px 0;
+   border-bottom: 1px solid #ddd;
+   position: relative;
 }
 
 .comment-item .nickname {
-	font-weight: bold;
-	margin-right: 5px;
+   font-weight: bold;
+   margin-right: 5px;
 }
 
 .comment-item .content {
-	display: block;
-	margin-top: 5px;
-	line-height: 1.5;
-	cursor: pointer; /* 커서를 포인터로 변경하여 클릭 가능함을 표시 */
+   display: block;
+   margin-top: 5px;
+   line-height: 1.5;
+   cursor: pointer; /* 커서를 포인터로 변경하여 클릭 가능함을 표시 */
 }
 
 .comment-item .date {
-	position: absolute;
-	right: 30px;
-	top: 10px;
-	font-size: 12px;
-	color: #888;
+   position: absolute;
+   right: 30px;
+   top: 10px;
+   font-size: 12px;
+   color: #888;
 }
 
 .comment-item .delete {
-	position: absolute;
-	right: 40px;
-	top: 30px; /* 날짜 아래로 위치 변경 */
-	font-size: 12px;
-	color: #888;
-	text-decoration: none;
+   position: absolute;
+   right: 40px;
+   top: 30px; /* 날짜 아래로 위치 변경 */
+   font-size: 12px;
+   color: #888;
+   text-decoration: none;
 }
 
 .comment-item.reply {
-	padding-left: 30px;
-	background-color: #f8f8f8;
+   padding-left: 30px;
+   background-color: #f8f8f8;
 }
 
 .comment-item.reply:before {
-	content: "↳";
-	position: absolute;
-	left: 10px;
-	color: #888;
+   content: "↳";
+   position: absolute;
+   left: 10px;
+   color: #888;
 }
 
 /* 대댓글 입력 폼 스타일 */
@@ -153,22 +151,16 @@ article {
     font-size: 14px;
 }
 
-footer {
-    margin-top: auto; /* 컨텐츠 다음에 배치 */
-    position: relative; /* 절대 위치에서 상대 위치로 변경 */
-    clear: both; /* float 요소 해제 */
-}
+/* 전체 컨테이너 설정 */
 .container {
-    position: relative;
-    min-height: 100vh; /* 최소 높이를 뷰포트 높이로 설정 */
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* 최소 높이를 화면 전체로 설정 */
 }
-.main-content {
-    padding-bottom: 50px; /* footer와의 간격 확보 */
-    min-height: 500px; /* 최소 높이 설정 */
-    overflow: visible; /* 내용이 넘쳐도 보이게 설정 */
-}
+
+
+
+
 </style>
 <html>
 <head>
@@ -178,7 +170,7 @@ footer {
 <title>노후재활센터</title>
 <link rel="stylesheet" type="text/css" href="../main/mainLayout.css">
 <script src="https://kit.fontawesome.com/f0cba69f8f.js"
-	crossorigin="anonymous"></script>
+   crossorigin="anonymous"></script>
 <!-- 안보이면 해당 사이트 로그인 후 주소받기 -->
 <script>
 // 대댓글 폼을 토글하는 함수
@@ -201,11 +193,9 @@ ArrayList<BbsDTO> arr = kdao.showContent(id);
 kdao.viewCnt(id);
 %>
 <body>
-	<div class="container">
+   	<div class="container">
 		<%@include file="/page/user/main/category.jsp"%>
 		<main class="main-content">
-			<section>
-				<article class="bbs-article">
 					<h1><%=arr.get(0).getTitle()%></h1>
 					<hr>
 					<div class="bbs-meta">
@@ -226,9 +216,8 @@ kdao.viewCnt(id);
 						%>
 					</div>
 					<form action="bbsComment_ok.jsp" class="comment-form">
-						댓글 입력 <input type="text" name="comm"> <input type="hidden"
-							name="idx" value="<%=arr.get(0).getBbs_idx()%>"> <input
-							type="submit" value="등록">
+						댓글 입력 <input type="text" name="comm"> <input type="hidden" name="idx" value="<%=arr.get(0).getBbs_idx()%>"> 
+							<input type="submit" value="등록">
 					</form>
 
 					<div class="comment-list">
@@ -265,13 +254,12 @@ kdao.viewCnt(id);
 						}
 						%>
 					</div>
-				</article>
-			</section>
 		</main>
 		
 	</div>
-</body>
-<footer>
+	<footer>
 			<%@include file="/page/user/main/footer.jsp"%>
 </footer>
+</body>
+
 </html>

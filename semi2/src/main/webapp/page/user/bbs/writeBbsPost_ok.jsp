@@ -14,8 +14,10 @@ String savepath = request.getRealPath("/page/user/bbs/img");
 MultipartRequest mr =
 new MultipartRequest(request,savepath,1024*1024*30,"utf-8",new DefaultFileRenamePolicy());
 
-
-
+String bbs_div = mr.getParameter("bbs_div");
+if(bbs_div==null){
+	bbs_div = "";
+}
 String id = (String)session.getAttribute("sid");
 int result = kdao.bbsUpload(id,mr);
 String msg = "";
@@ -37,17 +39,34 @@ if(result==0){
 }else if(result ==1){
 	msg = "게시글이 등록 되었습니다.";
 }else{  
- 	msg = "고객센터에 문의해주세요~";
+ 	msg = "항목을 바르게 입력해주세요.";
 }
 
 
+if(bbs_div.equals("1")){
+	%>
+	<script>
+	window.alert('<%=msg%>');
+	location.href = 'communityBbs.jsp';
+	</script>
+	<%
+}else if(bbs_div.equals("2")){
+	%>
+	<script>
+	window.alert('<%=msg%>');
+	location.href = 'buyBbs.jsp';
+	</script>
+	<%
+}else{
+	%>
+	<script>
+	window.alert('<%=msg%>');
+	location.href = 'noticeBbs.jsp';
+	</script>
+	<%
+}
 %>
 
-<script>
-window.alert('<%=msg%>');
-location.href = 'communityBbs.jsp';
-
-</script>
 
 
 

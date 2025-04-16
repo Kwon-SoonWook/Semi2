@@ -227,7 +227,7 @@ public class AskDAO {
 	public void askUpdate(int ask_id) {
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
-			String sql = "update ask set ask_type=1 where ask_id=? and aks_type != 2";
+			String sql = "update ask set ask_type=1 where ask_id=? and ask_type != 2";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, ask_id);
 			ps.executeUpdate();

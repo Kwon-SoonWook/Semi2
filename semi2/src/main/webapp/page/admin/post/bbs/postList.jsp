@@ -44,8 +44,7 @@ if (totalCnt % listSize == 0)
 	totalPage--;
 
 int userGroup = cp / pageSize;
-if (cp % pageSize == 0)
-	userGroup--;
+if (cp % pageSize == 0) userGroup--;
 %>
 
 <table>
