@@ -31,6 +31,15 @@ footer div {
 
 }
 </style> 
+<script>
+function pwdcheck(){
+	let popupW = 500;
+	let popupH = 300;
+	let left = Math.ceil((window.screen.width - popupW)/2);
+	let top = Math.ceil((window.screen.height - popupH)/2-100);
+	window.open('/semi2/page/user/mypage/pwdcheck.jsp', 'pwdcheckPopup', 'width='+popupW+',height='+popupH+',left='+left+',top='+top);
+}
+</script>
 <%
 String footid = (String)session.getAttribute("sid");
 %>
@@ -38,14 +47,14 @@ String footid = (String)session.getAttribute("sid");
 	<hr color="lightgray" size="1">
 	<div class="footer-menu">
 	<%if(footid==null){ %>
-	<a href="">문의사항</a>&emsp;|&emsp;
 	<a href="/semi2/page/user/bbs/noticeBbs.jsp">공지사항</a>&emsp;|&emsp;
+	<a href="">자유게시판</a>&emsp;|&emsp;
 	<a href="">내 정보 수정</a>&emsp;|&emsp;
 	<a href="/semi2/page/user/login/login.jsp">로그인</a>
 	<%}else{ %>
-	<a href="/semi2/page/user/mypage/mypage.jsp">문의사항</a>&emsp;|&emsp;
 	<a href="/semi2/page/user/bbs/noticeBbs.jsp">공지사항</a>&emsp;|&emsp;
-	<a href="/semi2/page/user/mypage/myInfoUpdate.jsp">내 정보 수정</a>&emsp;|&emsp;
+	<a href="/semi2/page/user/bbs/communityBbs.jsp">자유게시판</a>&emsp;|&emsp;
+	<a href="javascript:pwdcheck();">내 정보 수정</a>&emsp;|&emsp;
 	<a href="/semi2/page/user/mypage/myInfoDelete.jsp">회원탈퇴</a>
 	<%} %>
 	</div>

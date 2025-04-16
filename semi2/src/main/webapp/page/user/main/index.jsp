@@ -31,7 +31,7 @@ if(productsIds==null||productsIds.equals("")){
         	<h2>최근 업로드 목록</h2>
 	    	<div class="photo-grid">
 	        <%
-			ArrayList<ProductDTO> arr = pdao.AllProductList();
+			ArrayList<ProductDTO> arr = pdao.stateProductList();
 			if(arr==null || arr.size()==0){
 			%>
 				<h3>등록된 글이 없습니다.</h3>

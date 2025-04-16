@@ -32,7 +32,7 @@ table thead th{
 <body>
 <section>
 	<article>
-	<h2>나의 문의</h2>
+	<h2>1:1 문의</h2>
 	<form name='userAskList' action='askWrite.jsp'>
 		<table>
 			<caption style="text-align:right;"><input type='submit' value='문의작성'></caption>
