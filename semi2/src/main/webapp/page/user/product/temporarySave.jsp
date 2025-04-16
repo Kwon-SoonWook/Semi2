@@ -38,6 +38,17 @@ if(imagesIdArr!=null&&imagesIdArr.size()!=0){
 			}		
 		}
 	}
+}else{
+	ArrayList<TempProductImagesDTO> imglist = tidao.TempProductImagesList(sid);
+	if(imglist!=null&&imglist.size()!=0){
+		tidao.deleteProductImages(sid);
+		for(int i=0;i<imglist.size();i++){
+			File f = new File(savepath+"\\"+imglist.get(i).getTemp_product_images_id());
+			if(f.isFile()){
+				f.delete();
+			}
+		}
+	}
 }
 
 while (files.hasMoreElements()) {
@@ -48,7 +59,7 @@ while (files.hasMoreElements()) {
 imagesIdArr.clear();
 //전체 사진 이름 저장
 for(int i=0;i<5;i++){
-	if(mr.getParameter("loadimage"+i)==null||mr.getParameter("loadimage"+i).length()==0){
+	if(mr.getParameter("loadimage"+i)==null||mr.getParameter("loadimage"+i).equals("null")||mr.getParameter("loadimage"+i).length()==0){
 		if(mr.getFilesystemName("img"+i)!=null&&mr.getFilesystemName("img"+i).length()!=0){
 			imagesIdArr.add(mr.getFilesystemName("img"+i));
 		}
@@ -81,7 +92,7 @@ for(int i=0;i<saveFiles.size();i++){
 	}
 }
 int result;
-String imagePath = imagesIdArr.get(0).toString();
+String imagePath = imagesIdArr.isEmpty() ? "": imagesIdArr.get(0).toString();
 TempProductDTO dto = new TempProductDTO(sid, title, categoryid, content, price, location, imagePath, savepath);
 if (tpdao.tempProductList(sid) == null) {
 	result = tpdao.addTempProdcuct(dto);

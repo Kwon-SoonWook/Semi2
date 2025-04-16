@@ -71,22 +71,25 @@ public class BbsDAO {
 		}	
 	}
 	
-	public ArrayList<BbsDTO> buyBbsList(String select, String input){
+	public ArrayList<BbsDTO> userBbsList(String select, String input, int bbs_div){
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
 			String sql = "";
 			if(select==null || select.equals("")) {
-				sql = "select * from bbs where bbs_div = 2 order by bbs_idx desc";
+				sql = "select * from bbs where bbs_div = ? order by bbs_idx desc";
+				ps.setInt(1, bbs_div);
 				ps = conn.prepareStatement(sql);
 			}
 			else if(select.equals("title")) {
-				sql = "select * from bbs where title like ? and bbs_div = 2 order by bbs_idx desc";
+				sql = "select * from bbs where title like ? and bbs_div = ? order by bbs_idx desc";
 				ps = conn.prepareStatement(sql);
 				ps.setString(1, "%"+input+"%");
+				ps.setInt(2, bbs_div);
 			}else if(select.equals("writer")) {
-				sql = "select * from bbs where bbs_id like ? and bbs_div = 2 order by bbs_idx desc";
+				sql = "select * from bbs where bbs_id like ? and bbs_div = ? order by bbs_idx desc";
 				ps = conn.prepareStatement(sql);
 				ps.setString(1, "%"+input+"%");
+				ps.setInt(2, bbs_div);
 			}
 			rs = ps.executeQuery();
 			ArrayList<BbsDTO> arr = new ArrayList<BbsDTO>();
@@ -98,7 +101,6 @@ public class BbsDAO {
 				int view_cnt = rs.getInt("view_cnt");
 				java.sql.Date create_date = rs.getDate("create_date");
 				java.sql.Date update_date = rs.getDate("update_date");
-				int bbs_div = rs.getInt("bbs_div");
 				String bbs_image = rs.getString("bbs_image");
 				BbsDTO dto = new BbsDTO(bbs_idx, bbs_id, title, content, view_cnt, create_date, update_date, bbs_div, bbs_image);
 				arr.add(dto);

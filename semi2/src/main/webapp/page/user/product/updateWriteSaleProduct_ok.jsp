@@ -35,7 +35,7 @@ request.setCharacterEncoding("utf-8");
 		}
 	}
 	//불러온 이미지를 제외한 기존에있던 이미지 삭제
-	if(imagesIdArr!=null&&imagesIdArr.size()!=0){	
+	if(imagesIdArr!=null&&imagesIdArr.size()!=0){
 		ArrayList<ProductImagesDTO> imgArr = idao.ProductImagesList(productId, imagesIdArr);
 		if(imgArr!=null&&imgArr.size()!=0){
 			for(int i=0; i<imgArr.size(); i++){
@@ -44,6 +44,17 @@ request.setCharacterEncoding("utf-8");
 				if(f.isFile()) {
 					f.delete();
 				}		
+			}	
+		}
+	}else{
+		ArrayList<ProductImagesDTO> imglist = idao.ProductImagesList(productId);
+		if(imglist!=null&&imglist.size()!=0){
+			idao.deleteProductImages(productId);
+			for(int i=0;i<imglist.size();i++){
+				File f = new File(savepath+"\\"+imglist.get(i).getProductImagesId());
+				if(f.isFile()){
+					f.delete();
+				}
 			}
 		}
 	}
@@ -56,7 +67,7 @@ request.setCharacterEncoding("utf-8");
 	imagesIdArr.clear();
 	//전체 사진 이름 저장
 	for(int i=0;i<5;i++){
-		if(mr.getParameter("loadimage"+i)==null||mr.getParameter("loadimage"+i).length()==0){
+		if(mr.getParameter("loadimage"+i)==null||mr.getParameter("loadimage"+i).equals("null")||mr.getParameter("loadimage"+i).length()==0){
 			if(mr.getFilesystemName("img"+i)!=null&&mr.getFilesystemName("img"+i).length()!=0){
 				imagesIdArr.add(mr.getFilesystemName("img"+i));
 			}
@@ -89,7 +100,7 @@ request.setCharacterEncoding("utf-8");
 			images.add(saveFiles.get(i));
 		}
 	}
-	String imagePath = imagesIdArr.get(0).toString();
+	String imagePath = imagesIdArr.isEmpty() ? "":imagesIdArr.get(0).toString();
 	ProductDTO pdto = new ProductDTO(productId,categoryid,buyerId,sellerId,price,title,content,location,0,0,imagePath,0,null,null,savepath);
 	String msgProduct = pdao.upadteProduct(pdto)>0?"수정 성공":"수정 실패";
 	for(int i=0;i<images.size();i++){

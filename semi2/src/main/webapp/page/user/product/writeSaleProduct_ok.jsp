@@ -90,7 +90,7 @@ request.setCharacterEncoding("utf-8");
 			images.add(saveFiles.get(i));
 		}
 	}
-	String imagePath = imagesIdArr.get(0).toString(); 
+	String imagePath = imagesIdArr.isEmpty() ? "":imagesIdArr.get(0).toString(); 
 	ProductDTO pdto = new ProductDTO(0,categoryid,buyerId,sellerId,price,title,content,location,tradeState,bbsState,imagePath,0,null,null,savepath);
 	String msgProduct = pdao.productInsert(pdto)>0?"등록 성공":"등록 실패";
 	for(int i=0;i<imagesIdArr.size();i++){

@@ -23,8 +23,11 @@ public class loginDAO {
 			ps.setString(4, mr.getParameter("email"));
 			ps.setString(5, mr.getParameter("nickname"));
 			ps.setString(6, mr.getParameter("location"));
-			ps.setString(7, img);
-			
+			if(img == null) {
+				ps.setString(7, img);
+			}else {
+				ps.setString(7, "semi2/page/user/login/profile/"+img);
+			}
 			int result = ps.executeUpdate();
 			return result;
 			
