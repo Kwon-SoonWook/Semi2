@@ -71,6 +71,53 @@ public class BbsDAO {
 		}	
 	}
 	
+	public ArrayList<BbsDTO> buyBbsList(String select, String input){
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+			String sql = "";
+			if(select==null || select.equals("")) {
+				sql = "select * from bbs where bbs_div = 2 order by bbs_idx desc";
+				ps = conn.prepareStatement(sql);
+			}
+			else if(select.equals("title")) {
+				sql = "select * from bbs where title like ? and bbs_div = 2 order by bbs_idx desc";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, "%"+input+"%");
+			}else if(select.equals("writer")) {
+				sql = "select * from bbs where bbs_id like ? and bbs_div = 2 order by bbs_idx desc";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, "%"+input+"%");
+			}
+			rs = ps.executeQuery();
+			ArrayList<BbsDTO> arr = new ArrayList<BbsDTO>();
+			while(rs.next()) {
+				int bbs_idx = rs.getInt("bbs_idx");
+				String bbs_id = rs.getString("bbs_id");
+				String title = rs.getString("title");
+				String content = rs.getString("content");
+				int view_cnt = rs.getInt("view_cnt");
+				java.sql.Date create_date = rs.getDate("create_date");
+				java.sql.Date update_date = rs.getDate("update_date");
+				int bbs_div = rs.getInt("bbs_div");
+				String bbs_image = rs.getString("bbs_image");
+				BbsDTO dto = new BbsDTO(bbs_idx, bbs_id, title, content, view_cnt, create_date, update_date, bbs_div, bbs_image);
+				arr.add(dto);
+			}
+			return arr;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}finally {
+			try {
+				if(rs != null) rs.close();
+				if(ps != null) ps.close();
+				if(conn != null) conn.close();
+			}catch(Exception e2) {
+				
+			}
+		}	
+	}
+	
 	public int bbsDelete(String bbs_idx) {
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
