@@ -193,72 +193,72 @@ ArrayList<BbsDTO> arr = kdao.showContent(id);
 kdao.viewCnt(id);
 %>
 <body>
-   <div class="container">
-      <%@include file="/page/user/main/category.jsp"%>
-      <main class="main-content">
-               <h1><%=arr.get(0).getTitle()%></h1>
-               <hr>
-               <div class="bbs-meta">
-                  <span>작성자: <%=arr.get(0).getBbs_id()%></span> | <span>작성일자:
-                     <%=arr.get(0).getCreate_date()%></span>
-               </div>
-               <div class="bbs-body">
-                  <p><%=arr.get(0).getContent()%></p>
-                  <%
-                  if (arr.get(0).getBbs_image() != null) {
-                  %>
-                  <div class="bbs-image">
-                     <img src="img/<%=arr.get(0).getBbs_image()%>"
-                        alt="<%=arr.get(0).getTitle()%>" width="300">
-                  </div>
-                  <%
-                  }
-                  %>
-               </div>
-               <form action="bbsComment_ok.jsp" class="comment-form">
-                  댓글 입력 <input type="text" name="comm"> <input type="hidden" name="idx" value="<%=arr.get(0).getBbs_idx()%>"> 
-                     <input type="submit" value="등록">
-               </form>
+   	<div class="container">
+		<%@include file="/page/user/main/category.jsp"%>
+		<main class="main-content">
+					<h1><%=arr.get(0).getTitle()%></h1>
+					<hr>
+					<div class="bbs-meta">
+						<span>작성자: <%=arr.get(0).getBbs_id()%></span> | <span>작성일자:
+							<%=arr.get(0).getCreate_date()%></span>
+					</div>
+					<div class="bbs-body">
+						<p><%=arr.get(0).getContent()%></p>
+						<%
+						if (arr.get(0).getBbs_image() != null) {
+						%>
+						<div class="bbs-image">
+							<img src="img/<%=arr.get(0).getBbs_image()%>"
+								alt="<%=arr.get(0).getTitle()%>" width="300">
+						</div>
+						<%
+						}
+						%>
+					</div>
+					<form action="bbsComment_ok.jsp" class="comment-form">
+						댓글 입력 <input type="text" name="comm"> <input type="hidden" name="idx" value="<%=arr.get(0).getBbs_idx()%>"> 
+							<input type="submit" value="등록">
+					</form>
 
-               <div class="comment-list">
-                  <div>댓글</div>
-                  <%
-                  ArrayList<CommentDTO> cmtarr = kdao.showCmt(arr.get(0).getBbs_idx());
-                  for (int i = 0; i < cmtarr.size(); i++) {
-                     if (cmtarr.size() > 0) {
-                        boolean isReply = cmtarr.get(i).getLev() > 0; // 답글 여부 확인 (DTO에 depth 필드가 있다고 가정)
-                        int commentId = cmtarr.get(i).getBbs_comment_idx(); // 댓글 ID 가져오기
-                  %>
-                  <div class="comment-item <%=isReply ? "reply" : ""%>">
-                     <span class="nickname"><%=cmtarr.get(i).getNickname()%></span> 
-                     <span class="date"><%=cmtarr.get(i).getUpload_date()%></span>
-                     <%
-                     if(nickname.equals(cmtarr.get(i).getNickname())){
-                     %> 
-                     <a href="deletecomment_ok.jsp?id=<%=cmtarr.get(i).getBbs_comment_idx() %>&nickname=<%=cmtarr.get(i).getNickname() %>&bbsid=<%=id  %>" class="delete">✕</a>
-                     <%} %> 
-                     <span class="content" onclick="toggleReplyForm(<%=commentId%>)"><%=cmtarr.get(i).getComment_content()%></span>
-                     
-                     <!-- 대댓글 입력 폼 -->
-                     <div id="reply-form-<%=commentId%>" class="reply-form">
-                        <form action="bbsReplyComment_ok.jsp">
-                           대댓글 입력 <input type="text" name="reply">
-                           <input type="hidden" name="idx" value="<%=arr.get(0).getBbs_idx()%>">
-                           <input type="hidden" name="parent_id" value="<%=commentId%>">
-                           <input type="submit" value="등록">
-                        </form> 
-                     </div>
-                  </div>
-                  <%
-                     }
-                  }
-                  %>
-               </div>
-      </main>
-      
-   </div>
-   <footer>
-         <%@include file="/page/user/main/footer.jsp"%>
+					<div class="comment-list">
+						<div>댓글</div>
+						<%
+						ArrayList<CommentDTO> cmtarr = kdao.showCmt(arr.get(0).getBbs_idx());
+						for (int i = 0; i < cmtarr.size(); i++) {
+							if (cmtarr.size() > 0) {
+								boolean isReply = cmtarr.get(i).getLev() > 0; // 답글 여부 확인 (DTO에 depth 필드가 있다고 가정)
+								int commentId = cmtarr.get(i).getBbs_comment_idx(); // 댓글 ID 가져오기
+						%>
+						<div class="comment-item <%=isReply ? "reply" : ""%>">
+							<span class="nickname"><%=cmtarr.get(i).getNickname()%></span> 
+							<span class="date"><%=cmtarr.get(i).getUpload_date()%></span>
+							<%
+							if(nickname.equals(cmtarr.get(i).getNickname())){
+							%> 
+							<a href="deletecomment_ok.jsp?id=<%=cmtarr.get(i).getBbs_comment_idx() %>&nickname=<%=cmtarr.get(i).getNickname() %>&bbsid=<%=id  %>" class="delete">✕</a>
+							<%} %> 
+							<span class="content" onclick="toggleReplyForm(<%=commentId%>)"><%=cmtarr.get(i).getComment_content()%></span>
+							
+							<!-- 대댓글 입력 폼 -->
+							<div id="reply-form-<%=commentId%>" class="reply-form">
+								<form action="bbsReplyComment_ok.jsp">
+									대댓글 입력 <input type="text" name="reply">
+									<input type="hidden" name="idx" value="<%=arr.get(0).getBbs_idx()%>">
+									<input type="hidden" name="parent_id" value="<%=commentId%>">
+									<input type="submit" value="등록">
+								</form> 
+							</div>
+						</div>
+						<%
+							}
+						}
+						%>
+					</div>
+		</main>
+		
+	</div>
+	<footer>
+			<%@include file="/page/user/main/footer.jsp"%>
 </footer>
 </body>
 

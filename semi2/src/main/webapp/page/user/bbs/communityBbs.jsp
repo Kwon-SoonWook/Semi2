@@ -93,7 +93,7 @@ if (select.equals("title") && input != "") {
 // 총 게시물 수
 int totalCnt = kdao.getTotalCnt(); //db로 부터 조회하는 것이 기본 //56개의 게시물
 // 보여줄 리스트 수
-int listSize = 1; //5개씩 보여주기 인위적으로 내 맘대로 적용
+int listSize = 5; //5개씩 보여주기 인위적으로 내 맘대로 적용
 //보여줄 페이지 수
 int pageSize = 5;
 //사용자의 현재 위치

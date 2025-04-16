@@ -130,7 +130,7 @@ String saveid = "";
 Cookie cks[] = request.getCookies();
 if (cks != null) {
    for (int i = 0; i < cks.length; i++) {
-      if (cks[i].getName().equals("sname")) {
+      if (cks[i].getName().equals("sid")) {
          saveid = cks[i].getValue();
       }
    }
@@ -168,8 +168,8 @@ if (cks != null) {
 </form>
 
 <p style="margin-top:20px; font-size:14px;">아직도 회원가입을 안했다고?<a href="signUp.jsp">죄송합니다</a></p>
-<p style="margin-top:20px; font-size:14px;"><a href="show();">아이디를 잊으셨나요?</a></p>
-<p style="margin-top:20px; font-size:14px;"><a href="show();">비밀번호를 잊으셨나요?</a></p>
+<p style="margin-top:20px; font-size:14px;"><a href="#" onclick ="show()">아이디를 잊으셨나요?</a></p>
+<p style="margin-top:20px; font-size:14px;"><a href="#" onclick ="show2()">비밀번호를 잊으셨나요?</a></p>
 
 
 </div>

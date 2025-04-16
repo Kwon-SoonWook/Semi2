@@ -4,6 +4,7 @@
 <jsp:useBean id="kdto" class="com.ksj.login.loginDTO"></jsp:useBean>
 <jsp:setProperty property="*" name="kdto" />
 <%
+session.setAttribute("sid", kdto.getId());
 String sname = kdao.login(kdto.getId(), kdto.getPwd());
 String saveid = request.getParameter("saveid");
 if (sname == null || sname.equals("")) {
@@ -16,18 +17,18 @@ if (sname == null || sname.equals("")) {
 } else {
 
 if (saveid != null) {
-	Cookie ck = new Cookie("sname", sname);
+	Cookie ck = new Cookie("sid", kdto.getId());
 
 	ck.setMaxAge(60 * 60 * 24);
 	response.addCookie(ck);
 } else {
-	Cookie ck = new Cookie("sname", sname);
+	Cookie ck = new Cookie("sid", kdto.getId());
 
 	ck.setMaxAge(0);
 	response.addCookie(ck);
 
 }
-session.setAttribute("sid", kdto.getId());
+
 session.setAttribute("sname", sname);
 %>
 <script>

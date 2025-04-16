@@ -51,6 +51,7 @@ table td{
 }
 </style>
 <% 
+
 request.setCharacterEncoding("UTF-8");
 String input = request.getParameter("input");
 if(input==null){

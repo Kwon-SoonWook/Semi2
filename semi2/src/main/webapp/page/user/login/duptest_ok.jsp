@@ -4,7 +4,15 @@
 
 <%
 String id = request.getParameter("id");
-
+if(id==null||id==""){
+	%>
+	<script>
+	window.alert('사용 불가능한 문자입니다')
+	location.href='duptest.jsp'
+	</script>
+	<%
+	
+}
 boolean result = kdao.duptest(id);
 
 if(result == true){
