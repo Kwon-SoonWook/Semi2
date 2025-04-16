@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
 <%@ page import="com.ksj.review.*" %>
 <jsp:useBean id="rdao" class="com.ksj.review.ReviewDAO" scope="session"></jsp:useBean>
@@ -41,18 +40,16 @@ h2{
 }
 </style>
 </head>
-<%
-String rid = (String)session.getAttribute("sid");
-//총 게시물 수
-int reviewCnt = rdao.getReviewCnt(rid); // db로부터 조회
-session.setAttribute("reviewCnt", reviewCnt);
-
-%>
 <script>
 function reviewWrite(reviewid){
 	 window.open("/semi2/page/user/review/sallerWriteReview.jsp?review_id="+reviewid, 'popup', 'width=450; height=350');
 }
 </script>
+<%
+String rid = (String)session.getAttribute("sid");
+int reviewCnt = rdao.getReviewCnt(rid);
+session.setAttribute("reviewCnt", reviewCnt);
+%>
 <body>
 <section>
 <article>
@@ -61,26 +58,27 @@ function reviewWrite(reviewid){
 	ArrayList<ReviewDTO> arr = rdao.ReviewList(rid);
 	if(arr==null || arr.size()==0){
 	%>
-	<h3 align='center'>등록된 글이 없습니다.</h3>
-	<%
-	}else{%>
-	<div class="photo-grid">
+		<h3 align='center'>등록된 글이 없습니다.</h3>
+	<%}else{%>
+		<div class="photo-grid">
 		<%for(int i=0; i<arr.size(); i++){%>
             <div class="photo-card">
-	                <div class="thumbnail"></div>
-			        <h3><%=arr.get(i).getUsere_id() %></h3>
-			        <p><%=arr.get(i).getReview_content() %></p>
-			        <div class="rating">
-			        <%for(int j=0; j<arr.get(i).getRate(); j++){ %>
-			        <label for="star">★</label>
-			        <%} %>
-			        </div>
-			        <p><input type="button" value="답변하기" onclick="reviewWrite(<%=arr.get(i).getReview_id() %>);"></p>
-	            </a> 
+		        <div class="thumbnail"></div>
+				<h3><%=arr.get(i).getUsere_id() %></h3> 
+				<p><%=arr.get(i).getReview_content() %></p>
+				<div class="rating">
+					<%for(int j=0; j<arr.get(i).getRate(); j++){ %>
+				        <label for="star">★</label>
+				    <%} %>
+			    </div>
+			        <%if(arr.get(i).getReview_type()!=1){ %>
+			        	<p><input type="button" value="답변하기" onclick="reviewWrite(<%=arr.get(i).getReview_id() %>);"></p>
+            		<%} %>
+            		
             </div>
-        	<% 
-			}
-		}%>  
+        <% 
+		}
+	}%>  
     </div>
 </article>
 </section>
