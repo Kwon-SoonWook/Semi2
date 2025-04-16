@@ -28,11 +28,13 @@ if (sid == null) {
 %> 
 <link rel="stylesheet" type="text/css" href="/semi2/page/user/main/mainLayout.css">
 <style>
+h2{
+	text-align: center;
+}
 .form-section {
   border: 1px solid #ddd;
   padding: 20px;
-  margin-bottom: 50px;
-  margin-left:114px;
+  margin: 15px auto;
   width: 1100px;
   border-radius: 8px;
   background-color: #fff;
@@ -67,11 +69,11 @@ if (sid == null) {
   flex-wrap: wrap;
 }
 .image-grid input[type="file"] {
-    width: 90px; /* 기존보다 크기 조정 */
+    width: 200px; /* 기존보다 크기 조정 */
 }
 .image-box {
-  width: 150px;
-  height: 150px;
+  width: 198px;
+  height: 250px;
   position: relative;
   border: 1px dashed #ccc;
   border-radius: 6px;
@@ -265,9 +267,7 @@ if(pdto==null||pdto.equals("")){
 		<form name="writeSaleProduct" action="" method="post" enctype="multipart/form-data">
 		<input type="hidden" name ="productId" value="<%=productId%>">
 			<div>
-				<div>
-					<h2>상품정보</h2>
-				</div>
+				<h2>상품수정</h2>
 				<div class="form-section">
 					<h3>상품이미지(최대5개)</h3>
 					<div class="image-grid">
@@ -281,7 +281,7 @@ if(pdto==null||pdto.equals("")){
 							}
 							for(int i=0;i<imgStringArr.size();i++){%>
 								<div class="image-box" id="imageContainer<%=i%>" style="display:<%=imgStringArr.get(i)!=null? "block":"none"%>;">								
-								    <img id="previewImage<%=i %>" alt="" src="img/<%=imgStringArr.get(i)%>" style="width: 150px; height: 150px;">
+								    <img id="previewImage<%=i %>" alt="" src="img/<%=imgStringArr.get(i)%>" style="max-width: 100%; max-height: 100%;">
 								    <input type="hidden" name="loadimage<%=i %>" id="loadimage<%=i %>" value="<%=imgStringArr.get(i)%>">
 								    <button id="removeImage<%=i %>" onclick="removePreview(event,<%=i %>)"class="remove-btn">✖</button>
 								 </div>
@@ -289,7 +289,7 @@ if(pdto==null||pdto.equals("")){
 							}														
 							for(int i=imgStringArr.size();i<5;i++){ %>
 								<div class="image-box" id="imageContainer<%=i%>" style="display:none;">
-									<img id="previewImage<%=i %>" src="" style="width: 150px; height: 150px;">
+									<img id="previewImage<%=i %>" src="" style="max-width: 100%; max-height: 100%;">
 								    <input type="hidden" name="loadimage<%=i %>" id="loadimage<%=i %>">
 									<button id="removeImage<%=i %>" onclick="removePreview(event,<%=i %>)" class="remove-btn">✖</button>
 								</div>
