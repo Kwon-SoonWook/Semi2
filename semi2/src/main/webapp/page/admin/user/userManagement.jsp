@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%
+String sel = request.getParameter("select");
+if(sel==null){
+	sel = "전체";
+}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -84,6 +91,16 @@ tr:nth-child(even) {
 }
 </style>
 <script>
+function keyDownEvent(event) {
+    // 엔터키 누를 경우 show()만 실행, form submit은 막음
+    if (event.key === "Enter" || event.keyCode === 13) {
+        event.preventDefault(); // submit 방지
+        show(); // 검색 실행
+        return false;
+    }
+    return true;
+}
+
 function show(){
 	var input =  document.userManagement.input.value;
 	var select = document.userManagement.select.value;
@@ -103,13 +120,40 @@ function show(){
 	                    <%@include file="userInfoList.jsp" %>
 	                    <div class="search-bar">
 	                        <select name="select">
-	                            <option>전체</option>
+	                        <%
+	                        if(sel.equals("ID")){
+	                        	%>
+	                        	<option>전체</option>
+	                            <option selected>ID</option>
+	                            <option>이름</option>
+	                            <option>닉네임</option>
+	                        	<%
+	                        }else if(sel.equals("이름")){
+	                        	%>
+	                        	<option>전체</option>
+	                            <option>ID</option>
+	                            <option selected>이름</option>
+	                            <option>닉네임</option>
+	                        	<%
+	                        }else if(sel.equals("닉네임")){
+	                        	%>
+	                        	<option>전체</option>
+	                            <option>ID</option>
+	                            <option>이름</option>
+	                            <option selected>닉네임</option>
+	                        	<%
+	                        }else{
+	                        	%>
+	                        	<option selected>전체</option>
 	                            <option>ID</option>
 	                            <option>이름</option>
 	                            <option>닉네임</option>
+	                        	<%
+	                        }
+	                        %>
 	                        </select>
-	                        <input type="text" name="input">
-	                        <input type="button" value="검색" onclick="show();">
+	                        <input type="text" name="input" onkeydown="return keyDownEvent(event)">
+	                        <input type="button" id="btn" value="검색" onclick="show();">
 	                    </div>
 	                </form>
 	            </article>

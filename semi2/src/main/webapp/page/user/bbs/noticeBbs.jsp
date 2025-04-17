@@ -88,7 +88,9 @@ table td {
 </style>
 <% 
 String sid = (String)session.getAttribute("sid");
-
+if(sid==null){
+	sid="";
+}
 request.setCharacterEncoding("UTF-8");
 String input = request.getParameter("input");
 if(input==null){

@@ -4,6 +4,10 @@
 <%@ page import="com.ksj.user.*"%>
 <%
 String category = request.getParameter("category");
+String sel = request.getParameter("select");
+if(sel==null){
+	sel = "전체";
+}
 %>
 <!DOCTYPE html>
 <html>
@@ -100,6 +104,16 @@ tr:nth-child(even) {
 }
 </style>
 <script>
+	function keyDownEvent(event) {
+	    // 엔터키 누를 경우 show()만 실행, form submit은 막음
+	    if (event.key === "Enter" || event.keyCode === 13) {
+	        event.preventDefault(); // submit 방지
+	        show2(); // 검색 실행
+	        return false;
+	    }
+	    return true;
+	}
+
 	function show() {
 		var category = document.contentList.category.value;
 		location.href = "contentList.jsp?category=" + category;
@@ -163,23 +177,59 @@ tr:nth-child(even) {
 						<select name="select">
 							<%
 							if(category==null || category.equals("일반 게시글")){
-								%>
-								<option>전체</option>
-								<option>구분</option>
-								<option>제목</option>
-								<option>작성자</option>
-								<%
-
+								if(sel.equals("구분")){
+									%>
+									<option>전체</option>
+									<option selected>구분</option>
+									<option>제목</option>
+									<option>작성자</option>
+									<%
+								}else if(sel.equals("제목")){
+									%>
+									<option>전체</option>
+									<option>구분</option>
+									<option selected>제목</option>
+									<option>작성자</option>
+									<%
+								}else if(sel.equals("작성자")){
+									%>
+									<option>전체</option>
+									<option>구분</option>
+									<option>제목</option>
+									<option selected>작성자</option>
+									<%
+								}else{
+									%>
+									<option selected>전체</option>
+									<option>구분</option>
+									<option>제목</option>
+									<option>작성자</option>
+									<%
+								}
 							}else if(category.equals("판매 게시글")){
-								%>
-								<option>전체</option>
-								<option>제목</option>
-								<option>작성자</option>
-								<%
+								if(sel.equals("제목")){
+									%>
+									<option>전체</option>
+									<option selected>제목</option>
+									<option>작성자</option>
+									<%
+								}else if(sel.equals("작성자")){
+									%>
+									<option>전체</option>
+									<option>제목</option>
+									<option selected>작성자</option>
+									<%
+								}else{
+									%>
+									<option selected>전체</option>
+									<option>제목</option>
+									<option>작성자</option>
+									<%
+								}
 							}
 							%>
-						</select> <input type="text" name="input"> 
-						<input type="button" value="검색" onclick="show2();">
+						</select> <input type="text" name="input" onkeydown="return keyDownEvent(event)"> 
+						<input type="button" id="btn" value="검색" onclick="show2();">
 					</div>
 					</form>
 				</article>
