@@ -115,9 +115,11 @@ input[type="submit"]:hover {
 									if (bbs_div == null) {
 										bbs_div = "";
 									}
-									if (sid.equals("admin")) {
+									if (sid.equals("admin") && bbs_div.equals("0")) {
 										%>
 										<option value="notice" selected>공지사항</option>
+										<option value="bbs">자유게시판</option>
+										<option value="buy">구매게시판</option>
 										<%
 									}
 									if (bbs_div.equals("1")) {
@@ -129,11 +131,6 @@ input[type="submit"]:hover {
 										%>
 										<option value="bbs">자유게시판</option>
 										<option value="buy" selected>구매게시판</option>
-										<%
-									} else {
-										%>
-										<option value="bbs">자유게시판</option>
-										<option value="buy">구매게시판</option>
 										<%
 									}
 									%>

@@ -203,7 +203,7 @@ kdao.viewCnt(id);
 							<%=arr.get(0).getCreate_date()%></span>
 					</div>
 					<div class="bbs-body">
-						<p><%=arr.get(0).getContent()%></p>
+						<p><%=arr.get(0).getContent().replaceAll("\n", "<br>")%></p>
 						<%
 						if (arr.get(0).getBbs_image() != null) {
 						%>

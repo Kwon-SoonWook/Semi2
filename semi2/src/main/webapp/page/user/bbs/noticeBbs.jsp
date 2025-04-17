@@ -216,7 +216,7 @@ if (cp % pageSize == 0) userGroup--;
 				if(sid.equals("admin")){
 					%>
 					<caption style="caption-side:bottom; height:30px; vertical-align: center; text-align: right;">
-						<input type="button" value="글쓰기" onclick="location.href='writeBbsPost.jsp'">
+						<input type="button" value="글쓰기" onclick="location.href='writeBbsPost.jsp?bbs_div=0'">
 					</caption>
 					<%
 				}else{
