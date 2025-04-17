@@ -165,9 +165,6 @@ article {
   min-height: 100vh; /* 최소 높이를 화면 전체로 설정 */
 }
 
-
-
-
 </style>
 <html>
 <head>
@@ -216,6 +213,13 @@ kdao.viewCnt(id);
 						<%
 					}
 					%>
+					
+					<%
+					if(session.getAttribute("id")!=null){
+					%>
+					<input type = "button" value="삭제하기" onclick="location.href='bbsdelete_ok.jsp'">
+					<input type = "button" value="수정하기" onclick="location.href='bbschange_ok.jsp'">
+					<%} %>
 					<hr>
 					<div class="bbs-meta">
 						<span>작성자: <%=arr.get(0).getBbs_id()%></span> | <span>작성일자:

@@ -8,6 +8,9 @@
 function popup() {
     window.open('duptest.jsp', 'popup', 'width=700,height=300');
 }
+function popup2() {
+    window.open('nickduptest.jsp', 'popup', 'width=700,height=300');
+}
 </script>
 <style>
 /* 기본 스타일 */
@@ -109,7 +112,8 @@ form input[type="submit"]:hover {
 
 <div>
 <label for="nickname">닉네임:</label>
-<input type="text" name="nickname" id="nickname">
+<input type="text" name="nickname" id="nickname" readonly>
+<input type="button" value="중복검사" onclick="popup2()">
 </div>
 
 <div>
