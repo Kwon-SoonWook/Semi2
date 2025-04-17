@@ -24,6 +24,9 @@ if (sid == null) {
 	<%
     return;
 }
+   ProductDTO dto = pdao.ProductList(productsId);
+   dto.setTrade_state(0);
+   String msg = pdao.updateProductTrade(dto)>0?"수정완료":"수정실패";
 %>
 <!DOCTYPE html>
 <html>
@@ -123,11 +126,8 @@ function check(){
 <script>
 window.onbeforeunload = function () {
     if (window.opener) {
-        fetch('/semi2/page/user/product/productTrade_ok.jsp?productId=<%=productsId%>&trade=0')
-        .then(() => {
-            window.opener.document.getElementById("tradestateid").value = "0"; // 부모 창 값 변경
-            window.opener.location.reload(); // 부모 창 새로고침
-        });
-    }
-};
+        window.opener.document.getElementById("tradestateid").value = "0"; // 부모 창 값 변경
+        window.opener.location.reload(); // 부모 창 새로고침
+   }
+}
 </script>
