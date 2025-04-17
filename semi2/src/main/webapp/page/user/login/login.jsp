@@ -157,17 +157,10 @@ if (cks != null) {
     </div>
     <input type="submit" value="Login">
 
-    <%
-    if (session.getAttribute("sid") != null || session.getAttribute("sname") != null) {
-        %>
-        <input type="button" value="Log Out" onclick="location.href='logout.jsp'">
-        <%
-    }
-    %>
     
 </form>
 
-<p style="margin-top:20px; font-size:14px;">아직도 회원가입을 안했다고?<a href="signUp.jsp">죄송합니다</a></p>
+<p style="margin-top:20px; font-size:14px;">아직 회원이 아니신가요?<a href="signUp.jsp">계정 생성</a></p>
 <p style="margin-top:20px; font-size:14px;"><a href="#" onclick ="show()">아이디를 잊으셨나요?</a></p>
 <p style="margin-top:20px; font-size:14px;"><a href="#" onclick ="show2()">비밀번호를 잊으셨나요?</a></p>
 

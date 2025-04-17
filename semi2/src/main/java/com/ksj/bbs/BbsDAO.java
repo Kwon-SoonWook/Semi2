@@ -275,12 +275,12 @@ public class BbsDAO {
 	         
 	         int start=(cp-1)*listSize+1;
 	         int end=cp*listSize;
-	         //ref desc,sunbun asc) 250325 변경 및 추가 번호가 각자 다 각기각기 되지만 이렇게 바꿔줌으로써 답변은 답변에 본문밑에 답변 바로 되도록 순서대로
+	         
 	         String sql= "select * from(select rownum as rnum, a.* from(select * from bbs order by create_date desc)a where bbs_div = 1)b where rnum >= ? and rnum <= ?";	
 
 
 	         
-	                  //결과식 삭제하고 인 파라미터로 작성해줌
+	                  
 	         ps = conn.prepareStatement(sql);
 	         ps.setInt(1, start);
 	         ps.setInt(2, end);
@@ -338,14 +338,14 @@ public class BbsDAO {
 		}
 	}
 	
-	   /** 마지막 ref 구하기 관련 메서드 */ //ref는 int이므로 int로 반환값 줌
+	   /** 마지막 ref 구하기 관련 메서드 */ 
 	   public int getMaxRef() {
-	      try { //conn을 셋팅 안하는 이유는 글쓰기에서 이미 셋팅된 후 ref를 수행실 것 이므로 마지막에도 conn을 close안함 하게되면 이 메서드 수행 못함 
+	      try { 
 	         String sql="select max(ref) from bbs_comment";
 	         ps=conn.prepareStatement(sql);
 	         rs=ps.executeQuery();
-	         int ref=0; //변수 만들어서 0으로 초기화
-	         if(rs.next()) { //ref가 데이터가 있다면 1을 반환?
+	         int ref=0; 
+	         if(rs.next()) { 
 	            ref=rs.getInt(1);
 	         }
 	         return ref;
@@ -355,11 +355,67 @@ public class BbsDAO {
 	      }finally {
 	         try {
 	            if(rs!=null)rs.close();
-	            if(ps!=null)ps.close(); // conn을 close하면 ref가 conn을 받고 못하므로 순서대로 할려면 0이였던 것을 파라미터 받게 해서 셋팅
+	            if(ps!=null)ps.close();
 	         }catch (Exception e2) {}
 	      }
 	   }
 	   
+	   /**답변 글쓰기 관련 메서드*/ //250325 답변 2규칙 - 카트 bbsdto받음
+	   public int replyComment(CommentDTO dto) {
+	      try {
+	         conn = com.ksj.db.ConnectionDB.getConn();
+	         
+	         ///이 getsunbun은 본문글에 대한 순번이므로 +1로 해야지 ~
+	         setSunUpdate(dto.getRef(), dto.getSunbun()+1);
+	         
+	         String sql = "insert into bbs_comment values(bbs_comment_idx.nextval,?,?,?,sysdate,?,?,?)";
+	         ps=conn.prepareStatement(sql);
+	         //getMaxRef는 ref를 그룹화하기 위해서 쓰였으므로 여기서는 쓰지 않음
+	         ps.setString(1, dto.getComment_content());
+	         ps.setInt(2, dto.getBbs_idx());
+	         ps.setString(3, dto.getNickname());
+	         ps.setInt(4, dto.getRef()); //동일하므로 그대로 가져옴
+	         ps.setInt(5, dto.getLev()+1); //LEV,sunbun은 1씩 증가하므로 1식 추가해줌 = 조건 충족해줌
+	         ps.setInt(6, dto.getSunbun()+1);
+	         int count=ps.executeUpdate();
+	         return count;
+	      }catch (Exception e) {
+	         e.printStackTrace();
+	         return -1;
+	      }finally {
+	         try {
+	            if (ps != null)
+	               ps.close();
+	            if (conn != null)
+	               conn.close();
+	            
+	         }catch (Exception e2) {
+	            
+	         }
+	      }
+	   }
+	   
+	   
+	   /** 답변 시 sunbun 업데이트 관련 메서드*/  
+	   public void setSunUpdate(int ref, int sun) {   
+	      try {
+	         String sql="update bbs_comment "
+	               + "set sunbun=sunbun+1 "
+	               + "where ref=? and sunbun>=?" ;
+	         ps=conn.prepareStatement(sql);
+	         ps.setInt(1, ref);
+	         ps.setInt(2, sun);
+	         ps.executeUpdate();
+	      }catch (Exception e) {
+	         e.printStackTrace();
+	      }finally {
+	         try {
+	            if(ps!=null)ps.close();
+	         }catch (Exception e2) {
+	         
+	         }
+	      }
+	   }
 	/**댓글 업로드*/
 	public int cmtUpload(int idx,String comm,String nickname) {
 		try {
@@ -396,7 +452,7 @@ public class BbsDAO {
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
 			
-			String sql = "select * from bbs_comment where bbs_idx = ? order by ref asc";
+			String sql = "select * from bbs_comment where bbs_idx = ? order by ref asc, lev asc,sunbun asc";
 			ps = conn.prepareStatement(sql);
 			
 			ps.setInt(1, idx);
