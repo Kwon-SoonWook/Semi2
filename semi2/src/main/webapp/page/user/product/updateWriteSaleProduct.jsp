@@ -35,7 +35,7 @@ h2{
   border: 1px solid #ddd;
   padding: 20px;
   margin: 15px auto;
-  width: 1100px;
+  width: 900px;
   border-radius: 8px;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
@@ -49,6 +49,42 @@ h2{
 }
 .form-group {
   margin-bottom: 20px;
+  margin-left: 80px;
+}
+.form-group2{
+  margin-left: 80px;
+}
+.form-group2 label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+.form-group2 input[type="text"],
+.form-group2 textarea {
+  width: 90%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+label[for="price"] {
+  display: inline-block; /* 블록 대신 인라인 요소로 변경 */
+  margin-right: 10px; /* 오른쪽 여백 추가 */
+  flex-wrap: wrap; /* 줄바꿈 방지 */
+
+}
+
+label[for="location"] {
+  display: inline-block; /* 블록 대신 인라인 요소로 변경 */
+  margin-left: 290px;  
+}
+#price {
+  width: 30%;  /* `price` 입력칸 너비 조정 */
+}
+
+#location {
+  margin-left: 60px;  
+  width: 50%;  /* `location` 입력칸 너비 조정 */
 }
 .form-group label {
   display: block;
@@ -325,13 +361,13 @@ if(pdto==null||pdto.equals("")){
 						<label>상품설명</label>
 						<textarea rows="8" cols="45" name="content"></textarea>
 					</div>
-					<div class="form-group">
-						<label>가격</label>
-						<input type="text" name="price" value="0" onkeydown="return isNumberkey(event)" oninput="filterInvalidInput(event)">
+					<div class="form-group2">
+						<label for="price">가격</label>
+						<label for="location">거래희망장소</label>
 					</div>
-					<div class="form-group">
-						<label>거래희망장소</label>
-						<input type="text" name="location">
+					<div class="form-group2">
+						<input type="text" name="price" id="price" value="" onkeydown="return isNumberkey(event)" oninput="filterInvalidInput(event)">
+						<input type="text" name="location" id="location">
 					</div>
 				</div>
 				<div class="form-section action-btns">

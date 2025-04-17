@@ -27,6 +27,10 @@ ProductDTO pdto = pdao.ProductList(prodcutsId);
 ArrayList<ProductImagesDTO> arr= pidao.ProductImagesList(prodcutsId);
 ReviewDTO rdto = rdao.getReviewSeller(sid, productsIds);
 SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+int view = pdao.getViewCnt(sid,prodcutsId);
+if(view==0){
+	pdao.productViewCnt(prodcutsId);	
+}
 FavoriteProductsDTO fdto = fdao.favoriteProductsList(prodcutsId, sid);
 if(fdto==null){
 	FavoriteProductsDTO dto = new FavoriteProductsDTO(sid,prodcutsId,0);
@@ -57,22 +61,29 @@ if (sid == null) {
 
 /* 전체 레이아웃: 이미지 왼쪽, 내용 오른쪽 */
 .sale-product-container {
-	width:350px;
+	width:1000px;
     display: flex;
     align-items: flex-start; /* 위쪽 정렬 */
     gap: 100px; /* 요소 간 간격 */
-	margin-left:160px;
+	margin-left:250px;
 }
 .product-container{
 	width:100%;
 }
+.product-details {
+  padding: 15px;
+  border-radius: 10px;
+  background: white;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
+}
+
 /* 왼쪽 이미지 영역 */
 .image-container {
     flex: 1; /* 왼쪽 영역 크기 지정 */
     display: flex;
     flex-direction: column; /* 썸네일을 세로로 배치 */
     align-items: center;
-    
+    margin-top: 20px;
 }
 
 /* 큰 이미지 스타일 */
@@ -498,9 +509,12 @@ function toggleEditForm(commentIdx) {
 						</select>
 					</div>
 					<hr>
-					<div>가격:<%=pdto.getPrice() %></div>
-					<div><%=pdto.getContent().replace("\n", "<br>") %></div>
-					<div><%=pdto.getLocation() %></div>
+					<div>
+					<div>가격:<%=pdto.getPrice() %>원</div>
+					<div>본문:<%=pdto.getContent().replace("\n", "<br>") %></div>
+					<div>장소:<%=pdto.getLocation() %></div>
+					<div>조회수:<%=pdto.getView_cnt() %> 관심:<%=pdao.getfavoriteProductCnt(prodcutsId) %></div>
+					</div>
 					<div class="product-actions">
 					<% if(sid!=null&&sid.equals(pdto.getSeller_id())){
 						%>

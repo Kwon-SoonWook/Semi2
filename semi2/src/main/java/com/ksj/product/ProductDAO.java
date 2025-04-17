@@ -529,4 +529,69 @@ public class ProductDAO {
 			}
 		}
 	}
+	/**총 게시물 조회수 관련 메서드*/
+	public int getViewCnt(String sid,int productId) {
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+	        String sql = "select count(*) from products pd, favorite_products fp where pd.products_id = fp.products_id and is_valid <= 0 and user_id = ? and fp.products_id = ?";
+	        ps = conn.prepareStatement(sql);
+	        ps.setString(1, sid);
+	        ps.setInt(2, productId);
+	        rs = ps.executeQuery();
+	        rs.next();
+	        int count = rs.getInt(1);
+	        return count;
+		}catch (Exception e) {
+			e.printStackTrace();
+			return 1;
+		}finally {
+			try {
+				if (rs != null) rs.close();
+	            if (ps != null) ps.close();
+	            if (conn != null) conn.close();
+			}catch (Exception e) {}
+		}
+	}
+	/**총 찜한 사람수 관련 메서드*/
+	public int getfavoriteProductCnt(int productId) {
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+	        String sql = "select count(*) from favorite_products where products_id = ? and is_valid = 1";
+	        ps = conn.prepareStatement(sql);
+	        ps.setInt(1, productId);
+	        rs = ps.executeQuery();
+	        rs.next();
+	        int count = rs.getInt(1);
+	        return count;
+		}catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}finally {
+			try {
+				if (rs != null) rs.close();
+	            if (ps != null) ps.close();
+	            if (conn != null) conn.close();	
+			}catch (Exception e) {
+			}
+		}
+	}
+	/**조회수관련 메소드*/
+	public void productViewCnt(int idx) {
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+			String sql = "update products set view_cnt = view_cnt+1 where products_id = ? ";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, idx);			
+			int count = ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+	            if (ps != null) ps.close();
+	            if (conn != null) conn.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+		}
+	}
 }
