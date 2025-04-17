@@ -533,7 +533,7 @@ public class ProductDAO {
 	public int getViewCnt(String sid,int productId) {
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
-	        String sql = "select count(*) from products pd, favorite_products fp where pd.products_id = fp.products_id and is_valid <= 0 and user_id = ? and fp.products_id = ?";
+	        String sql = "select count(*) from products pd, favorite_products fp where pd.products_id = fp.products_id and is_valid >= 0 and user_id = ? and fp.products_id = ?";
 	        ps = conn.prepareStatement(sql);
 	        ps.setString(1, sid);
 	        ps.setInt(2, productId);

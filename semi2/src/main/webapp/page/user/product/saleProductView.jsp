@@ -123,7 +123,12 @@ if (sid == null) {
     display: flex;
     flex-direction: column;
 }
-
+.product-info .cnt{
+  font-size: 9px;
+  color: #666;
+  border: none;
+  color: #666;  
+}
 /* 버튼 스타일 */
 .product-actions {
     display: flex;
@@ -509,12 +514,10 @@ function toggleEditForm(commentIdx) {
 						</select>
 					</div>
 					<hr>
-					<div>
 					<div>가격:<%=pdto.getPrice() %>원</div>
 					<div>본문:<%=pdto.getContent().replace("\n", "<br>") %></div>
 					<div>장소:<%=pdto.getLocation() %></div>
-					<div>조회수:<%=pdto.getView_cnt() %> 관심:<%=pdao.getfavoriteProductCnt(prodcutsId) %></div>
-					</div>
+					<div class="cnt">조회수:<%=pdto.getView_cnt() %> 관심:<%=pdao.getfavoriteProductCnt(prodcutsId) %></div>
 					<div class="product-actions">
 					<% if(sid!=null&&sid.equals(pdto.getSeller_id())){
 						%>
