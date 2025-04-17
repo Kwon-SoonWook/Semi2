@@ -20,6 +20,7 @@ if(productsIds==null||productsIds.equals("")){
 <meta name="viewport" content="width=device-width"> <!-- 반응형 화면 변환 -->
 <title>노후재활센터</title>
 <link rel="stylesheet" type="text/css" href="mainLayout.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://kit.fontawesome.com/f0cba69f8f.js" crossorigin="anonymous"></script><!-- 안보이면 해당 사이트 로그인 후 주소받기 -->
 </head>
 <%@include file="/page/user/main/header.jsp" %> 
@@ -28,7 +29,6 @@ if(productsIds==null||productsIds.equals("")){
 	<%@include file="/page/user/main/category.jsp" %>
     <main class="main-content">
       	<%if(indexid!=null){ %>
-        	<h2>최근 업로드 목록</h2>
 	    	<div class="photo-grid">
 	        <%
 			ArrayList<ProductDTO> arr = pdao.stateProductList();
@@ -46,9 +46,9 @@ if(productsIds==null||productsIds.equals("")){
 				        <%}else{ %>
 				        <div class="thumbnail"></div>
 				        <%} %>
-				        <h3><%=arr.get(i).getTitle() %></h3>
-				        <p><%=arr.get(i).getPrice() %></p>
-				        <p><%=arr.get(i).getCreate_date() %></p></a>
+				        <p style="font-size: 16px;"><%=arr.get(i).getTitle() %></p>
+		       			<p style="font-size: 18px; font-weight: bold;"><%=arr.get(i).getPrice() %>원</p>
+		        		<p style="color: #6e6e73;"><%=arr.get(i).getCreate_date() %></p>
 		            </a> 
 	            </div>
 	        	<% 

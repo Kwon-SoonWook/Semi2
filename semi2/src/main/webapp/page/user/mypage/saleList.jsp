@@ -9,7 +9,77 @@
 <meta charset="UTF-8">
 <title>판매물품 리스트</title>
 <link rel="stylesheet" type="text/css" href="mypageLayout.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: #fefefe;
+    margin: 0;
+    padding: 0;
+    color: #1c1c1e;
+}
+
+.container {
+    min-height: 100vh;
+}
+
+/* index main 페이지 */
+.main-content {
+    padding: 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* 전체 게시물 목록 */
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 32px;
+}
+.photo-grid a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* 게시물 카드 */
+.photo-card {
+    background: #ffffff;
+    border: 1px solid #eaeaea;
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 270px;
+    overflow: hidden;                                                                                                                                                         
+}
+.photo-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+}
+.thumbnail {
+    width: 100%;
+    height: 180px;
+    border-radius: 12px;
+    background-color: #f2f2f2;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+.photo-card p {
+    font-size: 0.85rem;
+    margin: 10px 0;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+    .main-content {
+        padding: 40px 20px;
+    }
+}
+
 /* 숨겨진 게시물 전체 카드 흐리게 */
 .photo-card.hidden {
     opacity: 0.5;
@@ -87,11 +157,10 @@ if(productsIds==null||productsIds.equals("")){
 						<div class="thumbnail"></div>
 					<%} %>
 				<%} %>
-		        <h3><%=arr.get(i).getTitle() %></h3>
-		        <p><%=arr.get(i).getPrice() %></p>
-		        <p><%=arr.get(i).getCreate_date() %></p>
-		        
-            </a> 
+		        <p style="font-size: 16px; color: black"><%=arr.get(i).getTitle() %></p>
+		        <p style="font-size: 18px; font-weight: bold;"><%=arr.get(i).getPrice() %>원</p>
+		        <p style="color: #6e6e73;"><%=arr.get(i).getCreate_date() %></p>
+		    </a> 
            </div>
        	<% 
 		}
