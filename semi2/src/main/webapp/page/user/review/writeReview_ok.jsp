@@ -1,3 +1,4 @@
+<%@page import="com.ksj.product.ProductDTO"%>
 <%@page import="com.ksj.review.ReviewDTO"%>
 <%@page import="javax.websocket.Session"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -7,6 +8,15 @@
 <jsp:useBean id="rdao" class="com.ksj.review.ReviewDAO"></jsp:useBean>
 <jsp:useBean id="pdao" class="com.ksj.product.ProductDAO"></jsp:useBean>
 <%
+String productsId_s = request.getParameter("products_id");
+int productsId = 0;
+if(productsId_s!=null&&productsId_s.length()!=0){
+	productsId = Integer.parseInt(productsId_s);
+}
+ProductDTO pdto = pdao.ProductList(productsId);
+pdto.setTrade_state(2);
+pdao.updateProductTrade(pdto);
+
 rdto.setUsere_id((String)session.getAttribute("sid"));
 rdto.setReview_type(0);
 String review_id = request.getParameter("review_id");
@@ -22,17 +32,7 @@ pdao.upadteProductBuyerId(rdto.getUser_id(), Integer.parseInt(rdto.getProducts_i
 String msg = rdao.addReview(rdto)>0?"등록성공":"등록실패";
 %>
 <script>
-window.alert('<%=msg%>'); 
-if (window.opener) { 
-    setTimeout(() => { 
-        fetch('/semi2/page/user/product/productTrade_ok.jsp?productId=<%=rdto.getProducts_id()%>&trade=2')
-        .then(() => { 
-            window.opener.document.getElementById("tradestateid").value = "2"; // ✅ 부모 창 값 변경 
-            window.opener.location.reload(); // ✅ 부모 창 새로고침
-        })
-        .finally(() => {
-            window.self.close(); // ✅ 요청이 완료된 후 창 닫기
-        }); 
-    }, 500); // 500ms 딜레이 추가
-}
+     window.opener.document.getElementById("tradestateid").value = "2";  
+     window.opener.location.reload();
+     window.self.close();
 </script>
