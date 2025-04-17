@@ -38,6 +38,80 @@ body {
 	padding: 100px;	
 	text-align: center;
 }
+.info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 20px;
+}
+
+.info img,
+.info i {
+    margin-bottom: 20px;
+}
+
+.info form {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: stretch;
+    text-align: left;
+}
+
+.info form div {
+    display: flex;
+    flex-direction: column;
+}
+.info form input[readonly] {
+    background-color: #f0f0f0;
+    color: #999;
+    cursor: not-allowed;
+}
+.info form input[type="text"],
+.info form input[type="password"],
+.info form input[type="file"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.info form input:focus {
+    outline: none;
+    border-color: #7caeff;
+}
+
+.info form h2 {
+    text-align: center;
+    color: #333;
+    margin: 10px 0 20px;
+}
+
+.info form button {
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    cursor: pointer;
+    background-color: #7caeff;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.info form button:hover {
+    background-color: #5a90e8;
+}
+
+.info form button[type="button"] {
+    background-color: #aaa;
+}
+
+.info form button[type="button"]:hover {
+    background-color: #888;
+}
+
 </style>
 <script src="https://kit.fontawesome.com/f0cba69f8f.js" crossorigin="anonymous"></script><!-- 안보이면 해당 사이트 로그인 후 주소받기 -->
 <script>
@@ -53,7 +127,18 @@ function check(){
 			return false;
 		}
 	}
-	return true;
+	return true;  
+}
+function readURL(input){                                                                                                                        
+	if(input.files && input.files[0]){
+		let reader = new FileReader();
+		reader.onload = function(e){
+			document.getElementById('preview').src = e.target.result;
+		};
+		reader.readAsDataURL(input.files[0]);
+	}else{
+		document.getElementById('preview').src = "";
+	}
 }
 </script>
 </head>
@@ -80,15 +165,15 @@ String slocation = (String)session.getAttribute("slocation");
 	<main class="main-content">
 		<div class="page">
 			<div class="info">
+			<h2>정보 수정</h2>
 			<%if(arr.isEmpty() || arr.get(0).getProfile_uri() == null){ %>
 				<i class="fa-solid fa-circle-user" style="color:darkgray; font-size:100px;"></i>
 	         <%}else{ %>
-	         	<img src="/<%=arr.get(0).getProfile_uri() %>" alt="프로필 이미지" width="150" height="150" style=border-radius:50% />
+	         	<img src="/<%=arr.get(0).getProfile_uri() %>" id="preview" alt="프로필 이미지" width="150" height="150" style=border-radius:50% />
 	         <%} %>
          		<form onsubmit="return check();" action="myInfoUpdate_ok.jsp" method="post" enctype="multipart/form-data">	
 	         		<br>
-	         		<div><input type="file" name="profile" value="프로필 사진 수정" ></div>
-					<h2>정보 수정</h2>
+	         		<div><input type="file" name="profile" value="프로필 사진 수정" onchange="readURL(this);"></div>
 					<div>아이디<input type="text" name="id" value="<%=sid %>" readonly></div>
 					<div>비밀번호<input type="password" name="pwd" value="<%=spwd %>"></div>
 					<div>이름	<input type="text" name="name" value="<%=sname %>"></div>
