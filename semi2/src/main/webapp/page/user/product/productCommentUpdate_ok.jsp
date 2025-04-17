@@ -16,7 +16,5 @@ String commentContent = request.getParameter("comment_content");
 String msg = pcdao.updateProductsComment(idx, commentContent) > 0?"수정성공":"수정실패"; 
 %>
 <script>
-window.alert('<%=msg%>');
-opener.location.reload();
-window.self.close();
+location.href='saleProductView.jsp?productsIds=<%=id%>';
 </script>

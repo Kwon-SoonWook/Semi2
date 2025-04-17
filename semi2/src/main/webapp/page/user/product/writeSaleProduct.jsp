@@ -157,7 +157,12 @@ function check(){
 		return false;		  			
 	}
 }
-function show(){
+function tempDelete(){
+	<%
+	
+	tidao.deleteProductImages(sid);
+	tpdao.deleteTempProduct(sid);
+	%>
 }
     function previewImage(event,idx) {
         var file = event.target.files[0]; // 파일 가져오기
@@ -194,7 +199,7 @@ function show(){
     }
     function isNumberkey(event){
         // 허용할 키 목록
-        const allowedKeys = ["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Enter", "Tab","F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12","Escape","CapsLock"];
+        const allowedKeys = ["Backspace", "Delete", "ArrowLeft", "ArrowRight","ArrowUp","ArrowDown", "Enter", "Tab","F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12","Escape","CapsLock","NumLock", "Insert", "End", "PageDown","PageUp","Home","Clear","Shift","Control","Alt"];
     	if(event.key >="0" && event.key <= "9"||allowedKeys.includes(event.key)){
     		return true;
     	}else{
@@ -334,7 +339,7 @@ if (sid == null) {
 					</div>
 					<div class="form-group">
 						<label>가격</label>
-						<input type="text" name="price" value="0" onkeydown="return isNumberkey(event)" oninput="filterInvalidInput(event)">
+						<input type="text" name="price" value="" onkeydown="return isNumberkey(event)" oninput="filterInvalidInput(event)">
 					</div>
 					<div class="form-group">
 						<label>거래희망장소</label>
@@ -343,7 +348,7 @@ if (sid == null) {
 				</div>
 				<div class="form-section action-btns">
 					<input type="reset" value="초기화" onclick="removeImg()">
-					<input type="submit" name="tempsave" value="임시저장" onclick="return show()" formaction="temporarySave.jsp"> 
+					<input type="submit" name="tempsave" value="임시저장" formaction="temporarySave.jsp"> 
 					<input type="submit" name="save" value="저장" onclick="return check()" formaction="writeSaleProduct_ok.jsp">
 				</div>
 			</div>

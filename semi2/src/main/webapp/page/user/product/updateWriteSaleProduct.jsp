@@ -204,7 +204,7 @@ function show(){
     }
     function isNumberkey(event){
         // 허용할 키 목록
-        const allowedKeys = ["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Enter", "Tab","F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12","Escape","CapsLock"];
+        const allowedKeys = const allowedKeys = ["Backspace", "Delete", "ArrowLeft", "ArrowRight","ArrowUp","ArrowDown", "Enter", "Tab","F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12","Escape","CapsLock","NumLock", "Insert", "End", "PageDown","PageUp","Home","Clear","Shift","Control","Alt"];
     	if(event.key >="0" && event.key <= "9"||allowedKeys.includes(event.key)){
     		return true;
     	}else{

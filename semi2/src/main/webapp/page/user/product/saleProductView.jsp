@@ -47,7 +47,6 @@ if (sid == null) {
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="/semi2/page/user/main/mainLayout.css">
 <style>
 .center-wrapper {
   display: flex;
@@ -280,7 +279,7 @@ if (sid == null) {
 
 .reply-form textarea{
     align-items: center;
-    width: 85%;
+    width: 90%;
     border: 1px solid #ddd;
     padding: 10px;
     border-radius: 5px;
@@ -291,6 +290,63 @@ if (sid == null) {
     height: 40px;
    	margin-left: auto;    
     margin-right: 10px;
+    font-size : 10px;
+    background: #008cff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.edit-form {
+    display: none; /* 기본적으로 숨김 */
+    align-items: center;
+    width: 100%;
+    margin-left: auto;    
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    background: #f9f9f9;
+}
+
+.edit-form-header {
+    display: none;
+    align-items: center;
+    gap: 10px;
+}
+
+.edit-form-header i {
+    font-size: 25px;
+    color: darkgray;
+}
+
+
+.edit-form textarea{
+    align-items: center;
+    width: 90%;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    background: #f9f9f9;
+}
+.edit-form button {
+    width: 60px;
+    height: 40px;
+    font-size : 10px;
+    margin-left: auto;    
+    margin-right: 10px;
+    background: #008cff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.edit-form input[type="button"] {
+    width: 50px;
+    height: 35px;
+    font-size : 10px;
+   	margin-left: 10px;    
+    margin-right: auto;
     background: #008cff;
     color: white;
     border: none;
@@ -322,7 +378,6 @@ window.onload=function(){
 	<%
 	if(rdto==null){	
 		if(pdto.getTrade_state()==2&&sid.equals(pdto.getSeller_id())){
-			
 			%>
 			var popup = window.open('/semi2/page/user/review/writeReview.jsp?productsIds=<%=productsIds%>','writeReview','width=650,height=550,top=100,left=550');		
 			<% 
@@ -361,6 +416,15 @@ function reWrite(idx){
 		return true;
 	}	
 }
+function editWrite(idx){
+	var editContentname = document.getElementById("editContentname"+idx).value;
+	if(editContentname.trim()==""){
+		alert("댓글을 입력해주세요");
+		return false;
+	}else{
+		return true;
+	}	
+}
 function toggleReplyForm(commentIdx) {
     let replyForms = document.getElementsByClassName("reply-form"); // 모든 답글 폼 가져오기
 
@@ -381,7 +445,27 @@ function toggleReplyForm(commentIdx) {
         replyForm.style.display = "flex";
     }
 }
-
+function toggleEditForm(commentIdx) {
+	 let contentDiv = document.getElementById("comment-content-" + commentIdx);
+	 let editForm = document.getElementById("edit-form-" + commentIdx);// 해당 댓글의 수정 폼
+	 
+	 let editForms = document.getElementsByClassName("edit-form"); // 모든 답글 폼 가져오기
+	 
+    if (!editForms || editForms.length === 0) {
+        console.error("editForms 요소가 존재하지 않습니다.");
+        return;
+    }
+    
+    // 현재 폼이 열려 있으면 닫고, 닫혀 있으면 열기
+    if (editForm.style.display === "flex") {
+    	editForm.style.display = "none";
+    } else {
+        for (let i = 0; i < editForms.length; i++) {
+            editForms[i].style.display = "none";
+        }
+        editForm.style.display = "flex";
+    }
+}
 
 </script>
 </head>
@@ -415,7 +499,7 @@ function toggleReplyForm(commentIdx) {
 					</div>
 					<hr>
 					<div>가격:<%=pdto.getPrice() %></div>
-					<div><%=pdto.getContent() %></div>
+					<div><%=pdto.getContent().replace("\n", "<br>") %></div>
 					<div><%=pdto.getLocation() %></div>
 					<div class="product-actions">
 					<% if(sid!=null&&sid.equals(pdto.getSeller_id())){
@@ -488,7 +572,7 @@ function toggleReplyForm(commentIdx) {
 													    </div>
 													    <div class="actions">												
 															<%if(sellerlist.get(i).getSeller_id().equals(sid)){%>
-																<input type="button" value="수정하기" onclick="openReWrite('productCommentUpdate.jsp?idx=<%=sellerlist.get(i).getProducts_comment_idx()%>')">
+																<input type="button" value="수정하기" onclick="toggleEditForm(<%=sellerlist.get(i).getProducts_comment_idx()%>)">
 																<input type="button" value="삭제하기" onclick="location.href='deleteProductComment_ok.jsp?idx=<%=sellerlist.get(i).getProducts_comment_idx()%>'">
 															<%														
 															}else{%>
@@ -509,20 +593,28 @@ function toggleReplyForm(commentIdx) {
 													%></div><%
 												}%>
 											 </div>
+												<form name="productCommentUpdate" action="productCommentUpdate_ok.jsp">
+													<div id="edit-form-<%=sellerlist.get(i).getProducts_comment_idx()%>" class="edit-form">
+													<input type="hidden" value="<%=prodcutsId %>" name="Products_id">
+													<textarea name="comment_content" id="editContentname<%=sellerlist.get(i).getProducts_comment_idx()%>"><%=sellerlist.get(i).getComment_content() %></textarea>
+													<input type="hidden" value="<%=sellerlist.get(i).getProducts_comment_idx()%>" name="idx">
+													<button onclick="return editWrite('<%=sellerlist.get(i).getProducts_comment_idx()%>')">수정하기</button>
+													</div>
+												</form>											 																						 													
 											 <!-- 대댓글 입력 폼 -->
-										<form name="productComment" action="productCommentReWrite_ok.jsp">
-											<div id="reply-form-<%=sellerlist.get(i).getProducts_comment_idx()%>" class="reply-form">
-											    <input type="hidden" value="<%=prodcutsId %>" name="Products_id">
-												<%ProductsCommentDTO pcdto = pcdao.productsCommentList(sellerlist.get(i).getProducts_comment_idx());%>
-												<textarea placeholder="댓글을 작성해주세요" name="comment_content" id="reContentname<%=sellerlist.get(i).getProducts_comment_idx()%>"></textarea>
-											    <input type="hidden" value="<%=pcdto.getBuyer_id() %>" name="Buyer_id">
-											    <input type="hidden" value="<%=sid %>" name="seller_id">
-											    <input type="hidden" value="<%=pcdto.getRef() %>" name="ref">
-											    <input type="hidden" value="<%=pcdto.getLev() %>" name="lev">
-											    <input type="hidden" value="<%=pcdto.getSunbun() %>" name="sunbun">
-												<button onclick="return reWrite('<%=sellerlist.get(i).getProducts_comment_idx()%>')">댓글작성</button>
-											</div>
-										</form>											 
+											<form name="productComment" action="productCommentReWrite_ok.jsp">
+												<div id="reply-form-<%=sellerlist.get(i).getProducts_comment_idx()%>" class="reply-form">
+												    <input type="hidden" value="<%=prodcutsId %>" name="Products_id">
+													<%ProductsCommentDTO pcdto = pcdao.productsCommentList(sellerlist.get(i).getProducts_comment_idx());%>
+													<textarea placeholder="댓글을 작성해주세요" name="comment_content" id="reContentname<%=sellerlist.get(i).getProducts_comment_idx()%>"></textarea>
+												    <input type="hidden" value="<%=pcdto.getBuyer_id() %>" name="Buyer_id">
+												    <input type="hidden" value="<%=sid %>" name="seller_id">
+												    <input type="hidden" value="<%=pcdto.getRef() %>" name="ref">
+												    <input type="hidden" value="<%=pcdto.getLev() %>" name="lev">
+												    <input type="hidden" value="<%=pcdto.getSunbun() %>" name="sunbun">
+													<button onclick="return reWrite('<%=sellerlist.get(i).getProducts_comment_idx()%>')">댓글작성</button>
+												</div>
+											</form>											 
 										</td>
 									</tr><%								
 								}
@@ -538,32 +630,32 @@ function toggleReplyForm(commentIdx) {
 							}else{
 								for(int i=0;i<buyerlist.size();i++){%>
 									<tr>
-										<td><%
+										<td>
+										<div class="reply">
+										<%
 											for(int z=0;z<=buyerlist.get(i).getLev();z++){
 												%><div class="reply <%= buyerlist.get(i).getLev() > 0 ? "reply-indent" : " " %>"><%
 											}
 											if(buyerlist.get(i).getComment_div()==0){
-												if(i==0){
-													%><div class="reply <%= buyerlist.get(i).getLev() > 0 ? "reply-indent" : " " %>"><%														
-												}
-												%><div class="avatar"><%
+												%>
+												<div class="avatar" id="avatar-<%= buyerlist.get(i).getProducts_comment_idx()%>"><%
 											    	if(!headudao.myinfo(buyerlist.get(i).getSeller_id()).isEmpty() && headudao.myinfo(buyerlist.get(i).getSeller_id()).get(0).getProfile_uri() != null){ %>
 														<img src="/<%=headudao.myinfo(buyerlist.get(i).getSeller_id()).get(0).getProfile_uri() %>" alt="프로필 이미지" width="40" height="40" style=border-radius:50% />
 												    <%}else{ %>
 												         <i class="fa-solid fa-circle-user" style="color: darkgray; font-size: 25px;"></i>
 												    <%} %>
 												</div>
-												<div class="main">
-													<div class="meta">											          
+												<div class="main" id="main-<%=buyerlist.get(i).getProducts_comment_idx()%>">
+													<div class="meta" id="meta-<%=buyerlist.get(i).getProducts_comment_idx()%>">											          
 												        <span class="user-id"><%=udao.myinfo(buyerlist.get(i).getSeller_id()).get(0).getNickname() %></span>
 														<span class="date"><%=timeFormat.format(buyerlist.get(i).getCreate_date()) %></span>										        
 												    </div>												
-												    <div class="content">												
+												    <div class="content" id="comment-content-<%= buyerlist.get(i).getProducts_comment_idx() %>">												
 													<%=buyerlist.get(i).getComment_content() %>
 												    </div>
 												    <div class="actions">																								
 													<%if(buyerlist.get(i).getSeller_id().equals(sid)){
-														%><input type="button" value="수정하기" onclick="openReWrite('productCommentUpdate.jsp?idx=<%=buyerlist.get(i).getProducts_comment_idx()%>')">
+														%><input type="button" value="수정하기" onclick="toggleEditForm(<%=buyerlist.get(i).getProducts_comment_idx()%>)">
 														<input type="button" value="삭제하기" onclick="location.href='deleteProductComment_ok.jsp?idx=<%=buyerlist.get(i).getProducts_comment_idx()%>'"><%																								
 													}else{
 														%><input type="button" value="답글쓰기" onclick="toggleReplyForm(<%=buyerlist.get(i).getProducts_comment_idx()%>)"><%												
@@ -573,26 +665,31 @@ function toggleReplyForm(commentIdx) {
 												}else{
 													%>댓글이 삭제되었습니다<%
 												}
-											if(i==0){
-												%></div><%											
-											}
-											for(int z=0;z<buyerlist.get(i).getLev();z++){
+											for(int z=0;z<=buyerlist.get(i).getLev();z++){
 												%></div><%
-											}%>
+											}%>											
 											</div>
+												<form name="productCommentUpdate" action="productCommentUpdate_ok.jsp">
+													<div id="edit-form-<%=buyerlist.get(i).getProducts_comment_idx()%>" class="edit-form">
+													<input type="hidden" value="<%=prodcutsId %>" name="Products_id">
+													<textarea name="comment_content" id="editContentname<%=buyerlist.get(i).getProducts_comment_idx()%>"><%=buyerlist.get(i).getComment_content() %></textarea>
+													<input type="hidden" value="<%=buyerlist.get(i).getProducts_comment_idx()%>" name="idx">
+													<button onclick="return editWrite('<%=buyerlist.get(i).getProducts_comment_idx()%>')">수정하기</button>
+													</div>
+												</form>											 																						 													
 											<form name="productComment" action="productCommentReWrite_ok.jsp">
-											<div id="reply-form-<%=buyerlist.get(i).getProducts_comment_idx()%>" class="reply-form">
-											    <input type="hidden" value="<%=prodcutsId %>" name="Products_id">
-												<%ProductsCommentDTO pcdto = pcdao.productsCommentList(buyerlist.get(i).getProducts_comment_idx());%>
-												<textarea placeholder="댓글을 작성해주세요" name="comment_content" id="reContentname<%=buyerlist.get(i).getProducts_comment_idx()%>"></textarea>
-											    <input type="hidden" value="<%=pcdto.getBuyer_id() %>" name="Buyer_id">
-											    <input type="hidden" value="<%=sid %>" name="seller_id">
-											    <input type="hidden" value="<%=pcdto.getRef() %>" name="ref">
-											    <input type="hidden" value="<%=pcdto.getLev() %>" name="lev">
-											    <input type="hidden" value="<%=pcdto.getSunbun() %>" name="sunbun">
-												<button onclick="return reWrite('<%=buyerlist.get(i).getProducts_comment_idx()%>')">댓글작성</button>
-											</div>
-										</form>											 	
+												<div id="reply-form-<%=buyerlist.get(i).getProducts_comment_idx()%>" class="reply-form">
+												    <input type="hidden" value="<%=prodcutsId %>" name="Products_id">
+													<%ProductsCommentDTO pcdto = pcdao.productsCommentList(buyerlist.get(i).getProducts_comment_idx());%>
+													<textarea placeholder="댓글을 작성해주세요" name="comment_content" id="reContentname<%=buyerlist.get(i).getProducts_comment_idx()%>"></textarea>
+												    <input type="hidden" value="<%=pcdto.getBuyer_id() %>" name="Buyer_id">
+												    <input type="hidden" value="<%=sid %>" name="seller_id">
+												    <input type="hidden" value="<%=pcdto.getRef() %>" name="ref">
+												    <input type="hidden" value="<%=pcdto.getLev() %>" name="lev">
+												    <input type="hidden" value="<%=pcdto.getSunbun() %>" name="sunbun">
+													<button onclick="return reWrite('<%=buyerlist.get(i).getProducts_comment_idx()%>')">댓글작성</button>
+												</div>
+											</form>	
 										</td>
 									</tr><%																
 								}
