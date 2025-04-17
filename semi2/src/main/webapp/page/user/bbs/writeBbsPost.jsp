@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%
+String sid = (String) session.getAttribute("sid");
+String bbs_div = request.getParameter("bbs_div");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -95,7 +98,6 @@ input[type="submit"]:hover {
 }
 
 </style>
-
 <body>
 	<%@include file="/page/user/main/header.jsp"%>
 	<div id="container">
@@ -110,8 +112,6 @@ input[type="submit"]:hover {
 							<caption style="caption-side: top; height: 50px; vertical-align: center; text-align: right;">
 								<select name="select" style="width: 150px; align-content: right;">
 									<%
-									String sid = (String) session.getAttribute("sid");
-									String bbs_div = request.getParameter("bbs_div");
 									if (bbs_div == null) {
 										bbs_div = "";
 									}

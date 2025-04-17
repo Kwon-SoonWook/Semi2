@@ -64,6 +64,12 @@ if(result==0){
 	}
 }else{  
  	msg = "항목을 바르게 입력해주세요.";
+ 	%>
+	<script>
+	window.alert('<%=msg%>');
+	location.href = "writeBbsPost.jsp?bbs_div=<%=bbs_div%>";
+	</script>
+	<%
 }
 
 %>
