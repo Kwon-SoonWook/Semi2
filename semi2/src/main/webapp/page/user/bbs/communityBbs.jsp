@@ -87,7 +87,10 @@ table td {
 }
 </style>
 <% 
-
+String sid = (String)session.getAttribute("sid");
+if(sid==null){
+   sid="";
+}
 request.setCharacterEncoding("UTF-8");
 String input = request.getParameter("input");
 if(input==null){
@@ -211,9 +214,20 @@ if (cp % pageSize == 0) userGroup--;
                   </td>
                </tr>
             </tfoot>
-            <caption style="caption-side:bottom; height:30px; vertical-align: center; text-align: right;">
-               <input type="button" value="글쓰기" onclick="location.href='writeBbsPost.jsp?bbs_div=1'">
-            </caption>
+            <%
+            if(sid.equals("")){
+               %>
+               <caption style="caption-side:bottom; height:30px; vertical-align: center; text-align: right;">
+               </caption>   
+               <%
+            }else{
+               %>
+               <caption style="caption-side:bottom; height:30px; vertical-align: center; text-align: right;">
+                  <input type="button" value="글쓰기" onclick="location.href='writeBbsPost.jsp?bbs_div=2'">
+               </caption>   
+               <%
+            }
+            %>   
             <caption style="caption-side:bottom; height: 50px; vertical-align: center;">
                   <select id="select" name="select">
                      <%

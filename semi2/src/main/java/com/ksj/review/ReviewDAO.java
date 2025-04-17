@@ -151,5 +151,22 @@ public class ReviewDAO {
 			} catch (Exception e2) {}
 		}
 	}
-	
+	public int updateReview(String review_id) {
+		try {
+			conn=com.ksj.db.ConnectionDB.getConn();
+			String sql = "update user_review set review_div = 1 where review_id = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, review_id);
+			int result = ps.executeUpdate();
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}finally {
+			try {
+	            if (ps != null) ps.close();
+	            if (conn != null) conn.close();				
+			} catch (Exception e2) {}
+		}
+	}
 }
