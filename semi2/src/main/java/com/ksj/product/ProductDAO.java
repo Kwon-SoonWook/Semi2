@@ -93,7 +93,7 @@ public class ProductDAO {
 	public ArrayList<ProductDTO> SearchProductList(String keyword, String sort) {
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
-			String sql = "select * from products where title like ?";
+			String sql = "select * from products where title like ? and bbs_state = 0";
 			
 			switch(sort) {
 			case "oldest" :
@@ -385,7 +385,7 @@ public class ProductDAO {
 	public ArrayList<ProductDTO> favoriteList(String userid){
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
-			String sql = "select distinct * from products pd, favorite_products fp where pd.products_id = fp.products_id and is_valid = 1 and user_id = ?";
+			String sql = "select distinct * from products pd, favorite_products fp where pd.products_id = fp.products_id and is_valid = 1 and user_id = ? and bbs_state = 0";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, userid);
 			rs = ps.executeQuery();
@@ -424,7 +424,7 @@ public class ProductDAO {
 	public ArrayList<ProductDTO> recentList(String userid){
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
-			String sql = "select distinct * from products pd, favorite_products fp where pd.products_id = fp.products_id and user_id = ?";
+			String sql = "select distinct * from products pd, favorite_products fp where pd.products_id = fp.products_id and user_id = ? and bbs_state = 0";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, userid);
 			rs = ps.executeQuery();
@@ -509,7 +509,7 @@ public class ProductDAO {
 	public int getfavoriteCnt(String sid) {
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
-	        String sql = "select distinct count(*) from products pd, favorite_products fp where pd.products_id = fp.products_id and is_valid = 1 and user_id = ?";
+	        String sql = "select distinct count(*) from products pd, favorite_products fp where pd.products_id = fp.products_id and is_valid = 1 and user_id = ? and bbs_state=0";
 	        ps = conn.prepareStatement(sql);
 	        ps.setString(1, sid);
 	        rs = ps.executeQuery();
