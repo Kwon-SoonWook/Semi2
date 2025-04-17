@@ -3,7 +3,9 @@
 <jsp:useBean id="kdao" class = "com.ksj.login.loginDAO"></jsp:useBean>
 
 <%
+
 String id = request.getParameter("id");
+
 if(id==null||id==""){
 	%>
 	<script>

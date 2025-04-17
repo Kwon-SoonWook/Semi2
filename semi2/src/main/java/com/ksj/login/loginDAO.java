@@ -212,7 +212,36 @@ public class loginDAO {
 			return false;
 		}finally {
 			try {
-				
+				rs.close();
+				ps.close();
+				conn.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}	
+		}
+	}
+	
+	public boolean nickduptest(String nickname) {
+		try {
+			conn = com.ksj.db.DB.getConn();
+			
+			String sql = "select id from user_info where nickname = ?";
+			ps = conn.prepareStatement(sql);
+			
+			ps.setString(1, nickname);
+			
+			rs = ps.executeQuery();
+			
+			return rs.next()?false:true;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}finally {
+			try {
+				rs.close();
+				ps.close();
+				conn.close();
 			} catch (Exception e2) {
 				// TODO: handle exception
 			}	

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>비밀번호 찾기</title>
+<title>아이디 중복 검사</title>
 <style>
     html, body {
         height: 100%;
@@ -14,18 +14,17 @@
     }
     body {
         width: 100vw;
-        height: 40vh;
+        height: 50vh;
         box-sizing: border-box;
         font-family: 'Segoe UI', Arial, sans-serif;
-        margin-bottom: 120px
     }
     form {
         background: #fff;
         padding: 30px 25px 20px 25px;
         border-radius: 10px;
         box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        max-width: 340px;
-        margin: 100px auto;
+        max-width: 300px;
+        margin: 50px auto;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -69,7 +68,9 @@
     }
 </style>
 <script>
+// 팝업창을 중앙에 띄우는 함수
 function centerPopup() {
+    // 팝업창이 부모창에서 열릴 때만 동작
     if (window.opener) {
         var width = window.outerWidth;
         var height = window.outerHeight;
@@ -86,20 +87,12 @@ window.onload = centerPopup;
 </script>
 </head>
 <body>
-<form action="findPwd_ok.jsp">
+<form action="nickduptest_ok.jsp">
     <div>
-        이름
-        <input type="text" name="name" autocomplete="off">
+        닉네임
+        <input type="text" name="nickname" id="nickname" autocomplete="off">
     </div>
-    <div>
-        아이디
-        <input type="text" name="id" autocomplete="off">
-    </div>
-    <div>
-        이메일
-        <input type="text" name="email" autocomplete="off">
-    </div>
-    <input type="submit" value="비밀번호 찾기">
+    <input type="submit" value="검사하기">
 </form>
 </body>
 </html>
