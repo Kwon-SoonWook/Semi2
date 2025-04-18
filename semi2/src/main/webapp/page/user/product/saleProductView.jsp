@@ -39,8 +39,11 @@ if(fdto==null){
 if (sid == null) {
 	%>
 	<script>
-	window.alert('로그인 후 이용가능한 서비스입니다.');
-	location.href = '/semi2/page/user/login/login.jsp';
+	window.alert('로그인 후 이용해주세요~');
+	const login = confirm('로그인 하시겠습니까?');
+	if(login == true){
+		location.href = '/semi2/page/user/login/login.jsp';
+	}
 	</script>
 	<%
     return;
@@ -65,7 +68,7 @@ if (sid == null) {
     display: flex;
     align-items: flex-start; /* 위쪽 정렬 */
     gap: 100px; /* 요소 간 간격 */
-	margin-left:250px;
+	margin-left:300px;
 }
 .product-container{
 	width:100%;
@@ -124,16 +127,23 @@ if (sid == null) {
     flex-direction: column;
 }
 .product-info .cnt{
-  font-size: 9px;
+  font-size: 14px;
   color: #666;
   border: none;
-  color: #666;  
 }
 /* 버튼 스타일 */
 .product-actions {
     display: flex;
     gap: 10px;
     margin-top: 10px;
+}
+.product-actions input[type="button"]{
+  padding: 10px 20px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #ddd;
 }
 .comment-section {
     width: 80%;
@@ -159,12 +169,13 @@ if (sid == null) {
     padding: 10px;
     border-radius: 5px;
     background: #f9f9f9;
+    gap:10px;
 }
 
 .comment-header {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
 }
 
 .comment-header i {
@@ -180,6 +191,7 @@ if (sid == null) {
 
 .comment-input {
     flex: 1; /* 입력창이 가능한 넓게 차지하도록 설정 */
+    width:90%;
     height: 40px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -188,7 +200,7 @@ if (sid == null) {
 }
 
 .comment-submit {
-    width: 100px;
+    width: 80px;
     height: 40px;
     background: #008cff;
     color: white;
@@ -299,7 +311,6 @@ if (sid == null) {
     border: 1px solid #ddd;
     padding: 10px;
     border-radius: 5px;
-    background: #f9f9f9;
 }
 .reply-form button {
     width: 60px;
@@ -343,7 +354,6 @@ if (sid == null) {
     border: 1px solid #ddd;
     padding: 10px;
     border-radius: 5px;
-    background: #f9f9f9;
 }
 .edit-form button {
     width: 60px;
@@ -517,7 +527,7 @@ function toggleEditForm(commentIdx) {
 					<div>가격:<%=pdto.getPrice() %>원</div>
 					<div>본문:<%=pdto.getContent().replace("\n", "<br>") %></div>
 					<div>장소:<%=pdto.getLocation() %></div>
-					<div class="cnt">조회수:<%=pdto.getView_cnt() %> 관심:<%=pdao.getfavoriteProductCnt(prodcutsId) %></div>
+					<div class="cnt">관심 <%=pdao.getfavoriteProductCnt(prodcutsId) %> · 조회수 <%=pdto.getView_cnt() %> </div>
 					<div class="product-actions">
 					<% if(sid!=null&&sid.equals(pdto.getSeller_id())){
 						%>
@@ -585,7 +595,7 @@ function toggleEditForm(commentIdx) {
 															<span class="date"><%=timeFormat.format(sellerlist.get(i).getCreate_date()) %></span>
 													    </div>												
 													    <div class="content">
-															<%=sellerlist.get(i).getComment_content() %>
+															<%=sellerlist.get(i).getComment_content().replace("\n", "<br>") %>
 													    </div>
 													    <div class="actions">												
 															<%if(sellerlist.get(i).getSeller_id().equals(sid)){%>
@@ -601,7 +611,7 @@ function toggleEditForm(commentIdx) {
 													</div>	
 											    	<%
 												}else{
-													%>댓글이 삭제되었습니다<%
+													%>삭제된 댓글입니다<%
 												}
 												if(i==0){
 												%></div><%												
@@ -668,7 +678,7 @@ function toggleEditForm(commentIdx) {
 														<span class="date"><%=timeFormat.format(buyerlist.get(i).getCreate_date()) %></span>										        
 												    </div>												
 												    <div class="content" id="comment-content-<%= buyerlist.get(i).getProducts_comment_idx() %>">												
-													<%=buyerlist.get(i).getComment_content() %>
+													<%=buyerlist.get(i).getComment_content().replace("\n", "<br>") %>
 												    </div>
 												    <div class="actions">																								
 													<%if(buyerlist.get(i).getSeller_id().equals(sid)){
@@ -680,7 +690,7 @@ function toggleEditForm(commentIdx) {
 													</div>
 												</div><%	
 												}else{
-													%>댓글이 삭제되었습니다<%
+													%>삭제된 댓글입니다<%
 												}
 											for(int z=0;z<=buyerlist.get(i).getLev();z++){
 												%></div><%
