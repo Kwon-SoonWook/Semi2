@@ -9,6 +9,16 @@
 <jsp:useBean id="udao" class="com.ksj.user.UserDAO"></jsp:useBean>
 <jsp:useBean id="pdao" class="com.ksj.product.ProductDAO"></jsp:useBean>
 <%
+String sid = (String)session.getAttribute("sid");
+if (sid == null) {
+	%>
+	<script>
+	window.alert('로그인 후 이용해주세요~');
+    window.self.close();
+	</script>
+	<%
+    return;
+}
 String review_id = request.getParameter("review_id");
 ReviewDTO rdto = rdao.reviewlist(review_id);
 %>

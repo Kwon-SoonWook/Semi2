@@ -18,6 +18,19 @@ request.setCharacterEncoding("utf-8");
 <jsp:useBean id="tpdao" class="com.ksj.tempproduct.TempProductDAO"></jsp:useBean>
 <%
 	String sid = (String)session.getAttribute("sid");
+	String msgProduct = "로그인 후 이용해주세요";
+if(sid==null){
+	%>
+	<script>
+	window.alert('로그인 후 이용해주세요~');
+	const login = confirm('로그인 하시겠습니까?');
+	if(login == true){
+		location.href = '/semi2/page/user/login/login.jsp';
+	}
+	</script>
+	<%
+	return;
+}
 	String savepath = request.getRealPath("/page/user/product/img");
 	ArrayList<String> imagesIdArr = new ArrayList<String>();
 	ArrayList saveFiles = new ArrayList();//저장된 파일이름을 저장하기위한 어레이 리스트
@@ -102,7 +115,7 @@ request.setCharacterEncoding("utf-8");
 	}
 	String imagePath = imagesIdArr.isEmpty() ? "":imagesIdArr.get(0).toString();
 	ProductDTO pdto = new ProductDTO(productId,categoryid,buyerId,sellerId,price,title,content,location,0,0,imagePath,0,null,null,savepath);
-	String msgProduct = pdao.upadteProduct(pdto)>0?"수정 성공":"수정 실패";
+	msgProduct = pdao.upadteProduct(pdto)>0?"수정 성공":"수정 실패";
 	for(int i=0;i<images.size();i++){
 		ProductImagesDTO idto = new ProductImagesDTO((String)images.get(i),productId);
 		idao.addProductImages(idto);

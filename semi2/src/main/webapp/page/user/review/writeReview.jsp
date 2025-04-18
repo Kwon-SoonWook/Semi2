@@ -18,8 +18,8 @@ String sid = (String)session.getAttribute("sid");
 if (sid == null) {
 	%>
 	<script>
-	window.alert('로그인 후 이용가능한 서비스입니다.');
-	location.href = '/semi2/page/user/login/login.jsp';
+	window.alert('로그인 후 이용해주세요~');
+    window.self.close();
 	</script>
 	<%
     return;

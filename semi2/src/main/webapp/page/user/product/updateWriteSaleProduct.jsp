@@ -19,8 +19,11 @@ String sid = (String)session.getAttribute("sid");
 if (sid == null) {
 	%>
 	<script>
-	window.alert('로그인 후 이용가능한 서비스입니다.');
-	location.href = '/semi2/page/user/login/login.jsp';
+	window.alert('로그인 후 이용해주세요~');
+	const login = confirm('로그인 하시겠습니까?');
+	if(login == true){
+		location.href = '/semi2/page/user/login/login.jsp';
+	}
 	</script>
 	<%
     return;
@@ -76,7 +79,7 @@ label[for="price"] {
 
 label[for="location"] {
   display: inline-block; /* 블록 대신 인라인 요소로 변경 */
-  margin-left: 290px;  
+  margin-left: 270px;  
 }
 #price {
   width: 30%;  /* `price` 입력칸 너비 조정 */
@@ -240,7 +243,7 @@ function show(){
     }
     function isNumberkey(event){
         // 허용할 키 목록
-        const allowedKeys = const allowedKeys = ["Backspace", "Delete", "ArrowLeft", "ArrowRight","ArrowUp","ArrowDown", "Enter", "Tab","F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12","Escape","CapsLock","NumLock", "Insert", "End", "PageDown","PageUp","Home","Clear","Shift","Control","Alt"];
+        var allowedKeys = ["Backspace", "Delete", "ArrowLeft", "ArrowRight","ArrowUp","ArrowDown", "Enter", "Tab","F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12","Escape","CapsLock","NumLock", "Insert", "End", "PageDown","PageUp","Home","Clear","Shift","Control","Alt"];
     	if(event.key >="0" && event.key <= "9"||allowedKeys.includes(event.key)){
     		return true;
     	}else{

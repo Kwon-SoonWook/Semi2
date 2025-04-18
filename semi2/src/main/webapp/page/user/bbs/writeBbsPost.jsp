@@ -35,9 +35,11 @@ body {
 .write{
 	width: 800px;
 	margin: auto;
-	height: 650px;
+	height: 620px;
 }
 .page {
+	margin: auto;
+	width: 800px;
     background: white;
     padding: 20px;
     border-radius: 8px;
@@ -110,7 +112,7 @@ input[type="submit"]:hover {
 						<h2>게시판 글쓰기</h2>
 						<hr>
 						<table>
-							<caption style="caption-side: top; height: 50px; vertical-align: center; text-align: right;">
+							<caption style="caption-side: top; height: 50px; vertical-align: center; text-align: right; margin-right: 12px; margin-top: 12px;">
 								<select name="select" style="width: 150px; align-content: right;">
 									<%
 									if (bbs_div == null) {
@@ -138,13 +140,15 @@ input[type="submit"]:hover {
 								</select>
 							</caption>
 							<tr>
-								<th>제목</th>
-								<td><input type="text" name="title" value = "" style="width: 650px;"></td>
+
+								<th style="width: 100px;">제목</th>
+								<td><input type="text" name="title" style="width: 650px;"></td>
+
 							</tr>
 							<tr>
 								<th>본문</th>
-								<td class="content"><textarea name="content" cols="91"
-										rows="20"></textarea></td>
+								<td class="content"><textarea name="content" cols="89"
+										rows="20" style="resize: none;"></textarea></td>
 							</tr>
 							<tr>
 								<th>사진파일</th>

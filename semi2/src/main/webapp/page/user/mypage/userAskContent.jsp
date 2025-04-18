@@ -5,7 +5,58 @@
 <%
 int ask_id = Integer.parseInt(request.getParameter("ask_id"));
 AskDTO dto = adao.askContent(ask_id);
+String cp_s = request.getParameter("cp");
+int cp = 0;
+if(cp_s==null){
+	cp = 0;
+}else{
+	cp = Integer.parseInt(cp_s);	
+}
 %>
+<style>
+h2 {
+	text-align: center;
+	color: #333;
+}
+
+
+table {
+	width: 600px;
+	border-collapse: collapse;
+	text-align: center;
+	margin: auto;
+}
+
+th {
+	padding: 5px;
+	vertical-align: top;
+	color: #444;
+}
+td{
+	padding: 5px;
+	vertical-align: top;
+	color: #444;
+}
+
+input[type="text"], textarea, select {
+	padding: 5px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	font-size: 14px;
+	resize: vertical;
+}
+
+input[type="submit"], input[type="button"] {
+	background-color: #8c8c8c;
+	color: white;
+	border: none;
+	padding: 5px 20px;
+	font-size: 16px;
+	border-radius: 5px;
+	cursor: pointer;
+	margin-top: 20px;
+}
+</style>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,13 +69,16 @@ AskDTO dto = adao.askContent(ask_id);
        	 <main class="main-content">
 			<section>
 				<article>
-				<h2></h2>
-				<form name='userAskContent' action='userAskList.jsp'>
+				<h2>문의 내용</h2>
+				<form name='userAskContent' action='askUpdate.jsp?'>
 					<table width="550" border="1" cellspacing="0">
+						<input type='hidden' name='ask_title' value='<%=dto.getAsk_title()%>'>
+						<input type='hidden' name='ask_content' value='<%=dto.getAsk_content()%>'>
+						<input type='hidden' name='ask_id' value='<%=ask_id%>'>
 						<tr>
-							<th>번호</th>
+							<th>No</th>
 							<td><%=ask_id%></td>
-							<th>작성날짜</th>
+							<th>작성일자</th>
 							<td><%=dto.getAsk_date() %></td>
 						</tr>
 						<tr>
@@ -34,7 +88,7 @@ AskDTO dto = adao.askContent(ask_id);
 							<%
 							if(dto.getAsk_type()==0){
 								%>	
-								<td>미처리</td>
+								<td style="color: red;">미처리</td>
 								<%	
 							}else if(dto.getAsk_type()==1){
 								%>
@@ -54,10 +108,13 @@ AskDTO dto = adao.askContent(ask_id);
 							</td>
 						</tr>
 						<tr>
-							<td colspan='4' align='left' valign='top'><%=dto.getAsk_content().replaceAll("\n", "<br>") %></td>
+							<td colspan='4' align='left' valign='top' style="padding: 15px;"><%=dto.getAsk_content().replaceAll("\n", "<br>") %></td>
 						</tr>
 					</table>
-					<div><input type='submit' value='목록으로'>
+					<div style="text-align: center;">
+						<input type='button' value='목록으로' onclick="location.href='userAskList.jsp?cp=<%=cp%>'">
+						<input type="submit" value="수정하기">
+					</div>
 				</form>
 				</article>
 			</section>            

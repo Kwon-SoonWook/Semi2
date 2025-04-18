@@ -51,7 +51,7 @@ if(cp%pageSize==0) userGroup--;
 			<th style="width: 150px; text-align: center;">주소</th>
 			<th>E-mail</th>
 			<th style="width: 120px; text-align: center;">가입일자</th>
-			<th style="width: 60px;"><input type="submit" value="삭제"></th>
+			<th style="width: 60px;"><input type="submit" id="sbm" value="삭제"></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -84,26 +84,29 @@ if(cp%pageSize==0) userGroup--;
 		<tr>
 			<td colspan='7' align='center'>
 			<%
-			
-			if(userGroup!=0){
-				%>
-				<a href="userManagement.jsp?cp=<%=(userGroup-1)*pageSize+pageSize%>&input=<%=input %>&select=<%=select_str %>" style="color:black; font-size:10px; text-decoration:none">&lt;</a>
-				<%
-			}
-			for(int i=(userGroup*pageSize+1); i<=(userGroup*pageSize+pageSize); i++){
-				if(cp == i){
-					%>&nbsp;&nbsp;<a href="userManagement.jsp?cp=<%=i%>&input=<%=input %>&select=<%=select_str %>" style="color:black; text-decoration:underline;"><%=i%></a>&nbsp;&nbsp;<%	
-				}else{
-					%>&nbsp;&nbsp;<a href="userManagement.jsp?cp=<%=i%>&input=<%=input %>&select=<%=select_str %>" style="color:black; text-decoration:none;"><%=i%></a>&nbsp;&nbsp;<%					
+			if(arr.size()==0){
+				%>&nbsp;&nbsp;<a href="userManagement.jsp?cp=1&input=<%=input %>&select=<%=select_str %>" style="color:black; text-decoration:underline;">1</a>&nbsp;&nbsp;<%
+			}else{
+				if(userGroup!=0){
+					%>
+					<a href="userManagement.jsp?cp=<%=(userGroup-1)*pageSize+pageSize%>&input=<%=input %>&select=<%=select_str %>" style="color:black; font-size:10px; text-decoration:none">&lt;</a>
+					<%
 				}
-				if(i==totalPage){
-					break;
+				for(int i=(userGroup*pageSize+1); i<=(userGroup*pageSize+pageSize); i++){
+					if(cp == i){
+						%>&nbsp;&nbsp;<a href="userManagement.jsp?cp=<%=i%>&input=<%=input %>&select=<%=select_str %>" style="color:black; text-decoration:underline;"><%=i%></a>&nbsp;&nbsp;<%	
+					}else{
+						%>&nbsp;&nbsp;<a href="userManagement.jsp?cp=<%=i%>&input=<%=input %>&select=<%=select_str %>" style="color:black; text-decoration:none;"><%=i%></a>&nbsp;&nbsp;<%					
+					}
+					if(i==totalPage){
+						break;
+					}
 				}
-			}
-			if(((totalPage/pageSize)-(totalPage%pageSize==0?1:0))!=userGroup){
-				%>
-				<a href="userManagement.jsp?cp=<%=(userGroup+1)*pageSize+1%>&input=<%=input %>&select=<%=select_str %>" style="color:black; font-size:10px; text-decoration:none">&gt;</a>
-				<%
+				if(((totalPage/pageSize)-(totalPage%pageSize==0?1:0))!=userGroup){
+					%>
+					<a href="userManagement.jsp?cp=<%=(userGroup+1)*pageSize+1%>&input=<%=input %>&select=<%=select_str %>" style="color:black; font-size:10px; text-decoration:none">&gt;</a>
+					<%
+				}
 			}
 			%>
 			</td>

@@ -8,6 +8,16 @@
 <jsp:useBean id="rdao" class="com.ksj.review.ReviewDAO"></jsp:useBean>
 <jsp:useBean id="pdao" class="com.ksj.product.ProductDAO"></jsp:useBean>
 <%
+String sid = (String)session.getAttribute("sid");
+if (sid == null) {
+	%>
+	<script>
+	window.alert('로그인 후 이용해주세요~');
+    window.self.close();
+	</script>
+	<%
+    return;
+}
 String productsId_s = request.getParameter("products_id");
 int productsId = 0;
 if(productsId_s!=null&&productsId_s.length()!=0){
@@ -32,7 +42,9 @@ pdao.upadteProductBuyerId(rdto.getUser_id(), Integer.parseInt(rdto.getProducts_i
 String msg = rdao.addReview(rdto)>0?"등록성공":"등록실패";
 %>
 <script>
-     window.opener.document.getElementById("tradestateid").value = "2";  
+	if(window.opener.document.getElementById("tradestateid")){
+     	window.opener.document.getElementById("tradestateid").value = "2";
+	}
      window.opener.location.reload();
      window.self.close();
 </script>
