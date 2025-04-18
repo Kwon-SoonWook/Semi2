@@ -6,6 +6,34 @@
 <meta charset="UTF-8">
 <title>비밀번호 확인</title>
 <style>
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Pretendard-Medium";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Medium.woff")
+    format("woff");
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Pretendard-SemiBold";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-SemiBold.woff")
+    format("woff");
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Pretendard-Bold";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff")
+    format("woff");
+  font-weight: 700;
+  font-style: normal;
+}
 html, body {
     width: 500px;
     height: 300px;
@@ -30,6 +58,7 @@ form {
 }
 
 h2 {
+	font-family: "Pretendard-Bold", Helvetica;
     margin-bottom: 20px;
     color: #333;
 }
@@ -45,23 +74,26 @@ input[type="text"], input[type="password"] {
 }
 
 input[type="text"]:focus, input[type="password"]:focus {
-    border-color: #4a90e2;
+    border-color: #6E8233;
     outline: none;
 }
 
 button {
-    background-color: #4a90e2;
+	font-family: "Pretendard-SemiBold", Helvetica;
+    background-color: #6E8233;
     color: white;
     padding: 10px 25px;
     font-size: 16px;
-    border: none;
+    border: 1px solid #ccc;
     border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
 button:hover {
-    background-color: #357ab8;
+    background: #f5f5f5;
+    color: #000;
+    border-color: #bbb;
 }
 </style>
 </head>
