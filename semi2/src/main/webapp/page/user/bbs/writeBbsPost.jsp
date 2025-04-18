@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 
 <%
 String sid = (String) session.getAttribute("sid");
@@ -21,7 +21,7 @@ body {
     background-color: #f9f9f9;
 }
 .container {
-    min-height: 100vh;	/*스크린 화면 전체를 가득 채움*/
+    min-height: 100vh;   /*스크린 화면 전체를 가득 채움*/
     white-space: nowrap; /*띄어쓰기 방지*/
 }
 
@@ -33,71 +33,71 @@ body {
 
 /*흰색 페이지*/
 .write{
-	width: 800px;
-	margin: auto;
-	height: 620px;
+   width: 800px;
+   margin: auto;
+   height: 620px;
 }
 .page {
-	margin: auto;
-	width: 800px;
+   margin: auto;
+   width: 800px;
     background: white;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 h2 {
-	text-align: center;
-	color: #333;
+   text-align: center;
+   color: #333;
 }
 
 
 table {
-	width: 800px;
-	border-collapse: collapse;
-	text-align: center;
-	margin: auto;
+   width: 800px;
+   border-collapse: collapse;
+   text-align: center;
+   margin: auto;
 }
 
 th {
-	padding: 12px;
-	vertical-align: top;
-	color: #444;
+   padding: 12px;
+   vertical-align: top;
+   color: #444;
 }
 
 .page input[type="text"], textarea, select {
-	padding: 5px;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	font-size: 14px;
-	resize: vertical;
+   padding: 5px;
+   border: 1px solid #ccc;
+   border-radius: 4px;
+   font-size: 14px;
+   resize: vertical;
 }
 
 input[type="file"] {
-	border: none;
+   border: none;
 }
 
 .page input[type="submit"], input[type="reset"] {
-	background-color: #8c8c8c;
-	color: white;
-	border: none;
-	padding: 5px 20px;
-	font-size: 16px;
-	border-radius: 5px;
-	cursor: pointer;
-	margin-top: 20px;
+   background-color: #8c8c8c;
+   color: white;
+   border: none;
+   padding: 5px 20px;
+   font-size: 16px;
+   border-radius: 5px;
+   cursor: pointer;
+   margin-top: 20px;
 }
 
 
 input[type="submit"]:hover {
-	background-color: #0056b3;
+   background-color: #0056b3;
 }
 
 .content {
-	text-align: center;
-	width: 600px;
-	height: 150px;
-	position: relative;
-	left: 0px;
+   text-align: center;
+   width: 600px;
+   height: 150px;
+   position: relative;
+   left: 0px;
 }
 
 </style>
@@ -140,8 +140,11 @@ input[type="submit"]:hover {
 								</select>
 							</caption>
 							<tr>
+
+
 								<th style="width: 100px;">제목</th>
 								<td><input type="text" name="title" style="width: 650px;"></td>
+
 							</tr>
 							<tr>
 								<th>본문</th>
