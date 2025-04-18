@@ -55,6 +55,58 @@ public class BbsDAO {
 		
 	}
 	
+	public int bbschange(int id, MultipartRequest mr) {
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+			
+			String sql = "update bbs set title = ?, content = ?, update_date = sysdate, bbs_image = ? where bbs_idx = ? ";
+			
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, mr.getParameter("title"));
+			ps.setString(2, mr.getParameter("content"));
+			ps.setString(3, mr.getFilesystemName("file"));
+			ps.setInt(4, id);
+			
+			int count = ps.executeUpdate();
+			return count;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				ps.close();
+				conn.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+		}
+		
+	}
+	
+	public int bbsDelete(String idx) {
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+			
+			String sql = "delete from bbs where bbs_idx = ?";
+			ps=conn.prepareStatement(sql);
+			ps.setString(1, idx);
+			
+			int count = ps.executeUpdate();
+			return count;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				ps.close();
+				conn.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+		}
+		
+	}
+	
 	public int bbsUpload(String id, MultipartRequest mr) {
 		
 		if(id==null) {
