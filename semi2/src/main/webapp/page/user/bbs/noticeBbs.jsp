@@ -176,7 +176,7 @@ if (cp % pageSize == 0) userGroup--;
 				</tbody>
 				<tfoot>
 					<tr>
-						<td colspan='5' align='center'>
+						<td colspan='5' align='center' style="padding: 5px 5px;">
 							<%
 							if(arr==null || arr.size()==0){
 								%>&nbsp;&nbsp;<a

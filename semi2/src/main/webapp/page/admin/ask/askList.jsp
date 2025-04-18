@@ -5,6 +5,7 @@
 <jsp:useBean id="adao" class="com.ksj.ask.AskDAO"></jsp:useBean>
 <%
 ArrayList<AskDTO> arr = adao.askList();
+
 int totalCnt = arr.size();
 
 //보여줄 리스트 수
@@ -22,6 +23,7 @@ int cp = Integer.parseInt(cp_s);
 
 //총 페이지 수
 int totalPage = (totalCnt/listSize)+1;
+
 if(totalCnt%listSize==0) totalPage--;
 
 int userGroup = cp/pageSize;
@@ -112,10 +114,6 @@ th {
     <div class="container1">
         <!-- 사이드바 -->
         <%@include file="../main/adminCategory.jsp" %>
-		<%
-		int totalCount = (int)session.getAttribute("totalCount");
-		int todayCount = (int)session.getAttribute("todayCount");
-		%>
         <!-- 대시보드 내용 -->
         <main class="main-content1">
 			<section style="width: 800px; margin: auto;">
@@ -188,26 +186,29 @@ th {
 							<tr>
 								<td colspan='5' align='center'>
 								<%
-								
-								if(userGroup!=0){
-									%>
-									<a href="askList.jsp?cp=<%=(userGroup-1)*pageSize+pageSize%>" style="color:black; font-size:10px; text-decoration:none">&lt;</a>
-									<%
-								}
-								for(int i=(userGroup*pageSize+1); i<=(userGroup*pageSize+pageSize); i++){
-									if(cp == i){
-										%>&nbsp;&nbsp;<a href="askList.jsp?cp=<%=i%>" style="color:black; text-decoration:underline;"><%=i%></a>&nbsp;&nbsp;<%	
-									}else{
-										%>&nbsp;&nbsp;<a href="askList.jsp?cp=<%=i%>" style="color:black; text-decoration:none;"><%=i%></a>&nbsp;&nbsp;<%					
+								if(arr.size()==0){
+									%>&nbsp;&nbsp;<a href="askList.jsp?cp=1" style="color:black; text-decoration:underline;">1</a>&nbsp;&nbsp;<%
+								}else{
+									if(userGroup!=0){
+										%>
+										<a href="askList.jsp?cp=<%=(userGroup-1)*pageSize+pageSize%>" style="color:black; font-size:10px; text-decoration:none">&lt;</a>
+										<%
 									}
-									if(i==totalPage){
-										break;
+									for(int i=(userGroup*pageSize+1); i<=(userGroup*pageSize+pageSize); i++){
+										if(cp == i){
+											%>&nbsp;&nbsp;<a href="askList.jsp?cp=<%=i%>" style="color:black; text-decoration:underline;"><%=i%></a>&nbsp;&nbsp;<%	
+										}else{
+											%>&nbsp;&nbsp;<a href="askList.jsp?cp=<%=i%>" style="color:black; text-decoration:none;"><%=i%></a>&nbsp;&nbsp;<%					
+										}
+										if(i==totalPage){
+											break;
+										}
 									}
-								}
-								if(((totalPage/pageSize)-(totalPage%pageSize==0?1:0))!=userGroup){
-									%>
-									<a href="askList.jsp?cp=<%=(userGroup+1)*pageSize+1%>" style="color:black; font-size:10px; text-decoration:none">&gt;</a>
-									<%
+									if(((totalPage/pageSize)-(totalPage%pageSize==0?1:0))!=userGroup){
+										%>
+										<a href="askList.jsp?cp=<%=(userGroup+1)*pageSize+1%>" style="color:black; font-size:10px; text-decoration:none">&gt;</a>
+										<%
+									}
 								}
 								%>
 								</td>
