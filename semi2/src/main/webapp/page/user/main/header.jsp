@@ -187,6 +187,7 @@ String headpwd = (String)session.getAttribute("pwd");
 String heademail = (String)session.getAttribute("email");
 String headnickname = (String)session.getAttribute("nickname");
 String headlocation = (String)session.getAttribute("location");
+
 %>
 <script>
 function searchClick(){
@@ -206,8 +207,10 @@ function searchClick(){
     	<a href="/semi2/page/user/bbs/noticeBbs.jsp">공지사항</a>
     	<a href="/semi2/page/user/bbs/communityBbs.jsp">자유게시판</a>
     	<a href="/semi2/page/user/bbs/buyBbs.jsp">구매게시판</a>
-    	<%if(headid == "admin" || headid != null){ %>
-    	<a href="/semi2/page/admin/main/adminIndex.jsp">관리자페이지</a>
+    	<%if(headid != null){ %>
+	    	<%if(headid.equals("admin")){ %>
+	    		<a href="/semi2/page/admin/main/adminIndex.jsp">관리자페이지</a>
+	    	<%}%>
     	<%} %>
     </div>
     <div class="top-right">
