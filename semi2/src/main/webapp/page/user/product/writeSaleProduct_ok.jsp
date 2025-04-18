@@ -20,6 +20,19 @@ request.setCharacterEncoding("utf-8");
 <jsp:useBean id="tidao" class="com.ksj.tempproductimages.TempProductImagesDAO"></jsp:useBean>
 <%
 	String sid = (String)session.getAttribute("sid");
+	String msgProduct = "로그인 후 이용해주세요";
+if(sid==null){
+	%>
+	<script>
+	window.alert('로그인 후 이용해주세요~');
+	const login = confirm('로그인 하시겠습니까?');
+	if(login == true){
+		location.href = '/semi2/page/user/login/login.jsp';
+	}
+	</script>
+	<%
+	return;
+}
 	String savepath = request.getRealPath("/page/user/product/img");
 	ArrayList saveFiles = new ArrayList();
 	ArrayList images = new ArrayList();
@@ -92,7 +105,7 @@ request.setCharacterEncoding("utf-8");
 	}
 	String imagePath = imagesIdArr.isEmpty() ? "":imagesIdArr.get(0).toString(); 
 	ProductDTO pdto = new ProductDTO(0,categoryid,buyerId,sellerId,price,title,content,location,tradeState,bbsState,imagePath,0,null,null,savepath);
-	String msgProduct = pdao.productInsert(pdto)>0?"등록 성공":"등록 실패";
+	msgProduct = pdao.productInsert(pdto)>0?"등록 성공":"등록 실패";
 	for(int i=0;i<imagesIdArr.size();i++){
 		ProductImagesDTO idto = new ProductImagesDTO(imagesIdArr.get(i),pdao.searchProductIdx());
 		idao.addProductImages(idto);

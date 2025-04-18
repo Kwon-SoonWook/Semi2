@@ -16,6 +16,19 @@
 	}else{
 		productId= Integer.parseInt(productIds);
 	}
+	String sid = (String)session.getAttribute("sid");
+	if (sid == null) {
+		%>
+		<script>
+		window.alert('로그인 후 이용해주세요~');
+		const login = confirm('로그인 하시겠습니까?');
+		if(login == true){
+			location.href = '/semi2/page/user/login/login.jsp';
+		}
+		</script>
+		<%
+	    return;
+	}
 	ProductDTO dto = pdao.ProductList(productId);
 	ArrayList<ProductImagesDTO> arr = pidao.ProductImagesList(productId);
 	int imageResult = pidao.deleteProductImages(productId);
