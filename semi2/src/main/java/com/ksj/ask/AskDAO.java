@@ -224,7 +224,7 @@ public class AskDAO {
 	}
 	
 	/**관리자 페이지 문의답변시 해당 문의 미처리에서 처리완료로 변경 메서드*/
-	public void askUpdate(int ask_id) {
+	public void askTypeUpdate(int ask_id) {
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
 			String sql = "update ask set ask_type=1 where ask_id=? and ask_type != 2";
@@ -233,6 +233,30 @@ public class AskDAO {
 			ps.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
+		}finally {
+			try {
+				if(ps != null) ps.close();
+				if(conn != null) conn.close();
+			}catch(Exception e2) {
+				
+			}
+		}
+	}
+	
+	/**사용자 문의 수정하기 메서드*/
+	public int askUpdate(AskDTO dto) {
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+			String sql = "update ask set ask_title=?, ask_content=? where ask_id=?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, dto.getAsk_title());
+			ps.setString(2, dto.getAsk_content());
+			ps.setInt(3, dto.getAsk_id());
+			int count = ps.executeUpdate();
+			return count;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return -1;
 		}finally {
 			try {
 				if(ps != null) ps.close();

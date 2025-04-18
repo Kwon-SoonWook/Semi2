@@ -3,15 +3,16 @@
 <%@ page import="com.ksj.ask.*" %>
 <jsp:useBean id="adao" class="com.ksj.ask.AskDAO"></jsp:useBean>
 <%
-String ask_user_id = (String)session.getAttribute("sid");
-String ask_writer = (String)session.getAttribute("sid");
+String ask_title = request.getParameter("ask_title");
+String ask_content = request.getParameter("ask_content");
+String ask_id = request.getParameter("ask_id");
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width"> <!-- 반응형 화면 변환 -->
-<title>문의 작성</title>
+<title>문의 수정</title>
 <link rel="stylesheet" type="text/css" href="mypageLayout.css">
 <style>
 body {
@@ -63,26 +64,25 @@ input[type="submit"], input[type="reset"] {
        	 <main class="main-content">
 			<section>
 				<article>
-				<form name='askWrite' action='askWrite_ok.jsp'>
-				<h2>문의 작성</h2>
-				<input type='hidden' name='ask_writer' value='<%=ask_user_id%>'>
-				<input type='hidden' name='ask_user_id' value='<%=ask_user_id%>'>
+				<form name='askUpdate' action='askUpdate_ok.jsp'>
+				<h2>문의 수정</h2>
+				<input type='hidden' name='ask_id' value='<%=ask_id%>'>
 					<table>
 						<tr>
 							<th>제목</th>
 							<td colspan='3' style="padding-bottom: 20px;">
-								<input type='text' name='ask_title' size='60'>
+								<input type='text' name='ask_title' size='60' value="<%=ask_title%>">
 							</td>
 						</tr>
 						<tr>
 							<th>본문</th>
 							<td colspan='3'>
-								<textarea rows="15" cols="62" name='ask_content' style="resize: none;"></textarea>
+								<textarea rows="15" cols="62" name='ask_content' style="resize: none;"><%=ask_content%></textarea>
 							</td>
 						</tr>
 						<tr>
 							<td colspan='4' align='center'>
-								<input type="submit" value='작성하기'>
+								<input type="submit" value='수정하기'>
 								<input type='reset' value='다시작성'>
 							</td>
 						</tr>
