@@ -140,8 +140,11 @@ input[type="submit"]:hover {
 								</select>
 							</caption>
 							<tr>
-								<th>제목</th>
-								<td><input type="text" name="title" value = "" style="width: 650px;"></td>
+
+
+								<th style="width: 100px;">제목</th>
+								<td><input type="text" name="title" style="width: 650px;"></td>
+
 							</tr>
 							<tr>
 								<th>본문</th>
@@ -154,7 +157,7 @@ input[type="submit"]:hover {
 							</tr>
 							<input type="hidden" name="bbs_div" value="<%=bbs_div %>">
 							<caption style="caption-side: bottom; height: 50px; text-align: center;">
-								<input type="submit" value="등록하기">
+								<input type="submit" value="작성하기">
 								<input type="reset" value="다시작성">
 							</caption>
 						</table>
