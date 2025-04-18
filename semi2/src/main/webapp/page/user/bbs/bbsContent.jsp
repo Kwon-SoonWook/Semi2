@@ -215,10 +215,10 @@ kdao.viewCnt(id);
 					%>
 					
 					<%
-					if(session.getAttribute("id")!=null){
+					if(session.getAttribute("sid").equals(arr.get(0).getBbs_id())){
 					%>
-					<input type = "button" value="삭제하기" onclick="location.href='bbsdelete_ok.jsp'">
-					<input type = "button" value="수정하기" onclick="location.href='bbschange_ok.jsp'">
+					<input type = "button" value="삭제하기" onclick="location.href='bbsdelete_ok.jsp?id=<%=arr.get(0).getBbs_idx()%>'">
+					<input type = "button" value="수정하기" onclick="location.href='bbschange.jsp?id=<%=arr.get(0).getBbs_idx()%>&div=<%=arr.get(0).getBbs_div()%>'">
 					<%} %>
 					<hr>
 					<div class="bbs-meta">

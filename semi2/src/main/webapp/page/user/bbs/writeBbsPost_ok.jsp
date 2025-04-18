@@ -14,7 +14,7 @@ String savepath = request.getRealPath("/page/user/bbs/img");
 MultipartRequest mr =
 new MultipartRequest(request,savepath,1024*1024*30,"utf-8",new DefaultFileRenamePolicy());
 
-String bbs_div = mr.getParameter("bbs_div");
+String bbs_div = request.getParameter("bbs_div");
 if(bbs_div==null){
 	bbs_div = "";
 }

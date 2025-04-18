@@ -1,10 +1,8 @@
+<%@page import="com.ksj.bbs.BbsDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<jsp:useBean id="kdao" class = "com.ksj.bbs.BbsDAO"></jsp:useBean>
 
-<%
-String sid = (String) session.getAttribute("sid");
-String bbs_div = request.getParameter("bbs_div");
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,11 +33,9 @@ body {
 .write{
 	width: 800px;
 	margin: auto;
-	height: 620px;
+	height: 650px;
 }
 .page {
-	margin: auto;
-	width: 800px;
     background: white;
     padding: 20px;
     border-radius: 8px;
@@ -101,18 +97,26 @@ input[type="submit"]:hover {
 }
 
 </style>
+
+<%
+String sid = (String) session.getAttribute("sid");
+String bbs_div = request.getParameter("div");
+int idx = Integer.parseInt(request.getParameter("id"));
+
+ArrayList<BbsDTO> arr= kdao.showContent(idx);
+%>
 <body>
 	<%@include file="/page/user/main/header.jsp"%>
 	<div id="container">
 		<%@include file="/page/user/main/category.jsp"%>
 		<main class="main-content">
-			<form action="writeBbsPost_ok.jsp" method="post"enctype="multipart/form-data">
+			<form action="bbschange_ok.jsp?id=<%=idx %>" method="post"enctype="multipart/form-data">
 				<div class="page">
 					<div class="write">
 						<h2>게시판 글쓰기</h2>
 						<hr>
 						<table>
-							<caption style="caption-side: top; height: 50px; vertical-align: center; text-align: right; margin-right: 12px; margin-top: 12px;">
+							<caption style="caption-side: top; height: 50px; vertical-align: center; text-align: right;">
 								<select name="select" style="width: 150px; align-content: right;">
 									<%
 									if (bbs_div == null) {
@@ -140,21 +144,21 @@ input[type="submit"]:hover {
 								</select>
 							</caption>
 							<tr>
-								<th style="width: 100px;">제목</th>
-								<td><input type="text" name="title" style="width: 650px;"></td>
+								<th>제목</th>
+								<td><input type="text" name="title" value = "<%=arr.get(0).getTitle() %>" style="width: 650px;"></td>
 							</tr>
 							<tr>
 								<th>본문</th>
-								<td class="content"><textarea name="content" cols="89"
-										rows="20" style="resize: none;"></textarea></td>
+								<td class="content"><textarea name="content" cols="91"
+										rows="20"><%=arr.get(0).getContent() %></textarea></td>
 							</tr>
 							<tr>
 								<th>사진파일</th>
-								<td style="text-align: left;"><input type="file" name="file"></td>
+								<td style="text-align: left;"><input type="file" name="file" value = "<%=arr.get(0).getBbs_image()%>"></td>
 							</tr>
-							<input type="hidden" name="bbs_div" value="<%=bbs_div %>">
+							<input type="hidden" name="bbs_div" value="<%=arr.get(0).getBbs_div() %>">
 							<caption style="caption-side: bottom; height: 50px; text-align: center;">
-								<input type="submit" value="작성하기">
+								<input type="submit" value="수정하기">
 								<input type="reset" value="다시작성">
 							</caption>
 						</table>
