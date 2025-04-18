@@ -102,67 +102,67 @@ input[type="submit"]:hover {
 
 </style>
 <body>
-   <%@include file="/page/user/main/header.jsp"%>
-   <div id="container">
-      <%@include file="/page/user/main/category.jsp"%>
-      <main class="main-content">
-         <form action="writeBbsPost_ok.jsp" method="post"enctype="multipart/form-data">
-            <div class="page">
-               <div class="write">
-                  <h2>게시판 글쓰기</h2>
-                  <hr>
-                  <table>
-                     <caption style="caption-side: top; height: 50px; vertical-align: center; text-align: right; margin-right: 12px; margin-top: 12px;">
-                        <select name="select" style="width: 150px; align-content: right;">
-                           <%
-                           if (bbs_div == null) {
-                              bbs_div = "";
-                           }
-                           if (sid.equals("admin") && bbs_div.equals("0")) {
-                              %>
-                              <option value="notice" selected>공지사항</option>
-                              <option value="bbs">자유게시판</option>
-                              <option value="buy">구매게시판</option>
-                              <%
-                           }
-                           if (bbs_div.equals("1")) {
-                              %>
-                              <option value="bbs" selected>자유게시판</option>
-                              <option value="buy">구매게시판</option>
-                              <%
-                           } else if (bbs_div.equals("2")) {
-                              %>
-                              <option value="bbs">자유게시판</option>
-                              <option value="buy" selected>구매게시판</option>
-                              <%
-                           }
-                           %>
-                        </select>
-                     </caption>
-                     <tr>
-                        <th style="width: 100px;">제목</th>
-                        <td><input type="text" name="title" style="width: 650px;"></td>
-                     </tr>
-                     <tr>
-                        <th>본문</th>
-                        <td class="content"><textarea name="content" cols="89"
-                              rows="20" style="resize: none;"></textarea></td>
-                     </tr>
-                     <tr>
-                        <th>사진파일</th>
-                        <td style="text-align: left;"><input type="file" name="file"></td>
-                     </tr>
-                     <input type="hidden" name="bbs_div" value="<%=bbs_div %>">
-                     <caption style="caption-side: bottom; height: 50px; text-align: center;">
-                        <input type="submit" value="작성하기">
-                        <input type="reset" value="다시작성">
-                     </caption>
-                  </table>
-               </div>
-            </div>
-         </form>
-      </main>
-   </div>
+	<%@include file="/page/user/main/header.jsp"%>
+	<div id="container">
+		<%@include file="/page/user/main/category.jsp"%>
+		<main class="main-content">
+			<form action="writeBbsPost_ok.jsp" method="post"enctype="multipart/form-data">
+				<div class="page">
+					<div class="write">
+						<h2>게시판 글쓰기</h2>
+						<hr>
+						<table>
+							<caption style="caption-side: top; height: 50px; vertical-align: center; text-align: right; margin-right: 12px; margin-top: 12px;">
+								<select name="select" style="width: 150px; align-content: right;">
+									<%
+									if (bbs_div == null) {
+										bbs_div = "";
+									}
+									if (sid.equals("admin") && bbs_div.equals("0")) {
+										%>
+										<option value="notice" selected>공지사항</option>
+										<option value="bbs">자유게시판</option>
+										<option value="buy">구매게시판</option>
+										<%
+									}
+									if (bbs_div.equals("1")) {
+										%>
+										<option value="bbs" selected>자유게시판</option>
+										<option value="buy">구매게시판</option>
+										<%
+									} else if (bbs_div.equals("2")) {
+										%>
+										<option value="bbs">자유게시판</option>
+										<option value="buy" selected>구매게시판</option>
+										<%
+									}
+									%>
+								</select>
+							</caption>
+							<tr>
+								<th>제목</th>
+								<td><input type="text" name="title" value = "" style="width: 650px;"></td>
+							</tr>
+							<tr>
+								<th>본문</th>
+								<td class="content"><textarea name="content" cols="89"
+										rows="20" style="resize: none;"></textarea></td>
+							</tr>
+							<tr>
+								<th>사진파일</th>
+								<td style="text-align: left;"><input type="file" name="file"></td>
+							</tr>
+							<input type="hidden" name="bbs_div" value="<%=bbs_div %>">
+							<caption style="caption-side: bottom; height: 50px; text-align: center;">
+								<input type="submit" value="등록하기">
+								<input type="reset" value="다시작성">
+							</caption>
+						</table>
+					</div>
+				</div>
+			</form>
+		</main>
+	</div>
 </body>
 <footer>
 <%@include file="/page/user/main/footer.jsp" %>
