@@ -1,14 +1,36 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <style>
-footer {
-    bottom: 0; left: 0; right: 0;
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 400;
+  font-style: normal;
 }
-
-footer div {
-    text-align: left;
-    margin-left: 100px;
-    color: gray;
+@font-face {
+  font-family: "Pretendard-Medium";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Medium.woff")
+    format("woff");
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Pretendard-SemiBold";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-SemiBold.woff")
+    format("woff");
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Pretendard-Bold";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff")
+    format("woff");
+  font-weight: 700;
+  font-style: normal;
+}
+footer {
+    margin-left: 50px;
 }
 
 .footer-menu {
@@ -16,7 +38,7 @@ footer div {
     justify-content: center;
     align-items: center;
     padding: 15px;
-    color: black;
+    color: #505050;
 }
 .footer-menu a{
    	color: black;
@@ -25,52 +47,51 @@ footer div {
 .footer-menu a:hover{
    	color: gray;
 }
-.footeretc{
-	color: gray;
-	font-size: 12px;
-
+.footer-etc {
+	font-family: "Pretendard-Regular", Helvetica;
+	letter-spacing: -0.4px;
+    text-align: left;
+    margin-left: 100px;
+    color: #767676;
+    line-height: 22.4px;
+}
+.footer-tag {
+	color: #767676;
+	margin-top: 50px;
+	display: inline-flex;
+	gap: 34px;
+	font-family: "Pretendard-Bold", Helvetica;
+}
+.footer-tag a{
+	color: #767676;
+   	text-decoration: none;
+}
+.footer-tag a:hover{
+	color: #505050;
 }
 </style> 
-<script>
-function pwdcheck(){
-	let popupW = 500;
-	let popupH = 300;
-	let left = Math.ceil((window.screen.width - popupW)/2);
-	let top = Math.ceil((window.screen.height - popupH)/2-100);
-	window.open('/semi2/page/user/mypage/pwdcheck.jsp', 'pwdcheckPopup', 'width='+popupW+',height='+popupH+',left='+left+',top='+top);
-}
-</script>
-<%
-String footid = (String)session.getAttribute("sid");
-%>
 <footer>
-	<hr color="lightgray" size="1">
-	<div class="footer-menu">
-	<%if(footid==null){ %>
-	<a href="/semi2/page/user/bbs/noticeBbs.jsp">공지사항</a>&emsp;|&emsp;
-	<a href="">자유게시판</a>&emsp;|&emsp;
-	<a href="">내 정보 수정</a>&emsp;|&emsp;
-	<a href="/semi2/page/user/login/login.jsp">로그인</a>
-	<%}else{ %>
-	<a href="/semi2/page/user/bbs/noticeBbs.jsp">공지사항</a>&emsp;|&emsp;
-	<a href="/semi2/page/user/bbs/communityBbs.jsp">자유게시판</a>&emsp;|&emsp;
-	<a href="javascript:pwdcheck();">내 정보 수정</a>&emsp;|&emsp;
-	<a href="/semi2/page/user/mypage/myInfoDelete.jsp">회원탈퇴</a>
-	<%} %>
-	</div>
-	<hr color="lightgray" size="1">
-	<div>
-	<h3>고객센터</h3> 
-	<h1>1004-1234</h1>
-	</div>
-	<div class="footeretc">
-	운영시간 10시-18시(주말/공휴일 휴무, 점심시간 13시~14시)
+	<div class="footer-etc">
+	고객센터 <br>
+	1004-1234 <br>
+	운영시간 10시-18시(주말/공휴일 휴무, 점심시간 13시~14시)<br>
 	<br>
 	노후재활센터(주) 사업자정보 <br>
 	대표이사 : 김두원 | 개인정보보호책임자 : 권순욱 <br>
-	사업자등록번호 : 114-63-756476 | 통신판매업신고 : 2025-서울연남-14152 <br>
-	주소 : 서울특별시 마포구 서교동 447-5 풍성빌딩 2,3,4층 <br><br>
-	사업자정보 확인
+	사업자등록번호 : 114-63-756476 <br>
+	주소 : 서울특별시 마포구 서교동 447-5 풍성빌딩 2,3,4층 <br>
+	사업자정보 확인 <br>
+		<div class="footer-tag">
+			<div>이용약관</div>
+			<div>개인정보처리방침</div>
+			<div>운영정책</div>
+			<div>서비스 이용약관</div>
+			<div>이용자보호 비전과 계획</div>
+			<div>청소년보호정책</div>
+			<a href="/semi2/page/user/mypage/myInfoDelete.jsp">
+				<div>회원탈퇴</div>
+			</a>
+		</div>
 	</div>
 	<br><hr color="lightgray" size="1"><br>
 	<div style="text-align: center;">Copyright &copy; SsangYong Crop. All Rights Reserved.</div><br>
