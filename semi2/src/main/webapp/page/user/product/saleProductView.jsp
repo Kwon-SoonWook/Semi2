@@ -27,11 +27,11 @@ ProductDTO pdto = pdao.ProductList(prodcutsId);
 ArrayList<ProductImagesDTO> arr= pidao.ProductImagesList(prodcutsId);
 ReviewDTO rdto = rdao.getReviewSeller(sid, productsIds);
 SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+FavoriteProductsDTO fdto = fdao.favoriteProductsList(prodcutsId, sid);
 int view = pdao.getViewCnt(sid,prodcutsId);
 if(view==0){
 	pdao.productViewCnt(prodcutsId);	
 }
-FavoriteProductsDTO fdto = fdao.favoriteProductsList(prodcutsId, sid);
 if(fdto==null){
 	FavoriteProductsDTO dto = new FavoriteProductsDTO(sid,prodcutsId,0);
 	fdao.addFavoriteProducts(dto);
@@ -61,7 +61,10 @@ if (sid == null) {
   align-items: flex-start; /* 위에서부터 정렬, 필요시 center 로 변경 */
   margin-top: 20px; /* 위 간격 */
 }
-
+body{
+    background-color: #EBEDE0;
+    color: #EBEDE0;
+}
 /* 전체 레이아웃: 이미지 왼쪽, 내용 오른쪽 */
 .sale-product-container {
 	width:1000px;
@@ -527,8 +530,19 @@ function toggleEditForm(commentIdx) {
 					<div>가격:<%=pdto.getPrice() %>원</div>
 					<div>본문:<%=pdto.getContent().replace("\n", "<br>") %></div>
 					<div>장소:<%=pdto.getLocation() %></div>
-					<div class="cnt">관심 <%=pdao.getfavoriteProductCnt(prodcutsId) %> · 조회수 <%=pdto.getView_cnt() %> </div>
+					<%
+					if(view==0){
+					%>
+					<div class="cnt">관심 <%=pdao.getfavoriteProductCnt(prodcutsId) %> · 조회수 <%=pdto.getView_cnt()+1 %> </div>
 					<div class="product-actions">
+					<%
+					}else{
+						%>
+					<div class="cnt">관심 <%=pdao.getfavoriteProductCnt(prodcutsId) %> · 조회수 <%=pdto.getView_cnt() %> </div>
+					<div class="product-actions">						
+						<%
+					}
+					%>
 					<% if(sid!=null&&sid.equals(pdto.getSeller_id())){
 						%>
 					<input type="button" name="update_products" value="수정하기" onclick="location.href='updateWriteSaleProduct.jsp?productId=<%=prodcutsId%>'">

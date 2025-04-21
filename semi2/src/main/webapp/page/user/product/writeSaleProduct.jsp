@@ -31,6 +31,11 @@ if (sid == null) {
 %> 
 <link rel="stylesheet" type="text/css" href="/semi2/page/user/main/mainLayout.css">
 <style>
+body{
+    background-color: #EBEDE0;
+    color: #EBEDE0;
+}
+
 h2{
 	text-align: center;
 }
@@ -108,11 +113,12 @@ label[for="location"] {
   flex-wrap: wrap;
 }
 .image-grid input[type="file"] {
-    width: 200px; /* 기존보다 크기 조정 */
+    width: 150px; /* 기존보다 크기 조정 */
+    font-size: 10px;
 }
 .image-box {
-  width: 198px;
-  height: 250px;
+  width: 150px;
+  height: 150px;
   position: relative;
   border: 1px dashed #ccc;
   border-radius: 6px;
