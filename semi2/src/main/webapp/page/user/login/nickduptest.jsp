@@ -95,7 +95,9 @@ window.onload = centerPopup;
 <form action="nickduptest_ok.jsp">
     <div>
         닉네임
-        <input type="text" name="nickname" id="nickname" autocomplete="off">
+        <input type="text" name="nickname" id="nickname" autocomplete="off"
+        onkeydown="return event.key !== ' ';"
+       oninput="this.value = this.value.replace(/\s/g, '');">
     </div>
     <input type="submit" value="검사하기">
 </form>

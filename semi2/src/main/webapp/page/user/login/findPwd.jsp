@@ -94,15 +94,21 @@ window.onload = centerPopup;
 <form action="findPwd_ok.jsp">
     <div>
         이름
-        <input type="text" name="name" autocomplete="off">
+        <input type="text" name="name" autocomplete="off"
+        onkeydown="return event.key !== ' ';"
+       oninput="this.value = this.value.replace(/\s/g, '');">
     </div>
     <div>
         아이디
-        <input type="text" name="id" autocomplete="off">
+        <input type="text" name="id" autocomplete="off"
+        onkeydown="return event.key !== ' ';"
+       oninput="this.value = this.value.replace(/\s/g, '');">
     </div>
     <div>
         이메일
-        <input type="text" name="email" autocomplete="off">
+        <input type="text" name="email" autocomplete="off"
+        onkeydown="return event.key !== ' ';"
+       oninput="this.value = this.value.replace(/\s/g, '');">
     </div>
     <input type="submit" value="비밀번호 찾기">
 </form>

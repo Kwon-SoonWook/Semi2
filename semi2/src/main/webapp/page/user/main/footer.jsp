@@ -67,12 +67,12 @@ footer{
 	주소 : 서울특별시 마포구 서교동 447-5 풍성빌딩 2,3,4층 <br>
 	사업자정보 확인 <br>
 		<div class="footer-tag">
-			<div><a href="">이용약관</a></div>
-			<div><a href="">개인정보처리방침</a></div>
-			<div><a href="">운영정책</a></div>
-			<div><a href="">서비스 이용약관</a></div>
-			<div><a href="">이용자보호 비전과 계획</a></div>
-			<div><a href="">청소년보호정책</a></div>
+			<div><a href="/semi2/page/user/bbs/termsUse.jsp">이용약관</a></div>
+			<div><a href="/semi2/page/user/bbs/privacyPolicy.jsp">개인정보처리방침</a></div>
+			<div><a href="/semi2/page/user/bbs/operatingPolicy.jsp">운영정책</a></div>
+			<div><a href="/semi2/page/user/bbs/termsService.jsp">서비스 이용약관</a></div>
+			<div><a href="/semi2/page/user/bbs/userProtection.jsp">이용자보호 비전과 계획</a></div>
+			<div><a href="/semi2/page/user/bbs/youthProtection.jsp">청소년보호정책</a></div>
 			<div><a href="/semi2/page/user/mypage/myInfoDelete.jsp">회원탈퇴</a></div>
 		</div>
 	</div>

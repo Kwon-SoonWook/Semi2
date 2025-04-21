@@ -95,11 +95,15 @@ window.onload = centerPopup;
 <form action="findId_ok.jsp">
     <div>
         이름
-        <input type="text" name="name" autocomplete="off">
+        <input type="text" name="name" autocomplete="off"
+        onkeydown="return event.key !== ' ';"
+       oninput="this.value = this.value.replace(/\s/g, '');">
     </div>
     <div>
         이메일
-        <input type="text" name="email" autocomplete="off">
+        <input type="text" name="email" autocomplete="off"
+        onkeydown="return event.key !== ' ';"
+       oninput="this.value = this.value.replace(/\s/g, '');">
     </div>
     <input type="submit" value="아이디 찾기">
 </form>

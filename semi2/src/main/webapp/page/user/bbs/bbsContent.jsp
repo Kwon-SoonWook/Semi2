@@ -34,11 +34,19 @@ article {
    left: 30px;
 }
 .main-content {
-    margin-left: 320px; /* 사이드바 너비(200px) + 여유(20px) */
-    margin-right: 320px; /* 필요시 오른쪽도 여백 */
-    /* 기존 스타일이 있다면 여기에 추가로 작성 */
+    flex: 1;
+    padding: 20px;
+    margin-left: 50px;
 }
-
+/*흰색 페이지*/
+.page {
+   margin: auto;
+   width: 1000px;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
 @media (max-width: 900px) {
     .main-content {
         margin-left: 0;
@@ -176,6 +184,7 @@ article {
   display: flex;
   flex-direction: column;
   min-height: 100vh; /* 최소 높이를 화면 전체로 설정 */
+  background-color: #EBEDE0	
 }
 
 .bbs-btn-group {
@@ -285,6 +294,7 @@ kdao.viewCnt(id);
    	<div class="container">
 		<%@include file="/page/user/main/category.jsp"%>
 		<main class="main-content">
+		<div class = "page">
 					<h1><%=arr.get(0).getTitle()%></h1>
 <div class="bbs-btn-group">
  <%
@@ -304,7 +314,7 @@ kdao.viewCnt(id);
     <%
     if(userid.equals(arr.get(0).getBbs_id())){
     %>
-        <button type="button" class="bbs-btn" onclick="location.href='bbsdelete_ok.jsp?id=<%=arr.get(0).getBbs_idx()%>'">삭제하기</button>
+        <button type="button" class="bbs-btn" onclick="location.href='bbsdelete_ok.jsp?id=<%=arr.get(0).getBbs_idx()%>&div=<%=arr.get(0).getBbs_div()%>'">삭제하기</button>
         <button type="button" class="bbs-btn" onclick="location.href='bbschange.jsp?id=<%=arr.get(0).getBbs_idx()%>&div=<%=arr.get(0).getBbs_div()%>'">수정하기</button>
     <%
     }
@@ -397,7 +407,7 @@ kdao.viewCnt(id);
 					</form>
 					</div>
 		</main>
-		
+		</div>
 	</div>
 	<footer>
 			<%@include file="/page/user/main/footer.jsp"%>
