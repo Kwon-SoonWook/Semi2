@@ -267,6 +267,30 @@ public class AskDAO {
 		}
 	}
 	
+	/**관리자 문의 답변 수정하기 메서드*/
+	public int adminAskUpdate(String ask_title, String ask_content, int ask_id) {
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+			String sql = "update ask set ask_title=?, ask_content=? where ask_id=?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, ask_title);
+			ps.setString(2, ask_content);
+			ps.setInt(3, ask_id);
+			int count = ps.executeUpdate();
+			return count;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				if(ps != null) ps.close();
+				if(conn != null) conn.close();
+			}catch(Exception e2) {
+				
+			}
+		}
+	}
+	
 	public int getTodayAsk() {
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();

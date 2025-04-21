@@ -158,7 +158,7 @@ th {
 										out.println("&nbsp");
 									}
 										%>
-										<a href="askContent.jsp?ask_id=<%=arr.get(i).getAsk_id()%>" style="color: black; text-decoration: none;"><%=arr.get(i).getAsk_title() %></a></td>
+										<a href="askContent.jsp?ask_id=<%=arr.get(i).getAsk_id()%>&cp=<%=cp %>" style="color: black; text-decoration: none;"><%=arr.get(i).getAsk_title() %></a></td>
 										<td style="text-align: center;"><%=arr.get(i).getAsk_user_id() %></td>
 										<td style="text-align: center;"><%=arr.get(i).getAsk_date() %></td>
 									<%if(arr.get(i).getAsk_type()==0){

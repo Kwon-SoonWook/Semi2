@@ -5,17 +5,14 @@
 <%
 int ask_id = Integer.parseInt(request.getParameter("ask_id"));
 String ask_user_id = (String)session.getAttribute("sid");
-String ask_writer = request.getParameter("ask_writer");
 String ask_title = request.getParameter("ask_title");
-String ref = request.getParameter("ref");
-String lev = request.getParameter("lev");
-String sunbun = request.getParameter("sunbun");
+String ask_content = request.getParameter("ask_content");
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>문의 답변</title>
+<title>문의답변 수정</title>
 <link rel='stylesheet' type='text/css' href='/semi2/page/admin/adminLayout.css'>
 <style>
 .container1 {
@@ -104,31 +101,26 @@ textarea {
 	<div class="container1">
         <%@include file="../main/adminCategory.jsp" %>
        	 <main class="main-content1">
+       	 	<h2>문의답변 수정</h2>
 			<section>
-				<h2>문의 답변</h2>
 				<article>
-				<form name='askReWrite' action='askReWrite_ok.jsp'>
+				<form name='adminAskUpdate' action='adminAskUpdate_ok.jsp'>
 				<input type='hidden' name='ask_id' value='<%=ask_id%>'>
-				<input type='hidden' name='ask_writer' value='<%=ask_writer%>'>
-				<input type='hidden' name='ask_user_id' value='<%=ask_user_id%>'>
-				<input type='hidden' name='ref' value='<%=ref%>'>
-				<input type='hidden' name='lev' value='<%=lev%>'>
-				<input type='hidden' name='sunbun' value='<%=sunbun%>'>
 					<table>
 						<tr>
 							<th>제목</th>
 							<td colspan='3'>
-								<input type='text' name='ask_title' size='55' value='RE:<%=ask_title%>'>
+								<input type='text' name='ask_title' size='55' value='<%=ask_title%>'>
 							</td>
 						</tr>
 						<tr>
 							<td colspan='4'>
-								<textarea rows="10" cols="70" name='ask_content'></textarea>
+								<textarea rows="10" cols="70" name='ask_content'><%=ask_content%></textarea>
 							</td>
 						</tr>
 						<tr>
 							<td colspan='4' align='center'>
-								<input type="submit" value='답변하기'>
+								<input type="submit" value='수정하기'>
 								<input type='reset' value='다시작성'>
 							</td>
 						</tr>

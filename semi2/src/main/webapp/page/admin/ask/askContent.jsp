@@ -3,8 +3,14 @@
 <%@ page import="com.ksj.ask.*" %>
 <jsp:useBean id="adao" class="com.ksj.ask.AskDAO"></jsp:useBean>
 <%
+String cp_s = request.getParameter("cp");
+if(cp_s==null || cp_s.equals("")){
+	cp_s = "1";
+}
+int cp = Integer.parseInt(cp_s);
 int ask_id = Integer.parseInt(request.getParameter("ask_id"));
 AskDTO dto = adao.askContent(ask_id);
+String sid = (String) session.getAttribute("sid");
 %>
 <style>
 .container1 {
@@ -76,7 +82,7 @@ input[type="button"] {
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>문의 내용</title>
 <link rel='stylesheet' type='text/css' href='/semi2/page/admin/adminLayout.css'>
 
 </head>
@@ -87,8 +93,11 @@ input[type="button"] {
        	 <main class="main-content1">
 			<section>
 				<article>
-				<h2></h2>
-				<form name='askContent' action='askList.jsp'>
+				<h2>문의 내용</h2>
+				<form name='askContent' action='adminAskUpdate.jsp'>
+					<input type='hidden' name='ask_title' value='<%=dto.getAsk_title()%>'>
+					<input type='hidden' name='ask_content' value='<%=dto.getAsk_content()%>'>
+					<input type='hidden' name='ask_id' value='<%=ask_id%>'>
 					<table width="550" border="1" cellspacing="0">
 						<tr>
 							<th>번호</th>
@@ -126,8 +135,18 @@ input[type="button"] {
 							<td colspan='4' valign='top' style="text-align: left; padding: 30px;"><%=dto.getAsk_content().replaceAll("\n", "<br>") %></td>
 						</tr>
 					</table>
-					<div style="margin: auto;"><input type='submit' value='목록으로'>
-					<input type='button' value='문의답변' onclick="location.href='askReWrite.jsp?ask_id=<%=dto.getAsk_id() %>&ask_writer=<%=dto.getAsk_writer() %>&ask_title=<%=dto.getAsk_title() %>&ref=<%=dto.getRef()%>&lev=<%=dto.getLev()%>&sunbun=<%=dto.getSunbun()%>'"></div>
+					<div style="margin: auto;"><input type='button' value='목록으로' onclick="location.href='askList.jsp?cp=<%= cp%>'">
+					<%
+					if(sid.equals(dto.getAsk_user_id())){
+						%>
+						<input type='submit' value='수정하기'></div>
+						<%
+					}else{
+						%>
+						<input type='button' value='문의답변' onclick="location.href='askReWrite.jsp?ask_id=<%=dto.getAsk_id() %>&ask_writer=<%=dto.getAsk_writer() %>&ask_title=<%=dto.getAsk_title() %>&ref=<%=dto.getRef()%>&lev=<%=dto.getLev()%>&sunbun=<%=dto.getSunbun()%>'"></div>						
+						<%
+					}
+					%>
 				</form>
 				</article>
 			</section>            
