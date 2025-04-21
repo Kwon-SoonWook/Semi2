@@ -17,15 +17,38 @@ int id = Integer.parseInt(mr.getParameter("id"));
 String title = mr.getParameter("title");
 String content = mr.getParameter("content");
 String img = mr.getParameter("file");
+int div = Integer.parseInt(request.getParameter("div"));
 
 int result = kdao.bbschange(id,mr);
 
 String msg = result>0?"수정이 완료되었습니다~":"수정 실패 ㅜㅜ";  
 
-%>
 
-<script>
+switch(div){
+case 0:
+	%>
+	<script>
+window.alert('<%=msg%>');
+location.href = "noticeBbs.jsp";
+</script>
+	<%
+	break;
+case 1:
+	%>
+	<script>
 window.alert('<%=msg%>');
 location.href = "communityBbs.jsp";
-
 </script>
+	<%
+	break;
+case 2:
+	%>
+	<script>
+window.alert('<%=msg%>');
+location.href = "buyBbs.jsp";
+</script>
+	<%
+	break;
+}
+%>
+

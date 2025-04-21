@@ -1,4 +1,4 @@
-<%@page import="com.ksj.bbs.BbsDTO"%>
+ <%@page import="com.ksj.bbs.BbsDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	<jsp:useBean id="kdao" class = "com.ksj.bbs.BbsDAO"></jsp:useBean>
@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width"> <!-- 반응형 화면 변환 -->
-<title>게시판 글쓰기</title>
+<title>수정하기</title>
 <link rel="stylesheet" type="text/css" href="../main/mainLayout.css">
 <script src="https://kit.fontawesome.com/f0cba69f8f.js" crossorigin="anonymous"></script>
 <!-- 안보이면 해당 사이트 로그인 후 주소받기 -->
@@ -16,7 +16,8 @@
 <style>
 body {
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
+    background-color: #EBEDE0;
+
 }
 .container {
     min-height: 100vh;	/*스크린 화면 전체를 가득 채움*/
@@ -36,6 +37,8 @@ body {
 	height: 650px;
 }
 .page {
+   margin: auto;
+   width: 800px;
     background: white;
     padding: 20px;
     border-radius: 8px;
@@ -73,19 +76,22 @@ input[type="file"] {
 }
 
 .page input[type="submit"], input[type="reset"] {
-	background-color: #8c8c8c;
-	color: white;
-	border: none;
-	padding: 5px 20px;
-	font-size: 16px;
-	border-radius: 5px;
-	cursor: pointer;
-	margin-top: 20px;
+    font-family: "Pretendard-SemiBold", Helvetica, Arial, sans-serif;
+    background: #6d8132;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 9px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s, border 0.18s;
 }
 
 
-input[type="submit"]:hover {
-	background-color: #0056b3;
+input[type="submit"]:hover, input[type="reset"]:hover {
+    background: #fff;
+    color: #6d8132;
+    border: 1.5px solid #6d8132;
 }
 
 .content {
@@ -110,10 +116,10 @@ ArrayList<BbsDTO> arr= kdao.showContent(idx);
 	<div id="container">
 		<%@include file="/page/user/main/category.jsp"%>
 		<main class="main-content">
-			<form action="bbschange_ok.jsp?id=<%=idx %>" method="post"enctype="multipart/form-data">
+			<form action="bbschange_ok.jsp?id=<%=idx %>&div=<%=bbs_div %>" method="post"enctype="multipart/form-data">
 				<div class="page">
 					<div class="write">
-						<h2>게시판 글쓰기</h2>
+						<h2>게시글 수정</h2>
 						<hr>
 						<table>
 							<caption style="caption-side: top; height: 50px; vertical-align: center; text-align: right;">
@@ -132,11 +138,11 @@ ArrayList<BbsDTO> arr= kdao.showContent(idx);
 									if (bbs_div.equals("1")) {
 										%>
 										<option value="bbs" selected>자유게시판</option>
-										<option value="buy">구매게시판</option>
+										
 										<%
 									} else if (bbs_div.equals("2")) {
 										%>
-										<option value="bbs">자유게시판</option>
+										
 										<option value="buy" selected>구매게시판</option>
 										<%
 									}

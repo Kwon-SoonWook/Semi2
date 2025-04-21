@@ -8,6 +8,9 @@
 <title>이용자보호 비전과 계획 | 노후재활센터 중고거래</title>
 <link rel="stylesheet" type="text/css" href="../main/mainLayout.css">
 <style>
+body{
+background-color: #EBEDE0;
+}
 :root {
   --main-color: #6d8132;
   --accent-color: #f8f8f8;

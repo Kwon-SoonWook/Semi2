@@ -8,6 +8,9 @@
 <title>이용약관 | 노후재활센터</title>
 <link rel="stylesheet" type="text/css" href="../main/mainLayout.css">
 <style>
+body{
+background-color: #EBEDE0;
+}
 /* 메인 컬러 및 폰트 설정 */
 :root {
   --main-color: #6d8132;

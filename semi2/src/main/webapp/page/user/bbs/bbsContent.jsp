@@ -314,7 +314,7 @@ kdao.viewCnt(id);
     <%
     if(userid.equals(arr.get(0).getBbs_id())){
     %>
-        <button type="button" class="bbs-btn" onclick="location.href='bbsdelete_ok.jsp?id=<%=arr.get(0).getBbs_idx()%>'">삭제하기</button>
+        <button type="button" class="bbs-btn" onclick="location.href='bbsdelete_ok.jsp?id=<%=arr.get(0).getBbs_idx()%>&div=<%=arr.get(0).getBbs_div()%>'">삭제하기</button>
         <button type="button" class="bbs-btn" onclick="location.href='bbschange.jsp?id=<%=arr.get(0).getBbs_idx()%>&div=<%=arr.get(0).getBbs_div()%>'">수정하기</button>
     <%
     }

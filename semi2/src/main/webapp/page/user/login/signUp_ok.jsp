@@ -13,7 +13,7 @@ MultipartRequest mr =
 new MultipartRequest(request,savepath,1024*1024*30,"utf-8",new DefaultFileRenamePolicy());
 
 int result = kdao.signUp(mr);    
-String msg = result>0?"등록완료":"등록실패";
+String msg = result>0?"가입이 완료되었습니다~":"항목을 채워주세요~";
 
  
 %>

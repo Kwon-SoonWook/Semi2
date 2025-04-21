@@ -8,6 +8,9 @@
 <title>중고거래 플랫폼 운영정책 | 노후재활센터</title>
 <link rel="stylesheet" type="text/css" href="../main/mainLayout.css">
 <style>
+body{
+background-color: #EBEDE0;
+}
 :root {
   --main-color: #6d8132;
   --accent-color: #f8f8f8;

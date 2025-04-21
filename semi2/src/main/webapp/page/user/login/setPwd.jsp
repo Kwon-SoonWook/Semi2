@@ -120,11 +120,15 @@ window.onload = centerPopup;
     </div>
     <div class="form-group">
         새로운 비밀번호
-        <input type="password" name="pwd" autocomplete="off" required>
+        <input type="password" name="pwd" autocomplete="off" required
+        onkeydown="return event.key !== ' ';"
+       oninput="this.value = this.value.replace(/\s/g, '');">
     </div>
     <div class="form-group">
         비밀번호 확인
-        <input type="password" name="check_pwd" autocomplete="off" required>
+        <input type="password" name="check_pwd" autocomplete="off" required
+        onkeydown="return event.key !== ' ';"
+       oninput="this.value = this.value.replace(/\s/g, '');">
     </div>
     <input type="hidden" name="originpwd" value="<%=pwd%>">
     <div class="button-group">

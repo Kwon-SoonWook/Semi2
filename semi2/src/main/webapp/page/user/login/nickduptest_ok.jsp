@@ -4,10 +4,10 @@
 
 <%
 String nickname = request.getParameter("nickname");
-if(nickname==null||nickname==""){
+if(nickname == null || nickname.trim().isEmpty() || nickname.contains(" ")) {
 	%>
 	<script>
-	window.alert('사용 불가능한 문자입니다')
+	window.alert('닉네임에 공백을 포함할 수 없습니다.')
 	location.href='nickduptest.jsp'
 	</script>
 	<%
