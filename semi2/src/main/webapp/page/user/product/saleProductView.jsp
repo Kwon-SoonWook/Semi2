@@ -420,7 +420,7 @@ window.onload=function(){
 	if(rdto==null){	
 		if(pdto.getTrade_state()==2&&sid.equals(pdto.getSeller_id())){
 			%>
-			var popup = window.open('/semi2/page/user/review/writeReview.jsp?productsIds=<%=productsIds%>','writeReview','width=650,height=550,top=100,left=550');		
+			var popup = window.open('/semi2/page/user/review/writeReview.jsp?productsIds=<%=productsIds%>','writeReview','width=650,height=600,top=100,left=550');		
 			<% 
 		}
 	}else{

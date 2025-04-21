@@ -70,7 +70,7 @@ h2{
 </head>
 <script>
 function reviewWrite(reviewid){
-	 window.open("/semi2/page/user/review/sallerWriteReview.jsp?review_id="+reviewid, 'popup', 'width=450; height=350');
+	 window.open("/semi2/page/user/review/sallerWriteReview.jsp?review_id="+reviewid, 'popup', 'width=650,height=600,top=100,left=550');
 }
 </script>
 <%

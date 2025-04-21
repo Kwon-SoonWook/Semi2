@@ -61,7 +61,53 @@ textarea {
     resize: vertical;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
 }
+html, body {
+    width: 650px;
+    height: 600px;
+    background-color: #EBEDE0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+form {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+}
+input[type="submit"] {
+    background-color: #6E8233;
+    color: white;
+    padding: 10px 25px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
 
+input[type="submit"]:hover {
+    background: #f5f5f5;
+    color: #000;
+    border-color: #bbb;
+}
+input[type="reset"] {
+    background-color: #6E8233;
+    color: white;
+    padding: 10px 25px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+input[type="reset"]:hover {
+    background: #f5f5f5;
+    color: #000;
+    border-color: #bbb;
+}
 </style>
 <script>
 window.onunload=function(){	
