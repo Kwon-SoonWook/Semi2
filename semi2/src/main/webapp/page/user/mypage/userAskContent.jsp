@@ -47,15 +47,23 @@ input[type="text"], textarea, select {
 	resize: vertical;
 }
 
-input[type="submit"], input[type="button"] {
-	background-color: #8c8c8c;
+input[type="submit"], input[type="button"]{
+	background-color: #6E8233;
 	color: white;
 	border: none;
 	padding: 5px 20px;
-	font-size: 16px;
-	border-radius: 5px;
-	cursor: pointer;
-	margin-top: 20px;
+	font-size: 14px;
+	border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 5px;
+}
+
+input[type="submit"]:hover, input[type="button"]:hover {
+    background: #f5f5f5;
+    color: #000;
+    border-color: #bbb;
 }
 </style>
 <!DOCTYPE html>
