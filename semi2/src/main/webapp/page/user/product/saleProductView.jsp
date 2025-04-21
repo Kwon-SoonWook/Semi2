@@ -329,8 +329,7 @@ body{
 .reply-form button {
     width: 60px;
     height: 40px;
-   	margin-left: auto;    
-    margin-right: 10px;
+   	margin-left: 10px;    
     font-size : 10px;
     background: #008cff;
     color: white;
@@ -373,8 +372,7 @@ body{
     width: 60px;
     height: 40px;
     font-size : 10px;
-    margin-left: auto;    
-    margin-right: 10px;
+    margin-left: 10px;    
     background: #008cff;
     color: white;
     border: none;
