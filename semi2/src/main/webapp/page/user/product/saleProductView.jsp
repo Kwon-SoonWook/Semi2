@@ -160,13 +160,13 @@ body{
     border-color: #bbb;
 }
 .comment-section {
-    width: 80%;
-    max-width: 1400px;
-    margin: 20px auto;
+    width: 65%;
+    margin: 30px auto;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
     background: #f9f9f9;
+   	margin-left:300px;
 }
 
 .comment-section table {
@@ -393,7 +393,10 @@ body{
     border-radius: 5px;
     cursor: pointer;
 }
-
+.bbs-meta {
+   font-size: 14px;
+   color: #666;
+}
 </style>
 <script>
 window.onload=function(){
@@ -531,6 +534,11 @@ function toggleEditForm(commentIdx) {
 				<div class="product-info">
 					<div>
 					<h2>제목:<%=pdto.getTitle() %></h2>
+					<hr>
+					<div class="bbs-meta">
+						<span>작성자: <%=udao.myinfo(pdao.ProductList(prodcutsId).getSeller_id()).get(0).getNickname()%></span> | <span>작성일자:
+							<%=pdao.ProductList(prodcutsId).getCreate_date()%></span>
+					</div>
 						<select name = "tradestate" id ="tradestateid" onchange="trade(this);" >
 						<option value=0>판매중</option>	
 						<option value=1>예약중</option>	
