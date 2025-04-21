@@ -198,7 +198,7 @@ function searchClick(){
 <header class="top-bar">
 	<div class="logo">
 		<a href="/semi2/page/user/main/index.jsp">
-		<image src="/semi2/page/user/main/logo2.png" alt="로고">
+		<img src="/semi2/page/user/main/logo2.png" alt="로고">
 		<span>노후재활센터</span>
 		</a>
 	</div>

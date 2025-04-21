@@ -11,12 +11,36 @@
 <link rel="stylesheet" type="text/css" href="mypageLayout.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    background-color: #fefefe;
-    margin: 0;
-    padding: 0;
-    color: #1c1c1e;
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Pretendard-Medium";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Medium.woff")
+    format("woff");
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Pretendard-SemiBold";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-SemiBold.woff")
+    format("woff");
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Pretendard-Bold";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff")
+    format("woff");
+  font-weight: 700;
+  font-style: normal;
+}
+body, button, a{
+	font-family: "Pretendard-Medium", Helvetica;
 }
 h2{
 	text-align: center;
@@ -42,7 +66,23 @@ h2{
     text-decoration: none;
     color: inherit;
 }
+button {
+	font-family: "Pretendard-Bold", Helvetica;
+    background-color: #6E8233;
+    color: white;
+    padding: 10px 25px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
 
+button:hover {
+    background: #f5f5f5;
+    color: #000;
+    border-color: #bbb;
+}
 /* 게시물 카드 */
 .photo-card {
 	font-family: "Pretendard-Regular", Helvetica;
@@ -137,7 +177,7 @@ if(productsIds==null||productsIds.equals("")){
 <article>
 	<h2>판매물품 리스트</h2>
 	<div style="text-align: right">
-	<button onclick="top.location.href='/semi2/page/user/product/writeSaleProduct.jsp'">새글쓰기
+	<button onclick="top.location.href='/semi2/page/user/product/writeSaleProduct.jsp'">새글쓰기</button>
 	</div>
     <%
 	ArrayList<ProductDTO> arr = pdao.saleList(mypageid);

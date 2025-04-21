@@ -40,11 +40,12 @@
   font-weight: 700;
   font-style: normal;
 }
-body {
-    background-color: #EBEDE0;
-    color: #EBEDE0;
+body, button, a{
+	font-family: "Pretendard-Medium", Helvetica;
 }
-
+body{
+	background-color: #EBEDE0;
+}
 .container {
     min-height: 100vh;	/*스크린 화면 전체를 가득 채움*/
     white-space: nowrap; /*띄어쓰기 방지*/
@@ -108,7 +109,17 @@ h{
 </style>
 <script src="https://kit.fontawesome.com/f0cba69f8f.js" crossorigin="anonymous"></script>
 <script>
-document.addEventListener("DOMContentLoaded", categoryCheck); //페이지가 새로 로딩될 때마다 이벤트 발생
+document.addEventListener("DOMContentLoaded", function() {  //페이지가 새로 로딩될 때마다 이벤트 발생
+	categoryCheck();
+
+	// URL 파라미터 확인해서 iframe 초기화
+	const params = new URLSearchParams(window.location.search);
+	const page = params.get("page");
+
+	if (page) {
+		document.getElementById("iframe").src = page;
+	}
+});
 //카테고리 클래스 확인 이벤트
 function categoryCheck(){
 	let categories = document.querySelectorAll(".category");	//category class 요소 전체 반환
@@ -183,7 +194,7 @@ if(favoriteCnt==null) favoriteCnt = 0;
 			<div id="mypage-content">
 				<div class="category-container">
 					<div id="category-recent" class="flex-align-start">
-					<iframe src="saleList.jsp" id="iframe" onload="IframeHeight();"frameborder="0" scrolling="auto" style="width:100%; overflow:auto; overflow-x:hidden;"></iframe>
+					<iframe id="iframe" onload="IframeHeight();" frameborder="0" scrolling="auto" style="width:100%; overflow:auto; overflow-x:hidden;"></iframe>
 					</div>
 				</div>
 			</div>        	

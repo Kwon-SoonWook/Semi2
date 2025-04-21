@@ -11,9 +11,37 @@
 <title>정보 수정</title>
 <link rel="stylesheet" type="text/css" href="mypageLayout.css">
 <style>
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
+@font-face {
+  font-family: "Pretendard-Regular";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Pretendard-Medium";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Medium.woff")
+    format("woff");
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Pretendard-SemiBold";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-SemiBold.woff")
+    format("woff");
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Pretendard-Bold";
+  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff")
+    format("woff");
+  font-weight: 700;
+  font-style: normal;
+}
+body, button{
+	font-family: "Pretendard-Medium", Helvetica;
+    background-color: #EBEDE0;
 }
 .container {
     min-height: 100vh;	/*스크린 화면 전체를 가득 채움*/
@@ -25,18 +53,23 @@ body {
     padding: 20px;
     margin-left: 50px;
 }
-
+h2 {
+	font-family: "Pretendard-Bold", Helvetica;
+}
 /*흰색 페이지*/
 .page {
     background: white;
     padding: 10px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+	margin-left: 130px;
+    margin-right: 130px;
 }
 /*사용자 정보*/
 .info{
-	padding: 100px;	
-	text-align: center;
+	padding: 50px;
+	font-family: "Pretendard-SemiBold", Helvetica;
+	font-size: 18px;
 }
 .info {
     display: flex;
@@ -76,6 +109,8 @@ body {
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 14px;
+    font-family: "Pretendard-Medium", Helvetica;
+    
 }
 
 .info form input:focus {
@@ -90,18 +125,20 @@ body {
 }
 
 .info form button {
-    padding: 10px;
-    border: none;
-    border-radius: 6px;
-    font-size: 15px;
-    cursor: pointer;
-    background-color: #7caeff;
+    background-color: #6E8233;
     color: white;
-    transition: background-color 0.3s ease;
+    padding: 10px 25px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .info form button:hover {
-    background-color: #5a90e8;
+    background: #f5f5f5;
+    color: #000;
+    border-color: #bbb;
 }
 
 .info form button[type="button"] {
