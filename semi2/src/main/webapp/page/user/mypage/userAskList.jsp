@@ -45,15 +45,23 @@ table th {
 table td {
     padding: 12px 10px;
 }
-input[type="submit"], input[type="reset"], input[type="button"] {
-   background-color: #8c8c8c;
-   color: white;
-   border: none;
-   padding: 5px 20px;
-   font-size: 14px;
-   border-radius: 5px;
-   cursor: pointer;
-   margin-top: 5px;
+input[type="submit"]{
+	background-color: #6E8233;
+	color: white;
+	border: none;
+	padding: 5px 20px;
+	font-size: 14px;
+	border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 5px;
+}
+
+input[type="submit"]:hover {
+    background: #f5f5f5;
+    color: #000;
+    border-color: #bbb;
 }
 </style>
 </head>
