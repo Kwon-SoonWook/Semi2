@@ -3,6 +3,7 @@
 <%@ page import = "java.util.*" %>
 <%@ page import = "com.ksj.content.*" %>
 <jsp:useBean id="bdao" class="com.ksj.content.BbsDAO" scope="session"></jsp:useBean>
+<jsp:useBean id="kdao" class="com.ksj.bbs.CommentDAO"></jsp:useBean>
 <!DOCTYPE html>
 <html>
 <head>
@@ -85,6 +86,28 @@ table td {
 	cursor: pointer;
 	margin-top: 5px;
 }
+.sort-box {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 10px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.sort-box select {
+    padding: 5px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    background: #fafafa;
+}
+.comment-count {
+    font-size: 0.95em;
+    color: #888;
+    margin-left: 6px;
+    vertical-align: middle;
+}
 </style>
 <% 
 String sid = (String)session.getAttribute("sid");
@@ -101,7 +124,8 @@ String select = request.getParameter("select");
 if(select==null || select.equals("")){
 	select="title";
 }
-ArrayList<BbsDTO> arr = bdao.userBbsList(select, input, 2);
+String sort = request.getParameter("sort");
+ArrayList<BbsDTO> arr = bdao.userBbsList(select, input, 2, sort);
 int totalCnt = 0;
 if(arr==null || arr.size()==0){
 	totalCnt = 0;
@@ -138,6 +162,14 @@ if (cp % pageSize == 0) userGroup--;
 		<form name="buyFind" method="get" action="buyBbs.jsp">
 		<div class="page">
 			<h2>구매게시판</h2>
+			    <div class="sort-box">
+    <label for="sort" style="margin-right:6px; font-size:15px; color:#666;">정렬</label>
+    <select id="sort" name="sort" onchange="this.form.submit()">
+        <option value="recent" <%= "recent".equals(request.getParameter("sort")) ? "selected" : "" %>>최신순</option>
+        <option value="recommend" <%= "recommend".equals(request.getParameter("sort")) ? "selected" : "" %>>추천순</option>
+        <option value="view" <%= "view".equals(request.getParameter("sort")) ? "selected" : "" %>>조회순</option>
+    </select>
+</div>
 			<table>	
 				<thead>
 					<tr>
@@ -146,6 +178,7 @@ if (cp % pageSize == 0) userGroup--;
 						<th style="width: 100px; text-align: center;">작성자</th>
 						<th style="width: 110px; text-align: center;">작성일</th>
 						<th style="width: 70px; text-align: center;">조회수</th>
+						<th style="width: 70px; text-align: center;">추천수</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -161,10 +194,14 @@ if (cp % pageSize == 0) userGroup--;
 					%>
 					<tr>
 						<td style="text-align: center;"><%=arr.get(i).getBbs_idx()%></td>
-						<td><a href="bbsContent.jsp?id=<%=arr.get(i).getBbs_idx()%>"><%=arr.get(i).getTitle()%></a></td>
+						<td>
+  					<a href="bbsContent.jsp?id=<%=arr.get(i).getBbs_idx()%>&cp=<%=cp %>"><%=arr.get(i).getTitle()%></a>
+ 				    <span class="comment-count">[<%=kdao.commentTotal(arr.get(i).getBbs_idx()) %>]</span>
+				  </td>
 						<td style="text-align: center;"><%=arr.get(i).getBbs_id()%></td>
 						<td style="text-align: center;"><%=arr.get(i).getCreate_date()%></td>
 						<td style="text-align: center;"><%=arr.get(i).getView_cnt()%></td>
+						<td style="text-align: center;"><%=arr.get(i).getRecommend_like()%></td>
 					<tr>
 						<%
 							if (i == totalCnt - 1)
@@ -180,23 +217,23 @@ if (cp % pageSize == 0) userGroup--;
 							<%
 							if(arr==null || arr.size()==0){
 								%>&nbsp;&nbsp;<a
-								href="buyBbs.jsp?cp=1&input=<%=input%>&select=<%=select%>"
+								href="buyBbs.jsp?cp=1&input=<%=input%>&select=<%=select%>&sort=<%=sort %>"
 								style="color: black; text-decoration: underline;">1</a>&nbsp;&nbsp;<%	
 							}else{
 								if (userGroup != 0) {
 									%> <a
-									href="buyBbs.jsp?cp=<%=(userGroup - 1) * pageSize + pageSize%>&input=<%=input%>&select=<%=select%>"
+									href="buyBbs.jsp?cp=<%=(userGroup - 1) * pageSize + pageSize%>&input=<%=input%>&select=<%=select%>&sort=<%=sort %>"
 									style="color: black; font-size: 10px; text-decoration: none">&lt;</a>
 									<%
 								}
 								for (int i = (userGroup * pageSize + 1); i <= (userGroup * pageSize + pageSize); i++) {
 									if (cp == i) {
 										%>&nbsp;&nbsp;<a
-										href="buyBbs.jsp?cp=<%=i%>&input=<%=input%>&select=<%=select%>"
+										href="buyBbs.jsp?cp=<%=i%>&input=<%=input%>&select=<%=select%>&sort=<%=sort %>"
 										style="color: black; text-decoration: underline;"><%=i%></a>&nbsp;&nbsp;<%
 									} else {
 										%>&nbsp;&nbsp;<a
-										href="buyBbs.jsp?cp=<%=i%>&input=<%=input%>&select=<%=select%>"
+										href="buyBbs.jsp?cp=<%=i%>&input=<%=input%>&select=<%=select%>&sort=<%=sort %>"
 										style="color: black; text-decoration: none;"><%=i%></a>&nbsp;&nbsp;<%
 									}
 									if (i == totalPage) {
@@ -205,7 +242,7 @@ if (cp % pageSize == 0) userGroup--;
 								}
 								if (((totalPage / pageSize) - (totalPage % pageSize == 0 ? 1 : 0)) != userGroup) {
 									%> <a
-									href="buyBbs.jsp?cp=<%=(userGroup + 1) * pageSize + 1%>&input=<%=input%>&select=<%=select%>"
+									href="buyBbs.jsp?cp=<%=(userGroup + 1) * pageSize + 1%>&input=<%=input%>&select=<%=select%>&sort=<%=sort %>"
 									style="color: black; font-size: 10px; text-decoration: none">&gt;</a>
 									<%
 								}	

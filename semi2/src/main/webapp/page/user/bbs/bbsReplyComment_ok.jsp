@@ -14,7 +14,7 @@ String msg = count>0?"등록완료":"등록실패";
 %>
 
 <script>
-window.alert('<%=msg%>');
+
 location.href = "bbsContent.jsp?id=<%=bbs_idx%>";
 
 </script>

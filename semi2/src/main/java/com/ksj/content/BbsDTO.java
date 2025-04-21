@@ -11,13 +11,17 @@ public class BbsDTO {
 	private Date update_date;
 	private int bbs_div;
 	private String bbs_image;
+	private int recommend_like;
+	private int recommend_dislike;
 	
 	public BbsDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
+	
+
 	public BbsDTO(int bbs_idx, String bbs_id, String title, String content, int view_cnt, Date create_date,
-			Date update_date, int bbs_div, String bbs_image) {
+			Date update_date, int bbs_div, String bbs_image, int recommend_like, int recommend_dislike) {
 		super();
 		this.bbs_idx = bbs_idx;
 		this.bbs_id = bbs_id;
@@ -28,7 +32,35 @@ public class BbsDTO {
 		this.update_date = update_date;
 		this.bbs_div = bbs_div;
 		this.bbs_image = bbs_image;
+		this.recommend_like = recommend_like;
+		this.recommend_dislike = recommend_dislike;
 	}
+
+
+
+	public int getRecommend_like() {
+		return recommend_like;
+	}
+
+
+
+	public void setRecommend_like(int recommend_like) {
+		this.recommend_like = recommend_like;
+	}
+
+
+
+	public int getRecommend_dislike() {
+		return recommend_dislike;
+	}
+
+
+
+	public void setRecommend_dislike(int recommend_dislike) {
+		this.recommend_dislike = recommend_dislike;
+	}
+
+
 
 	public int getBbs_idx() {
 		return bbs_idx;

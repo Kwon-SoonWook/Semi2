@@ -32,4 +32,32 @@ public class CommentDAO {
 			}
 		}
 	}
+	
+	public int commentTotal(int idx) {
+		try {
+			conn  = com.ksj.db.ConnectionDB.getConn();
+			
+			String sql = "select count(bbs_idx) from bbs_comment where bbs_idx = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, idx);
+			rs=ps.executeQuery();
+			
+			int count = 0;
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+			return count;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				ps.close();
+				conn.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+		}
+	}
 }
