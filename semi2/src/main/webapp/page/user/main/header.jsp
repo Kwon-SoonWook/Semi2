@@ -229,7 +229,7 @@ function searchClick(){
 	    <div style="display: flex; align-items: center; margin-left: auto;">
 	    	<div class="mypage">
 		    	<a href="/semi2/page/user/mypage/mypage.jsp">
-			    	<p style="font-size: 16px;"><%=headnickname %>님</p>
+			    	<p style="font-size: 16px;"><%=headnickname %></p>
 			    	<%if(!arr2.isEmpty() && arr2.get(0).getProfile_uri() != null){ %>
 						<img src="/<%=arr2.get(0).getProfile_uri() %>" alt="프로필 이미지">
 				    <%}else{ %>

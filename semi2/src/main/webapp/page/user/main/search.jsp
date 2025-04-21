@@ -89,7 +89,7 @@ body {
 
 /* 게시물 카드 */
 .photo-card {
-	font-family: "Pretendard-Medium", Helvetica;
+	font-family: "Pretendard-Regular", Helvetica;
     background: #ffffff;
     border: 1px solid #eaeaea;
     border-radius: 16px;
@@ -109,7 +109,7 @@ body {
     width: 100%;
     height: 180px;
     border-radius: 12px;
-    background-color: #f2f2f2;
+    background-color: #E9EAE5;
     object-fit: cover;
     object-position: center;
     display: block;
