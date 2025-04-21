@@ -53,7 +53,10 @@ public class BbsDAO {
 				java.sql.Date update_date = rs.getDate("update_date");
 				int bbs_div = rs.getInt("bbs_div");
 				String bbs_image = rs.getString("bbs_image");
-				BbsDTO dto = new BbsDTO(bbs_idx, bbs_id, title, content, view_cnt, create_date, update_date, bbs_div, bbs_image);
+				int recommend_like = rs.getInt("recommend_like");
+				int recommend_dislike = rs.getInt("recommend_dislike");
+				
+				BbsDTO dto = new BbsDTO(bbs_idx, bbs_id, title, content, view_cnt, create_date, update_date, bbs_div, bbs_image,recommend_like,recommend_dislike);
 				arr.add(dto);
 			}
 			return arr;
@@ -71,22 +74,38 @@ public class BbsDAO {
 		}	
 	}
 	
-	public ArrayList<BbsDTO> userBbsList(String select, String input, int bbs_div){
+	public ArrayList<BbsDTO> userBbsList(String select, String input, int bbs_div, String sort){
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
 			String sql = "";
+			String orderBy = "";
+			
+			switch (sort) {
+		    case "view":
+		        orderBy = "view_cnt DESC"; // 조회순
+		        break;
+		    case "recommend":
+		        orderBy = "recommend_like DESC"; // 추천순
+		        break;
+		    case null,default:
+		    	orderBy = "create_date DESC"; 
+		    	break;
+		}
+			
+			
 			if(select==null || select.equals("")) {
-				sql = "select * from bbs where bbs_div = ? order by bbs_idx desc";
+				sql = "select * from bbs where bbs_div = ? order by " + orderBy;
+				
 				ps.setInt(1, bbs_div);
 				ps = conn.prepareStatement(sql);
 			}
 			else if(select.equals("title")) {
-				sql = "select * from bbs where title like ? and bbs_div = ? order by bbs_idx desc";
+				sql = "select * from bbs where title like ? and bbs_div = ? order by " + orderBy;
 				ps = conn.prepareStatement(sql);
 				ps.setString(1, "%"+input+"%");
 				ps.setInt(2, bbs_div);
 			}else if(select.equals("writer")) {
-				sql = "select * from bbs where bbs_id like ? and bbs_div = ? order by bbs_idx desc";
+				sql = "select * from bbs where bbs_id like ? and bbs_div = ? order by " + orderBy;
 				ps = conn.prepareStatement(sql);
 				ps.setString(1, "%"+input+"%");
 				ps.setInt(2, bbs_div);
@@ -102,7 +121,9 @@ public class BbsDAO {
 				java.sql.Date create_date = rs.getDate("create_date");
 				java.sql.Date update_date = rs.getDate("update_date");
 				String bbs_image = rs.getString("bbs_image");
-				BbsDTO dto = new BbsDTO(bbs_idx, bbs_id, title, content, view_cnt, create_date, update_date, bbs_div, bbs_image);
+				int recommend_like = rs.getInt("recommend_like");
+				int recommend_dislike = rs.getInt("recommend_dislike");
+				BbsDTO dto = new BbsDTO(bbs_idx, bbs_id, title, content, view_cnt, create_date, update_date, bbs_div, bbs_image,recommend_like,recommend_dislike);
 				arr.add(dto);
 			}
 			return arr;
@@ -162,6 +183,51 @@ public class BbsDAO {
 				if(conn!=null) conn.close();
 			}catch(Exception e2) {
 				
+			}
+		}
+	}
+	public int likeRecommend(String idx) {
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+			
+			String sql = "update bbs set recommend_like = recommend_like+1 where bbs_idx = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, idx);
+			
+			int count = ps.executeUpdate();
+			return count;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				ps.close();
+				conn.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+		}
+	}
+	
+	public int dislikeRecommend(String idx) {
+		try {
+			conn = com.ksj.db.ConnectionDB.getConn();
+			
+			String sql = "update bbs set recommend_dislike = recommend_dislike+1 where bbs_idx = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, idx);
+			
+			int count = ps.executeUpdate();
+			return count;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}finally {
+			try {
+				ps.close();
+				conn.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
 			}
 		}
 	}

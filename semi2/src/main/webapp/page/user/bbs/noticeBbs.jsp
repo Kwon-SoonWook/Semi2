@@ -85,6 +85,22 @@ table td {
 	cursor: pointer;
 	margin-top: 5px;
 }
+.sort-box {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 10px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.sort-box select {
+    padding: 5px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    background: #fafafa;
+}
 </style>
 <% 
 String sid = (String)session.getAttribute("sid");
@@ -101,7 +117,8 @@ String select = request.getParameter("select");
 if(select==null || select.equals("")){
 	select="title";
 }
-ArrayList<BbsDTO> arr = bdao.userBbsList(select, input, 0);
+String sort = request.getParameter("sort");
+ArrayList<BbsDTO> arr = bdao.userBbsList(select, input, 0,sort);
 int totalCnt = 0;
 if(arr==null || arr.size()==0){
 	totalCnt = 0;
@@ -138,6 +155,13 @@ if (cp % pageSize == 0) userGroup--;
 		<form name="noticeFind" method="get" action="noticeBbs.jsp">
 		<div class="page">
 			<h2>공지사항</h2>
+			         <div class="sort-box">
+    <label for="sort" style="margin-right:6px; font-size:15px; color:#666;">정렬</label>
+    <select id="sort" name="sort" onchange="this.form.submit()">
+    <option value="recent" <%= "recent".equals(request.getParameter("sort")) ? "selected" : "" %>>최신순</option>
+        <option value="view" <%= "view".equals(request.getParameter("sort")) ? "selected" : "" %>>조회순</option>
+    </select>
+</div>
 			<table>
 				<thead>
 					<tr>
@@ -161,7 +185,7 @@ if (cp % pageSize == 0) userGroup--;
 					%>
 					<tr>
 						<td style="text-align: center;"><%=arr.get(i).getBbs_idx()%></td>
-						<td><a href="bbsContent.jsp?id=<%=arr.get(i).getBbs_idx()%>"><%=arr.get(i).getTitle()%></a></td>
+						<td><a href="bbsContent.jsp?id=<%=arr.get(i).getBbs_idx()%>&cp=<%=cp %>"><%=arr.get(i).getTitle()%></a></td>
 						<td style="text-align: center;"><%=arr.get(i).getBbs_id()%></td>
 						<td style="text-align: center;"><%=arr.get(i).getCreate_date()%></td>
 						<td style="text-align: center;"><%=arr.get(i).getView_cnt()%></td>
@@ -180,23 +204,23 @@ if (cp % pageSize == 0) userGroup--;
 							<%
 							if(arr==null || arr.size()==0){
 								%>&nbsp;&nbsp;<a
-								href="noticeBbs.jsp?cp=1&input=<%=input%>&select=<%=select%>"
+								href="noticeBbs.jsp?cp=1&input=<%=input%>&select=<%=select%>&sort=<%=sort %>"
 								style="color: black; text-decoration: underline;">1</a>&nbsp;&nbsp;<%	
 							}else{
 								if (userGroup != 0) {
 									%> <a
-									href="noticeBbs.jsp?cp=<%=(userGroup - 1) * pageSize + pageSize%>&input=<%=input%>&select=<%=select%>"
+									href="noticeBbs.jsp?cp=<%=(userGroup - 1) * pageSize + pageSize%>&input=<%=input%>&select=<%=select%>&sort=<%=sort %>"
 									style="color: black; font-size: 10px; text-decoration: none">&lt;</a>
 									<%
 								}
 								for (int i = (userGroup * pageSize + 1); i <= (userGroup * pageSize + pageSize); i++) {
 									if (cp == i) {
 										%>&nbsp;&nbsp;<a
-										href="noticeBbs.jsp?cp=<%=i%>&input=<%=input%>&select=<%=select%>"
+										href="noticeBbs.jsp?cp=<%=i%>&input=<%=input%>&select=<%=select%>&sort=<%=sort %>"
 										style="color: black; text-decoration: underline;"><%=i%></a>&nbsp;&nbsp;<%
 									} else {
 										%>&nbsp;&nbsp;<a
-										href="noticeBbs.jsp?cp=<%=i%>&input=<%=input%>&select=<%=select%>"
+										href="noticeBbs.jsp?cp=<%=i%>&input=<%=input%>&select=<%=select%>&sort=<%=sort %>"
 										style="color: black; text-decoration: none;"><%=i%></a>&nbsp;&nbsp;<%
 									}
 									if (i == totalPage) {
@@ -205,7 +229,7 @@ if (cp % pageSize == 0) userGroup--;
 								}
 								if (((totalPage / pageSize) - (totalPage % pageSize == 0 ? 1 : 0)) != userGroup) {
 									%> <a
-									href="noticeBbs.jsp?cp=<%=(userGroup + 1) * pageSize + 1%>&input=<%=input%>&select=<%=select%>"
+									href="noticeBbs.jsp?cp=<%=(userGroup + 1) * pageSize + 1%>&input=<%=input%>&select=<%=select%>&sort=<%=sort %>"
 									style="color: black; font-size: 10px; text-decoration: none">&gt;</a>
 									<%
 								}	

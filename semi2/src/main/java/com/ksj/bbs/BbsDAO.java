@@ -34,8 +34,10 @@ public class BbsDAO {
 				Date update_date = rs.getDate("update_date");
 				int bbs_div = rs.getInt("bbs_div");
 				String image = rs.getString("bbs_image");
+				int recommend_like = rs.getInt("recommend_like");
+				int recommend_dislike = rs.getInt("recommend_dislike");
 				
-				BbsDTO dto = new BbsDTO(idx, id, title, content, view_cnt, create_date, update_date, bbs_div,image);
+				BbsDTO dto = new BbsDTO(idx, id, title, content, view_cnt, create_date, update_date, bbs_div,image,recommend_like,recommend_dislike);
 				arr.add(dto);
 			}
 			return arr;
@@ -116,7 +118,7 @@ public class BbsDAO {
 		try {
 			conn = com.ksj.db.DB.getConn();
 			
-			String sql = "insert into bbs values(bbs_idx.nextval,?,?,?,0,sysdate,sysdate,?,?)";
+			String sql = "insert into bbs values(bbs_idx.nextval,?,?,?,0,sysdate,sysdate,?,?,0,0)";
 			ps= conn.prepareStatement(sql);
 			
 			String image = mr.getFilesystemName("file");
@@ -185,8 +187,10 @@ public class BbsDAO {
 				Date update_date = rs.getDate("update_date");
 				int bbs_div = rs.getInt("bbs_div");
 				String image = rs.getString("bbs_image");
+				int recommend_like = rs.getInt("recommend_like");
+				int recommend_dislike = rs.getInt("recommend_dislike");
 				
-				BbsDTO dto = new BbsDTO(idx, id, title, content, view_cnt, create_date, update_date, bbs_div,image);
+				BbsDTO dto = new BbsDTO(idx, id, title, content, view_cnt, create_date, update_date, bbs_div,image,recommend_like,recommend_dislike);
 				arr.add(dto);
 			}
 			
@@ -227,8 +231,10 @@ public class BbsDAO {
 			Date update_date = rs.getDate("update_date");
 			int div = rs.getInt("bbs_div");
 			String image = rs.getString("bbs_image");
+			int recommend_like = rs.getInt("recommend_like");
+			int recommend_dislike = rs.getInt("recommend_dislike");
 			
-			BbsDTO dto = new BbsDTO(idx, id, title, content, view, create_date, update_date, div,image);
+			BbsDTO dto = new BbsDTO(idx, id, title, content, view, create_date, update_date, div,image,recommend_like,recommend_dislike);
 			arr.add(dto);
 			}
 			
@@ -298,8 +304,10 @@ public class BbsDAO {
 	            Date update_date = rs.getDate("update_date");
 	            int bbs_div = rs.getInt("bbs_div");
 	            String image = rs.getString("bbs_image");
-	            
-	            BbsDTO dto = new BbsDTO(idx, id, title, content, view_cnt, create_date, update_date, bbs_div,image);
+	            int recommend_like = rs.getInt("recommend_like");
+				int recommend_dislike = rs.getInt("recommend_dislike");
+				
+				BbsDTO dto = new BbsDTO(idx, id, title, content, view_cnt, create_date, update_date, bbs_div,image,recommend_like,recommend_dislike);
 	            arr.add(dto);
 	         }
 	         return arr;
@@ -348,9 +356,10 @@ public class BbsDAO {
 	            Date update_date = rs.getDate("update_date");
 	            int bbs_div = rs.getInt("bbs_div");
 	            String bbs_image = rs.getString("bbs_image");
-	            
-	            BbsDTO dto = new BbsDTO(bbs_idx, bbs_id, title, content, view_cnt, create_date, update_date, bbs_div, bbs_image);
-	            		
+	            int recommend_like = rs.getInt("recommend_like");
+				int recommend_dislike = rs.getInt("recommend_dislike");
+				
+				BbsDTO dto = new BbsDTO(bbs_idx, bbs_id, title, content, view_cnt, create_date, update_date, bbs_div,bbs_image,recommend_like,recommend_dislike);
 	            arr.add(dto);
 	         }
 	         return arr;
@@ -474,7 +483,7 @@ public class BbsDAO {
 			conn = com.ksj.db.ConnectionDB.getConn();
 			
 			int ref = getMaxRef();
-			
+
 			String sql = "insert into bbs_comment values(bbs_comment_idx.nextval,?,?,?,sysdate,?,?,?)";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, comm);
@@ -504,7 +513,7 @@ public class BbsDAO {
 		try {
 			conn = com.ksj.db.ConnectionDB.getConn();
 			
-			String sql = "select * from bbs_comment where bbs_idx = ? order by ref asc, lev asc,sunbun asc";
+			String sql = "select * from bbs_comment where bbs_idx = ? order by ref asc, lev asc,sunbun desc";
 			ps = conn.prepareStatement(sql);
 			
 			ps.setInt(1, idx);
