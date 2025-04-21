@@ -141,15 +141,21 @@ function popup2() {
         </div>
         <div class="form-group">
             <label for="pwd">비밀번호</label>
-            <input type="password" name="pwd" id="pwd" required>
+            <input type="password" name="pwd" id="pwd" required
+       onkeydown="return event.key !== ' ';"
+       oninput="this.value = this.value.replace(/\s/g, '');">
         </div>
         <div class="form-group">
             <label for="name">이름</label>
-            <input type="text" name="name" id="name" required>
+            <input type="text" name="name" id="name" required
+            onkeydown="return event.key !== ' ';"
+       		oninput="this.value = this.value.replace(/\s/g, '');">
         </div>
         <div class="form-group">
             <label for="email">이메일</label>
-            <input type="text" name="email" id="email" required>
+            <input type="text" name="email" id="email" required
+            onkeydown="return event.key !== ' ';"
+       		oninput="this.value = this.value.replace(/\s/g, '');">
         </div>
         <div class="form-group">
             <label for="nickname">닉네임</label>
@@ -160,7 +166,9 @@ function popup2() {
         </div>
         <div class="form-group">
             <label for="location">거주 지역 (00구)</label>
-            <input type="text" name="location" id="location" required>
+            <input type="text" name="location" id="location" required
+            onkeydown="return event.key !== ' ';"
+       		oninput="this.value = this.value.replace(/\s/g, '');">
         </div>
         <div class="form-group">
             <label for="img">프로필 사진</label>

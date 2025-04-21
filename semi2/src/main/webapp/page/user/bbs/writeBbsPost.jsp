@@ -18,7 +18,8 @@ String bbs_div = request.getParameter("bbs_div");
 <style>
 body {
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
+    background-color: #EBEDE0;
+
 }
 .container {
     min-height: 100vh;   /*스크린 화면 전체를 가득 채움*/
@@ -77,19 +78,22 @@ input[type="file"] {
 }
 
 .page input[type="submit"], input[type="reset"] {
-   background-color: #8c8c8c;
-   color: white;
-   border: none;
-   padding: 5px 20px;
-   font-size: 16px;
-   border-radius: 5px;
-   cursor: pointer;
-   margin-top: 20px;
+    font-family: "Pretendard-SemiBold", Helvetica, Arial, sans-serif;
+    background: #6d8132;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 9px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s, border 0.18s;
 }
 
 
-input[type="submit"]:hover {
-   background-color: #0056b3;
+input[type="submit"]:hover, input[type="reset"]:hover {
+    background: #fff;
+    color: #6d8132;
+    border: 1.5px solid #6d8132;
 }
 
 .content {
