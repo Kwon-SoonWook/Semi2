@@ -27,13 +27,13 @@
   src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff")
     format("woff");
   font-weight: 700;
-  font-style: normal;
+  font-style: normal;	
 }
 footer{
+	font-family: "Pretendard-Regular", Helvetica;
 	margin-top: 150px;
 }
 .footer-etc {
-	font-family: "Pretendard-Regular", Helvetica;
 	letter-spacing: -0.4px;
     text-align: left;
     margin-left: 200px;
@@ -53,6 +53,9 @@ footer{
 }
 .footer-tag a:hover{
 	color: #505050;
+}
+.footer-img{
+	
 }
 </style> 
 <footer>
@@ -74,6 +77,11 @@ footer{
 			<div><a href="/semi2/page/user/bbs/userProtection.jsp">이용자보호 비전과 계획</a></div>
 			<div><a href="/semi2/page/user/bbs/youthProtection.jsp">청소년보호정책</a></div>
 			<div><a href="/semi2/page/user/mypage/myInfoDelete.jsp">회원탈퇴</a></div>
+		</div>
+	</div>
+	<div>
+		<div class="footer-img">
+
 		</div>
 	</div>
 	<br><hr color="lightgray" size="1"><br>

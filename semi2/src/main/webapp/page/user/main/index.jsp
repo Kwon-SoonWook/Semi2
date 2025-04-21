@@ -40,11 +40,12 @@
   font-weight: 700;
   font-style: normal;
 }
-body {
-    background-color: #EBEDE0;
-    color: #EBEDE0;
+body, button, a{
+	font-family: "Pretendard-Medium", Helvetica;
 }
-
+body{
+	background-color: #EBEDE0;
+}
 .container {
     min-height: 100vh;
 }
