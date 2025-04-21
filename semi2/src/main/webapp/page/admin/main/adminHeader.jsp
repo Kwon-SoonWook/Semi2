@@ -75,7 +75,7 @@ String sname = (String)session.getAttribute("sname");
    	 		<a href="/semi2/page/user/login/login.jsp" class="btn-login"><i class="fa-regular fa-circle-user" style="font-size: 20px;"></i>로그인</a>
     	</div>
     <%}else{ %>
-	    	<%=sname %>님 &nbsp;<a href="../mypage/mypage.jsp"><i class="fa-solid fa-circle-user" style="font-size: 25px; color:black;"></i></a>
+	    	<%=sname %>님 &nbsp;<a href="/semi2/page/user/mypage/mypage.jsp"><i class="fa-solid fa-circle-user" style="font-size: 25px; color:black;"></i></a>
 	    	&emsp;
     	</div>  	<div class="logout-button">
     		<a href="/semi2/page/user/login/logout.jsp" class="btn-logout"><i class="fa-solid fa-right-from-bracket" style="font-size: 20px;"></i>로그아웃</a>

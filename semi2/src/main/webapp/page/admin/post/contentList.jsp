@@ -82,6 +82,20 @@ form {
 	background-color: #74b9ff;
 }
 
+input[type="submit"] {
+	padding: 3px 5px;
+	background-color: #0984e3;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover {
+	background-color: #74b9ff;
+}
+
 /* 예: userInfoList.jsp에서 테이블이 있을 경우를 대비한 기본 테이블 스타일 */
 table {
 	width: 100%;
