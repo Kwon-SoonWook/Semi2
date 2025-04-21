@@ -155,17 +155,28 @@ label[for="location"] {
   gap: 10px;
 }
 .action-btns input {
-  padding: 10px 20px;
-  font-size: 14px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
+    border: 1px solid #ccc;
+    padding: 10px 20px; /* 패딩 줄임 */
+    font-family: "Pretendard-SemiBold", Helvetica;
+    font-size: 16px; /* 폰트 크기 조정 */
+    font-weight: 600;
+    color: #ffffff;
+    border-radius: 8px;
+    background: #6d8132;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
-.action-btns input[type="submit"] {
-  background-color: #ddd;
+.action-btns input[type="submit"]:hover {
+    background: #f5f5f5;
+    color: #000;
+    border-color: #bbb;
 }
-.action-btns input[type="reset"] {
-  background-color: #ddd;
+.action-btns input[type="reset"]:hover {
+    background: #f5f5f5;
+    color: #000;
+    border-color: #bbb;
 }
 </style>
 <script>
@@ -252,7 +263,6 @@ function show(){
     	if(event.key >="0" && event.key <= "9"||allowedKeys.includes(event.key)){
     		return true;
     	}else{
-    		alert("정수만 입력해주세요");
     		return false;
     	}
     }
