@@ -29,29 +29,14 @@
   font-weight: 700;
   font-style: normal;
 }
-footer {
-    margin-left: 50px;
-}
-
-.footer-menu {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 15px;
-    color: #505050;
-}
-.footer-menu a{
-   	color: black;
-   	text-decoration: none;
-}
-.footer-menu a:hover{
-   	color: gray;
+footer{
+	margin-top: 150px;
 }
 .footer-etc {
 	font-family: "Pretendard-Regular", Helvetica;
 	letter-spacing: -0.4px;
     text-align: left;
-    margin-left: 100px;
+    margin-left: 200px;
     color: #767676;
     line-height: 22.4px;
 }
@@ -82,15 +67,13 @@ footer {
 	주소 : 서울특별시 마포구 서교동 447-5 풍성빌딩 2,3,4층 <br>
 	사업자정보 확인 <br>
 		<div class="footer-tag">
-			<div>이용약관</div>
-			<div>개인정보처리방침</div>
-			<div>운영정책</div>
-			<div>서비스 이용약관</div>
-			<div>이용자보호 비전과 계획</div>
-			<div>청소년보호정책</div>
-			<a href="/semi2/page/user/mypage/myInfoDelete.jsp">
-				<div>회원탈퇴</div>
-			</a>
+			<div><a href="">이용약관</a></div>
+			<div><a href="">개인정보처리방침</a></div>
+			<div><a href="">운영정책</a></div>
+			<div><a href="">서비스 이용약관</a></div>
+			<div><a href="">이용자보호 비전과 계획</a></div>
+			<div><a href="">청소년보호정책</a></div>
+			<div><a href="/semi2/page/user/mypage/myInfoDelete.jsp">회원탈퇴</a></div>
 		</div>
 	</div>
 	<br><hr color="lightgray" size="1"><br>

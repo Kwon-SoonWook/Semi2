@@ -187,6 +187,7 @@ String headpwd = (String)session.getAttribute("pwd");
 String heademail = (String)session.getAttribute("email");
 String headnickname = (String)session.getAttribute("nickname");
 String headlocation = (String)session.getAttribute("location");
+
 %>
 <script>
 function searchClick(){
@@ -206,8 +207,10 @@ function searchClick(){
     	<a href="/semi2/page/user/bbs/noticeBbs.jsp">공지사항</a>
     	<a href="/semi2/page/user/bbs/communityBbs.jsp">자유게시판</a>
     	<a href="/semi2/page/user/bbs/buyBbs.jsp">구매게시판</a>
-    	<%if(headid == "admin" || headid != null){ %>
-    	<a href="/semi2/page/admin/main/adminIndex.jsp">관리자페이지</a>
+    	<%if(headid != null){ %>
+	    	<%if(headid.equals("admin")){ %>
+	    		<a href="/semi2/page/admin/main/adminIndex.jsp">관리자페이지</a>
+	    	<%}%>
     	<%} %>
     </div>
     <div class="top-right">
@@ -226,7 +229,7 @@ function searchClick(){
 	    <div style="display: flex; align-items: center; margin-left: auto;">
 	    	<div class="mypage">
 		    	<a href="/semi2/page/user/mypage/mypage.jsp">
-			    	<p style="font-size: 16px;"><%=headnickname %>님</p>
+			    	<p style="font-size: 16px;"><%=headnickname %></p>
 			    	<%if(!arr2.isEmpty() && arr2.get(0).getProfile_uri() != null){ %>
 						<img src="/<%=arr2.get(0).getProfile_uri() %>" alt="프로필 이미지">
 				    <%}else{ %>
