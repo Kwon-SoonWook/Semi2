@@ -90,7 +90,7 @@ session.setAttribute("reviewCnt", reviewCnt);
 	<%}else{%>
 		<div class="photo-grid">
 		<%for(int i=0; i<arr.size(); i++){%>
-            <div class="photo-card">
+            <div class="photo-card" onclick = "parent.location.href='/semi2/page/user/product/saleProductView.jsp?productsIds=<%=arr.get(i).getProducts_id()%>'">
 		        <div class="thumbnail"></div>
 				<h3><%=arr.get(i).getUsere_id() %></h3>
 				<p><%=arr.get(i).getReview_content() %></p>
