@@ -7,6 +7,7 @@ int ask_id = Integer.parseInt(request.getParameter("ask_id"));
 AskDTO dto = adao.askContent(ask_id);
 String cp_s = request.getParameter("cp");
 int cp = 0;
+String sid = (String) session.getAttribute("sid");
 if(cp_s==null){
 	cp = 0;
 }else{
@@ -113,7 +114,13 @@ input[type="submit"], input[type="button"] {
 					</table>
 					<div style="text-align: center;">
 						<input type='button' value='목록으로' onclick="location.href='userAskList.jsp?cp=<%=cp%>'">
-						<input type="submit" value="수정하기">
+						<%
+						if(sid.equals(dto.getAsk_user_id())){
+							%>
+							<input type="submit" value="수정하기">
+							<%
+						}
+						%>
 					</div>
 				</form>
 				</article>

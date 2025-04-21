@@ -118,12 +118,12 @@ input[type="button"] {
 						</tr>
 						<tr>
 							<th>제목</th>
-							<td colspan='3'>
+							<td colspan='3' style="text-align: left;">
 							<%=dto.getAsk_title() %>
 							</td>
 						</tr>
 						<tr>
-							<td colspan='4' align='left' valign='top'><%=dto.getAsk_content().replaceAll("\n", "<br>") %></td>
+							<td colspan='4' valign='top' style="text-align: left; padding: 30px;"><%=dto.getAsk_content().replaceAll("\n", "<br>") %></td>
 						</tr>
 					</table>
 					<div style="margin: auto;"><input type='submit' value='목록으로'>

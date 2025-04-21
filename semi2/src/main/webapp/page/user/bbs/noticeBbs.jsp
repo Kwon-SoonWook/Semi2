@@ -14,7 +14,8 @@
 <style>
 body {
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
+    background-color: #EBEDE0;
+    color: #EBEDE0;
 }
 .container {
     min-height: 100vh;	/*스크린 화면 전체를 가득 채움*/
@@ -28,6 +29,8 @@ body {
 }
 /*흰색 페이지*/
 .page {
+	margin: auto;
+	width: 1100px;
     background: white;
     padding: 20px;
     border-radius: 8px;
@@ -100,6 +103,12 @@ table td {
     border-radius: 4px;
     font-size: 14px;
     background: #fafafa;
+}
+.comment-count {
+    font-size: 0.95em;
+    color: #888;
+    margin-left: 6px;
+    vertical-align: middle;
 }
 </style>
 <% 
