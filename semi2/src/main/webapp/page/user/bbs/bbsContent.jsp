@@ -34,8 +34,8 @@ article {
    left: 30px;
 }
 .main-content {
-    margin-left: 220px; /* 사이드바 너비(200px) + 여유(20px) */
-    margin-right: 30px; /* 필요시 오른쪽도 여백 */
+    margin-left: 320px; /* 사이드바 너비(200px) + 여유(20px) */
+    margin-right: 320px; /* 필요시 오른쪽도 여백 */
     /* 기존 스타일이 있다면 여기에 추가로 작성 */
 }
 
