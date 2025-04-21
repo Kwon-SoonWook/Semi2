@@ -34,6 +34,10 @@ if (sid == null) {
 h2{
 	text-align: center;
 }
+body{
+    background-color: #EBEDE0;
+    color: #EBEDE0;
+}
 .form-section {
   border: 1px solid #ddd;
   padding: 20px;
@@ -108,11 +112,12 @@ label[for="location"] {
   flex-wrap: wrap;
 }
 .image-grid input[type="file"] {
-    width: 200px; /* 기존보다 크기 조정 */
+    width: 150px; /* 기존보다 크기 조정 */
+    font-size: 10px;
 }
 .image-box {
-  width: 198px;
-  height: 250px;
+  width: 150px;
+  height: 150px;
   position: relative;
   border: 1px dashed #ccc;
   border-radius: 6px;
