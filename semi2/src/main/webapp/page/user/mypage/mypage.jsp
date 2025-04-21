@@ -176,7 +176,7 @@ if(favoriteCnt==null) favoriteCnt = 0;
 	         		<p>등록한 게시물 수 : <%=productCnt %></p>
 	         		<p>리뷰 수 : <%=reviewCnt %></p>
 	         		<p>찜 목록 : <%=favoriteCnt %></p>
-			    	<button class="update" type="button" onclick="pwdcheck();">수정</button>     	
+			    	<button class="update" type="button" onclick="pwdcheck();">수정</button>    	
 				</div>
 			</div>
 			<nav id="mypage-nav">

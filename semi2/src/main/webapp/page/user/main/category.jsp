@@ -135,10 +135,10 @@ String categoryid = (String)session.getAttribute("sid");
         <%if(categoryid == null){ %>
         <p class="login-p">노후재활센터를 이용하기 위해서는 회원가입 및 로그인이 필요합니다.</p>
         <div class="category-button">
-   	 		<a href="/semi2/page/user/login/signUp.jsp" class="btn-signup2">회원가입
-   	 		</a>
-   	 		<a href="/semi2/page/user/login/login.jsp" class="btn-login2">로그인
+        	<a href="/semi2/page/user/login/login.jsp" class="btn-login2">로그인
     		</a>
+   	 		<a href="/semi2/page/user/login/signUp.jsp" class="btn-signup2">회원가입
+   	 		</a>   	 		
     	</div>
         <%}else{ %>
         <div class="menu-item"><a href="/semi2/page/user/main/index.jsp"><i class="fas fa-home"></i><span> 홈</span></a></div>
