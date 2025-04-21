@@ -4,7 +4,7 @@
 <jsp:useBean id="kdto" class="com.ksj.login.loginDTO"></jsp:useBean>
 <jsp:setProperty property="*" name="kdto" />
 <%
-session.setAttribute("sid", kdto.getId());
+
 String sname = kdao.login(kdto.getId(), kdto.getPwd());
 String saveid = request.getParameter("saveid");
 if (sname == null || sname.equals("")) {
@@ -12,10 +12,14 @@ if (sname == null || sname.equals("")) {
 <script>
    window.alert('아이디 혹은 비밀번호가 틀렸습니다');
    location.href = 'login.jsp';
+   session.invalidate();
+   
 </script>
 <%
 } else {
-
+	session.setAttribute("sid", kdto.getId());
+	session.setAttribute("sname", sname);
+	
 if (saveid != null) {
 	Cookie ck = new Cookie("sid", kdto.getId());
 
@@ -29,7 +33,6 @@ if (saveid != null) {
 
 }
 
-session.setAttribute("sname", sname);
 %>
 <script>
    window.alert('<%=sname%>님 환영합니다~');

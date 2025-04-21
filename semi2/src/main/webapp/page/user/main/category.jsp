@@ -41,7 +41,7 @@
 	--side-bar-height: 90vh;
 }
 .side-bar {
-	font-family: "Pretendard-Regular", Helvetica;
+	font-family: "Pretendard-SemiBold", Helvetica;
 	position: fixed;
 	background: white;
     width: var(--side-bar-width);
@@ -50,65 +50,109 @@
     border-radius: 20px;
     transform: translate(calc(var(--side-bar-width)*-0.8),0);
     transition: .3s;
+    padding: 20px 0; /* 내부 여백 살짝 줌 */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .side-bar:hover{
 	transform: translate(-20px, 0);
 }
-.side-bar a {
-  	color: black;
- 	font-size: 1.0rem;
- 	font-weight: bold ;
- 	white-space: nowrap;
- 	text-decoration: none;
-  	padding-top: 20px;
-  	padding-bottom: 20px;
-  	padding-left: 50px;
-}
-
-.side-bar a:hover {
-  	color: gray;
+.side-bar nav {
+    width: 100%;
 }
 .side-bar span {
 	opacity: 0;
-	transition: .5s .1s;
+	transition: .3s .1s;
+	margin-left: 10px;
 }
 .side-bar:hover span{
 	opacity: 1;
 }
-
-.menu-item {
-    padding: 0px;
-    margin-top: 0px;
-    font-size: 18px;
-    cursor: pointer;
+.custom-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, #ddd, transparent);
+    margin: 10px 10%;
+}
+.side-bar .menu-item a {
     display: flex;
     align-items: center;
-    gap: 10px;
-    transition: background 0.3s;
+    padding: 15px 20px;
+    color: black;
+    font-size: 1.0rem;
+    text-decoration: none;
+    margin-left: 20px;
 }
 
-.menu-item:hover {
-    background: #f1f1f1;
+.side-bar .menu-item a:hover {
+    color: gray;
+    background-color: #f1f1f1;
+}
+
+.login-p{
+	font-family: "Pretendard-Regular";
+	margin-left: 40px;
+	margin-right: 40px;
+	text-align: justify;
+	font-size: 14px;
+}
+.category-button{
+	display: flex;
+    flex-direction: column; /* 세로 정렬 */
+    align-items: center;     /* 가운데 정렬 */
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.btn-login2,
+.btn-signup2{
+    font-family: "Pretendard-SemiBold", Helvetica;
+    font-size: 14px; /* 폰트 크기 조정 */
+    padding: 10px 20px;
+    border: 2px solid #ccc;
+    border-color: #111111;
+    border-radius: 30px;
+    background: #ffffff;
+    transition: all 0.3s ease;
+    width: 100px;
+    text-align: center;
+}
+
+.btn-login2:hover,
+.btn-signup2:hover {
+    color: #bbb;
+    border-color: #bbb;
 }
 </style>
 <script src="https://kit.fontawesome.com/f0cba69f8f.js" crossorigin="anonymous"></script>
 <%
-
 String categoryid = (String)session.getAttribute("sid");
-
 %>
 </head>
 <aside class="side-bar">
      <nav>
+        <%if(categoryid == null){ %>
+        <p class="login-p">노후재활센터를 이용하기 위해서는 회원가입 및 로그인이 필요합니다.</p>
+        <div class="category-button">
+        	<a href="/semi2/page/user/login/login.jsp" class="btn-login2">로그인
+    		</a>
+   	 		<a href="/semi2/page/user/login/signUp.jsp" class="btn-signup2">회원가입
+   	 		</a>   	 		
+    	</div>
+        <%}else{ %>
         <div class="menu-item"><a href="/semi2/page/user/main/index.jsp"><i class="fas fa-home"></i><span> 홈</span></a></div>
-        
-        <%if(categoryid != null){ %>
-        <div class="menu-item"><a href="/semi2/page/user/product/writeSaleProduct.jsp"><i class="fa-solid fa-pen-to-square"></i><span> 글쓰기</span></a></div>
+        <div class="menu-item"><a href="/semi2/page/user/product/writeSaleProduct.jsp"><i class="fa-solid fa-pen-to-square"></i><span> 판매등록</span></a></div>
+        <div class="custom-divider"></div>
+        <div class="menu-item"><a href="/semi2/page/user/mypage/mypage.jsp"><i class="fa-regular fa-circle-user"></i><span> 마이페이지</span></a></div>
+        <div class="menu-item"><a href="/semi2/page/user/mypage/mypage.jsp?page=saleList.jsp"><i class="fas fa-list"></i><span> 판매물픔</span></a></div>
+        <div class="menu-item"><a href="/semi2/page/user/mypage/mypage.jsp?page=myReviewList.jsp"><i class="fas fa-comments"></i><span> 거래후기</span></a></div>
+        <div class="menu-item"><a href="/semi2/page/user/mypage/mypage.jsp?page=interestList.jsp"><i class="fas fa-heart"></i><span> 찜 목록</span></a></div>
+        <div class="menu-item"><a href="/semi2/page/user/mypage/mypage.jsp?page=recentList.jsp"><i class="fas fa-history"></i><span> 최신 본 상품</span></a></div>
+        <div class="menu-item"><a href="/semi2/page/user/mypage/mypage.jsp?page=userAskList.jsp"><i class="fa-regular fa-circle-question"></i><span> 나의 문의</span></a></div>
         <%} %>
-        <div class="menu-item"><a href="/semi2/page/user/bbs/noticeBbs.jsp"><i class="fa-solid fa-bullhorn"></i><span> 공지사항</span></a></div>
-        <div class="menu-item"><a href="/semi2/page/user/bbs/communityBbs.jsp"><i class="fa-solid fa-comments"></i><span> 자유게시판</span></a></div>
-        <div class="menu-item"><a href="/semi2/page/user/bbs/buyBbs.jsp"><i class="fa-solid fa-cart-shopping"></i><span> 구매게시판</span></a></div>
         <%if("admin".equals(categoryid)){ %>
+        <div class="custom-divider"></div>
         <div class="menu-item"><a href="/semi2/page/admin/main/adminIndex.jsp"><i class="fa-solid fa-user-tie"></i><span> 관리자페이지</span></a></div>
    		<%} %>
     </nav>

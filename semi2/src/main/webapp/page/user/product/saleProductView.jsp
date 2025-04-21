@@ -141,21 +141,32 @@ body{
     margin-top: 10px;
 }
 .product-actions input[type="button"]{
-  padding: 10px 20px;
-  font-size: 14px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  background-color: #ddd;
+    border: 1px solid #ccc;
+    padding: 10px 20px; /* 패딩 줄임 */
+    font-family: "Pretendard-SemiBold", Helvetica;
+    font-size: 16px; /* 폰트 크기 조정 */
+    font-weight: 600;
+    color: #ffffff;
+    border-radius: 8px;
+    background: #6d8132;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.product-actions input[type="button"]:hover{
+    background: #f5f5f5;
+    color: #000;
+    border-color: #bbb;
 }
 .comment-section {
-    width: 80%;
-    max-width: 1400px;
-    margin: 20px auto;
+    width: 65%;
+    margin: 30px auto;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
     background: #f9f9f9;
+   	margin-left:300px;
 }
 
 .comment-section table {
@@ -318,8 +329,7 @@ body{
 .reply-form button {
     width: 60px;
     height: 40px;
-   	margin-left: auto;    
-    margin-right: 10px;
+   	margin-left: 10px;    
     font-size : 10px;
     background: #008cff;
     color: white;
@@ -362,8 +372,7 @@ body{
     width: 60px;
     height: 40px;
     font-size : 10px;
-    margin-left: auto;    
-    margin-right: 10px;
+    margin-left: 10px;    
     background: #008cff;
     color: white;
     border: none;
@@ -382,7 +391,10 @@ body{
     border-radius: 5px;
     cursor: pointer;
 }
-
+.bbs-meta {
+   font-size: 14px;
+   color: #666;
+}
 </style>
 <script>
 window.onload=function(){
@@ -520,6 +532,11 @@ function toggleEditForm(commentIdx) {
 				<div class="product-info">
 					<div>
 					<h2>제목:<%=pdto.getTitle() %></h2>
+					<hr>
+					<div class="bbs-meta">
+						<span>작성자: <%=udao.myinfo(pdao.ProductList(prodcutsId).getSeller_id()).get(0).getNickname()%></span> | <span>작성일자:
+							<%=pdao.ProductList(prodcutsId).getCreate_date()%></span>
+					</div>
 						<select name = "tradestate" id ="tradestateid" onchange="trade(this);" >
 						<option value=0>판매중</option>	
 						<option value=1>예약중</option>	
