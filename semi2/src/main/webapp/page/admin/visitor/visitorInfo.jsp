@@ -169,7 +169,7 @@ int todayCount = (int) session.getAttribute("todayCount");
 					<tr><th style="width: 200px">총 방문자</th>
 						<td style="width: 150px"><%=totalCount %>명</td>
 						<th style="width: 200px">오늘 방문자</th>
-						<td style="width: 150px"><%=todayCount %>명</td>
+						<td style="width: 150px"><%=vdao.getVisitDateCount(0) %>명</td>
 					</tr>
 					</table>
 					<table>
