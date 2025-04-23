@@ -90,7 +90,8 @@ session.setAttribute("reviewCnt", reviewCnt);
 	<%}else{%>
 		<div class="photo-grid">
 		<%for(int i=0; i<arr.size(); i++){%>
-            <div class="photo-card" onclick = "parent.location.href='/semi2/page/user/product/saleProductView.jsp?productsIds=<%=arr.get(i).getProducts_id()%>'">
+            <div class="photo-card">
+            <div onclick = "parent.location.href='/semi2/page/user/product/saleProductView.jsp?productsIds=<%=arr.get(i).getProducts_id()%>'">
 		        <div class="thumbnail"></div>
 				<h3><%=arr.get(i).getUsere_id() %></h3>
 				<p><%=arr.get(i).getReview_content() %></p>
@@ -99,6 +100,7 @@ session.setAttribute("reviewCnt", reviewCnt);
 				        <label for="star">★</label>
 				    <%} %>
 			    </div>
+			  </div>  
 			        <%if(arr.get(i).getReview_div()!=1){ %>
 			        	<p><input type="button" value="답변하기" onclick="reviewWrite(<%=arr.get(i).getReview_id() %>);"></p>
             		<%} %>
