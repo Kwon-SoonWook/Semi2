@@ -4,6 +4,7 @@
 <jsp:useBean id="pdao" class="com.ksj.content.ProductDAO"></jsp:useBean>
 <jsp:useBean id="udao" class="com.ksj.user.UserDAO"></jsp:useBean>
 <jsp:useBean id="adao" class="com.ksj.ask.AskDAO"></jsp:useBean>
+<jsp:useBean id="vdao" class="com.ksj.visitor.VisitCountDAO"></jsp:useBean>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -22,8 +23,8 @@
 	    <%@include file="adminCategory.jsp" %>
 	
 	    <%
-	    int totalCount = (int) session.getAttribute("totalCount");
-	    int todayCount = (int) session.getAttribute("todayCount");
+	    int totalCount = vdao.getVisitTotalCount();
+	    int todayCount = vdao.getVisitDateCount(0);
 	    int todayBbs = bdao.getTodayBbs();
 	    int todayProduct = pdao.getTodayProduct();
 	    int todayAsk = adao.getTodayAsk();
@@ -45,7 +46,7 @@
 	                </div>
 	                <div class="card-info">
 	                    <h3>오늘 방문자</h3>
-	                    <p><%= todayCount %>명</p>
+	                    <p><%=  todayCount%>명</p>
 	                </div>
 	                </a>
 	            </div>
