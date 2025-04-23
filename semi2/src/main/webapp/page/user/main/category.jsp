@@ -145,7 +145,7 @@ String categoryid = (String)session.getAttribute("sid");
         <div class="menu-item"><a href="/semi2/page/user/product/writeSaleProduct.jsp"><i class="fa-solid fa-pen-to-square"></i><span> 판매등록</span></a></div>
         <div class="custom-divider"></div>
         <div class="menu-item"><a href="/semi2/page/user/mypage/mypage.jsp"><i class="fa-regular fa-circle-user"></i><span> 마이페이지</span></a></div>
-        <div class="menu-item"><a href="/semi2/page/user/mypage/mypage.jsp?page=saleList.jsp"><i class="fas fa-list"></i><span> 판매물픔</span></a></div>
+        <div class="menu-item"><a href="/semi2/page/user/mypage/mypage.jsp?page=saleList.jsp"><i class="fas fa-list"></i><span> 판매물품</span></a></div>
         <div class="menu-item"><a href="/semi2/page/user/mypage/mypage.jsp?page=myReviewList.jsp"><i class="fas fa-comments"></i><span> 거래후기</span></a></div>
         <div class="menu-item"><a href="/semi2/page/user/mypage/mypage.jsp?page=interestList.jsp"><i class="fas fa-heart"></i><span> 찜 목록</span></a></div>
         <div class="menu-item"><a href="/semi2/page/user/mypage/mypage.jsp?page=recentList.jsp"><i class="fas fa-history"></i><span> 최신 본 상품</span></a></div>

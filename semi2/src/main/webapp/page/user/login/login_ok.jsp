@@ -35,7 +35,6 @@ if (saveid != null) {
 
 %>
 <script>
-   window.alert('<%=sname%>님 환영합니다~');
 	location.href = '../main/index.jsp';
 </script>
 <%
