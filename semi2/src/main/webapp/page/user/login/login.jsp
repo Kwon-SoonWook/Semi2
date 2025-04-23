@@ -102,8 +102,9 @@ a:hover {
 }
 
 body{
-background-image: url("img/noin.jpg");
-background-attachment: 
+background: #EBEDE0;
+    height: 100vh;
+    background-size: cover
 }
 
 nav{
